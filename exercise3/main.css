@@ -25,11 +25,12 @@ body {
     background: #ffffc7;
     margin-left: 20%;
     margin-right: 20%;
-    margin-top: 5%;
+    /* margin-top: 5%; */
     margin-bottom: 5%;
     display: flex;
     flex-flow: column;
 }
+
 
 nav{
     display: block;
@@ -39,7 +40,6 @@ nav{
     margin-bottom: 12px;
     width: 100%;
     gap: 4px;
-    /* background-color: #ffffc7; */
 }
 
 hr {
@@ -62,7 +62,7 @@ hr {
 h1 {
     font-family: 'Bebas', Arial, sans-serif;
     font-size: 72px;
-    margin: 0;
+    margin: 56px 0px 0 0;
 }
 
 h2 {
@@ -89,11 +89,11 @@ strong {
 }
 
 a {
-    color: #3043d7;
+    color: #273bd0;
 }
 
 a:hover {
-    color: #7283ff;
+    color: #8198ff;
     font-weight: 600;
 }
 
@@ -109,8 +109,9 @@ a h3:hover {
     flex-direction: row;
     align-items: center;
     /* margin-top: 20%; */
-    height: 100%;
     position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 32px;
     text-decoration: none;
 }
@@ -133,7 +134,7 @@ a h3:hover {
     display: flex;
     justify-content: space-between;
     gap: 75px;
-    /* align-items: center; */
+
 }
 
 .text-section {
@@ -169,14 +170,22 @@ a h3:hover {
     box-sizing: border-box;
 }
 
+.fixed-cont {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffc7;
+}
+
 .definition {
     display: grid;
-    position: sticky;
-    top: 0px;
+    padding: 56px 0 18px 0;
     grid-template-columns: 1fr 2.5fr;
     gap: 25px;
     justify-content: space-between;
-    background: #ffffc7;
 }
 
 @media only screen and (max-width: 786px) {
