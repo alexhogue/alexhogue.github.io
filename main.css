@@ -1,9 +1,51 @@
+@font-face {
+font-family: 'Tagesschrift';
+  	src:  url('./fonts/Tagesschrift-Regular.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+font-family: 'Roboto';
+  	src:  url('./fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+    font-display: swap;
+}
+
 body{
+    display: flex;
+    flex-direction: column;
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 2%;;
+    margin-top: 2%;
+    /* gap: 56px; */
+    /* align-items: flex-start; */
 }
 
 h1 {
+    font-family: 'Tagesschrift';
     font-size: 64px;
+    margin: 0;
+}
+
+h2 {
+    font-family: 'Roboto';
+    color: #4b4b4b;
+}
+
+h3 {
+    font-family: 'Roboto';
+    font-size: 28px;
+    font-weight: 100;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #e67716;
 }
