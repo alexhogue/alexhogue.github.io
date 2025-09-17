@@ -97,6 +97,13 @@ a:hover {
     font-weight: 600;
 }
 
+a h3 {
+    color: black;
+}
+a h3:hover {
+    color: black;
+}
+
 .nav-button {
     display: flex;
     flex-direction: row;
