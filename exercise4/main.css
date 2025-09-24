@@ -91,7 +91,18 @@ a:hover {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-bottom: 250px solid #a6e3f5;
+    border-bottom: 250px solid #6792db;
+}
+
+#med_triangle.a2_child {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 39.4px;
+    top: 32px;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-bottom: 218px solid #a6e3f5;
 }
 
 #small_triangle.a2_child {
@@ -108,23 +119,26 @@ a:hover {
 #bar.a2_child {
     position: absolute;
     display: block;
-    left: 95px;
+    left: 118px;
     top: 145px;
-    width: 150px;
+    width: 130px;
     height: 25px;
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
     background: #a6e3f5;
 }
 
 .a2_parent:hover #big_triangle {
-  border-bottom: 250px solid #0f2e5f;
+  border-bottom: 250px solid #a6e3f5;
   transition: 0.3s ease-in-out;
 }
 .a2_parent:hover #small_triangle {
   border-bottom: 166.67px solid #bdd6ff;
   transition: 0.3s ease-in-out;
 }
-
+.a2_parent:hover #med_triangle {
+  border-bottom: 218px solid #0f2e5f;
+  transition: 0.3s ease-in-out;
+}
 .a2_parent:hover #bar {
   background: #0f2e5f;
   transition: 0.3s ease-in-out;
@@ -196,27 +210,33 @@ a:hover {
 .a4_parent .a4-rect-left{
     position: absolute;
     width: 20px;
+    transform: skew(-20deg);
     height: 300px;
 }
 #front.a4-rect-left {
-    transform: skew(-20deg);
     background: rgb(0, 2, 57);
 }
 #back1.a4-rect-left {
-    transform: skew(-24deg);
+    left:9px;
+    transform: rotate(23deg);
     background: rgb(11, 14, 90);
 }
 #back2.a4-rect-left {
-    transform: skew(-28deg);
+    left:19px;
+    transform: rotate(27deg);
     background: rgb(27, 31, 125);
 }
 #back3.a4-rect-left {
-    transform: skew(-32deg);
-    background: rgb(48, 51, 147);
+    left:23px;
+    top:10px;
+    transform: rotate(30deg);
+    background: rgb(56, 59, 155);
 }
 #back4.a4-rect-left {
-    transform: skew(-36deg);
-    background: rgb(79, 83, 177);
+    left:30.5px;
+    top:13px;
+    transform: rotate(33deg);
+    background: rgb(100, 103, 188);
 }
 
 .a4-rect-right{
@@ -224,13 +244,32 @@ a:hover {
     width: 20px;
     height: 300px;
     left: 110px;
+}
+#front.a4-rect-right{
     transform: skew(20deg);
     background: rgb(0, 2, 57);
 }
+#back1.a4-rect-right{
+    transform: skew(16deg);
+    background: rgb(13, 16, 100);
+}
+#back2.a4-rect-right{
+    transform: skew(10deg);
+    background: rgb(36, 39, 135);
+}
+#back3.a4-rect-right{
+    transform: skew(4deg);
+    background: rgb(67, 70, 162);
+}
+#back4.a4-rect-right{
+    transform: skew(0deg);
+    background: rgb(100, 103, 188);
+}
+
 
 .a4-rect-middle{
     position: absolute;
-    width: 135px;
+    width: 130px;
     height: 20px;
     top: 150px;
     background: rgb(0, 2, 57);
@@ -286,7 +325,7 @@ a:hover {
     left:-5px;
     top:30px;
     transform: skew(-24deg);
-    background: rgb(133, 162, 248);
+    background: rgb(102, 139, 233);
 }
 #left3.a5-rect-left {
     position: absolute;
@@ -352,6 +391,15 @@ a:hover {
     transform: skew(24deg);
     background: rgb(0, 62, 168);
 }
+#right6.a5-rect-right {
+    position: absolute;
+    width: 20px;
+    height: 150px;
+    left: 80px;
+    top:-38px;
+    transform: skew(24deg);
+    background: rgb(0, 62, 168);
+}
 
 #middle1.a5-rect-middle {
     position: absolute;
@@ -379,10 +427,10 @@ a:hover {
 #middle4.a5-rect-middle {
     position: absolute;
     width: 100px;
-    height: 5px;
+    height: 7px;
     top: 180px;
     left:-15px;
-    background: rgb(102, 155, 247);
+    background: rgb(142, 183, 255);
 }
 
 
