@@ -1,0 +1,388 @@
+body {
+    background-color: #1f4a85;
+}
+
+nav{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 25px;
+    margin-bottom: 12px;
+    width: 100%;
+    gap: 4px;
+}
+
+p {
+    font-family: 'Inconsolata', monospace;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+a {
+    color: #bcceff;
+}
+
+a:hover {
+    color: #748fdb;
+}
+
+.a1_parent {
+   position: relative;
+   display: block;
+   left: 200px;
+   top: 100px;
+   width: 200px;
+   height: 200px;
+}
+
+#triangle.a1_child {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 200px solid white;
+}
+
+#circle_fill.a1_child {
+  position: absolute;
+  opacity: 100;  
+  transform: scale(1);
+  top: 60px;
+  left: 70px;
+  width: 60px;
+  height: 60px;
+  background: #1f4a85;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+#circle_bottom.a1_child {
+  position: absolute;
+  opacity: 100;  
+  transform: scale(1);
+  top: 150px;
+  left: 40px;
+  width: 125px;
+  height: 125px;
+  background: #1f4a85;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.a1_parent:hover #circle_fill, 
+.a1_parent:hover #circle_bottom { 
+    transform: scale(0);
+    transition: all 0.3s ease-in-out;
+} 
+
+.a2_parent {
+   position: relative;
+   display: block;
+   left: 500px;
+   top: 100px;
+   width: 200px;
+   height: 200px;
+}
+
+#big_triangle.a2_child {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 250px solid #a6e3f5;
+}
+
+#small_triangle.a2_child {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 100px;
+    top: 83.5px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 166.67px solid #707070;
+}
+
+#bar.a2_child {
+    position: absolute;
+    display: block;
+    left: 95px;
+    top: 145px;
+    width: 150px;
+    height: 25px;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    background: #a6e3f5;
+}
+
+.a2_parent:hover #big_triangle {
+  border-bottom: 250px solid #0f2e5f;
+  transition: 0.3s ease-in-out;
+}
+.a2_parent:hover #small_triangle {
+  border-bottom: 166.67px solid #bdd6ff;
+  transition: 0.3s ease-in-out;
+}
+
+.a2_parent:hover #bar {
+  background: #0f2e5f;
+  transition: 0.3s ease-in-out;
+}
+
+
+.a3_parent {
+   position: relative;
+   width: 200px;
+   height: 200px;
+   display: flex;
+   gap:20px;
+   flex-flow: column;
+   align-items: center;
+   left: 950px;
+   top: 100px;
+}
+
+.row {
+    display: flex;
+}
+#row2{
+    gap:20px;
+}
+#row3{
+    gap:50px;
+}
+#row4{
+    gap:75px
+}
+#row5 {
+    gap: 25px;
+}
+#row6 {
+    gap: 140px;
+}
+#row7 {
+    gap: 175px;
+}
+
+.a3_child{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+}
+
+.a3_parent .a3_child:nth-child(1) { background: rgb(255, 255, 255); }
+.a3_parent .a3_child:nth-child(2) { background: rgb(60, 115, 186); }
+.a3_parent .a3_child:nth-child(3) { background: rgb(60, 115, 186); }
+.a3_parent .a3_child:nth-child(4) { background: rgb(60, 115, 186); }
+
+
+.a3_parent:hover .a3_child {
+  transform: scale(2); /* scale down to 80% */
+  background: #a6e3f5;
+  transition: all 0.5s ease-in-out;
+}
+
+.a4_parent {
+   position: relative;
+   width: 200px;
+   height: 200px;
+   left: 150px;
+   top: -150px;
+
+}
+
+.a4_parent .a4-rect-left{
+    position: absolute;
+    width: 20px;
+    height: 300px;
+}
+#front.a4-rect-left {
+    transform: skew(-20deg);
+    background: rgb(0, 2, 57);
+}
+#back1.a4-rect-left {
+    transform: skew(-24deg);
+    background: rgb(11, 14, 90);
+}
+#back2.a4-rect-left {
+    transform: skew(-28deg);
+    background: rgb(27, 31, 125);
+}
+#back3.a4-rect-left {
+    transform: skew(-32deg);
+    background: rgb(48, 51, 147);
+}
+#back4.a4-rect-left {
+    transform: skew(-36deg);
+    background: rgb(79, 83, 177);
+}
+
+.a4-rect-right{
+    position: absolute;
+    width: 20px;
+    height: 300px;
+    left: 110px;
+    transform: skew(20deg);
+    background: rgb(0, 2, 57);
+}
+
+.a4-rect-middle{
+    position: absolute;
+    width: 135px;
+    height: 20px;
+    top: 150px;
+    background: rgb(0, 2, 57);
+}
+#front.a4-rect-middle{
+    left: -4px;
+    transform: skew(-20deg);
+}
+#back1.a4-rect-middle{
+    transform: rotate(4deg);
+    transform-origin: top left;
+    background: rgb(10, 13, 95);
+}
+#back2.a4-rect-middle{
+    transform: rotate(8deg);
+    transform-origin: top left;
+    background: rgb(32, 35, 129);
+}
+#back3.a4-rect-middle{
+    transform: rotate(12deg);
+    transform-origin: top left;
+    background: rgb(63, 67, 160);
+}
+#back4.a4-rect-middle{
+    transform: rotate(16deg);
+    transform-origin: top left;
+    background: rgb(101, 103, 185);
+}
+
+
+.a5_parent {
+   position: relative;
+   display: block;
+   width: 200px;
+   height: 200px;
+   left: 1200px;
+   top: -750px;
+
+}
+
+#left1.a5-rect-left {
+    position: absolute;
+    width: 20px;
+    height: 300px;
+    top: 10px;
+    transform: skew(-24deg);
+    background: rgb(0, 62, 168);
+}
+#left2.a5-rect-left {
+    position: absolute;
+    width: 20px;
+    height: 200px;
+    left:-5px;
+    top:30px;
+    transform: skew(-24deg);
+    background: rgb(133, 162, 248);
+}
+#left3.a5-rect-left {
+    position: absolute;
+    width: 25px;
+    height: 200px;
+    left:0px;
+    top:100px;
+    transform: skew(-24deg);
+    background: rgb(0, 21, 84);
+}
+#left4.a5-rect-left {
+    position: absolute;
+    width: 25px;
+    height: 40px;
+    left:-25px;
+    top:330px;
+    transform: skew(-24deg);
+    background: rgb(81, 114, 216);
+}
+
+#right1.a5-rect-right {
+    position: absolute;
+    width: 20px;
+    height: 250px;
+    top:-12px;
+    left: 135px;
+    transform: skew(24deg);
+    background: rgb(69, 107, 202);
+}
+#right2.a5-rect-right {
+    position: absolute;
+    width: 12px;
+    height: 160px;
+    left: 200px;
+    top:200px;
+    transform: skew(24deg);
+    background: rgb(189, 235, 255);
+}
+#right3.a5-rect-right {
+    position: absolute;
+    width: 12px;
+    height: 160px;
+    left: 170px;
+    top:20px;
+    transform: skew(24deg);
+    background: rgb(25, 29, 95);
+}
+#right4.a5-rect-right {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    left: 100px;
+    top:20px;
+    transform: skew(24deg);
+    background: rgb(102, 155, 247);
+}
+#right5.a5-rect-right {
+    position: absolute;
+    width: 40px;
+    height: 200px;
+    left: 160px;
+    top:150px;
+    transform: skew(24deg);
+    background: rgb(0, 62, 168);
+}
+
+#middle1.a5-rect-middle {
+    position: absolute;
+    width: 130px;
+    height: 20px;
+    top: 150px;
+    background: rgb(69, 107, 202);
+}
+#middle2.a5-rect-middle {
+    position: absolute;
+    width: 60px;
+    height: 25px;
+    top: 150px;
+    left:30px;
+    background: rgb(8, 45, 118);
+}
+#middle3.a5-rect-middle {
+    position: absolute;
+    width: 200px;
+    height: 5px;
+    top: 150px;
+    left:30px;
+    background: rgb(186, 209, 255);
+}
+#middle4.a5-rect-middle {
+    position: absolute;
+    width: 100px;
+    height: 5px;
+    top: 180px;
+    left:-15px;
+    background: rgb(102, 155, 247);
+}
+
+
