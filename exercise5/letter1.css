@@ -1,0 +1,132 @@
+body {
+    background-color: #1f4a85;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 25px;
+    margin-bottom: 12px;
+    width: 100%;
+    gap: 4px;
+}
+
+p {
+    font-family: 'Inconsolata', monospace;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+a {
+    color: #bcceff;
+}
+
+a:hover {
+    color: #748fdb;
+}
+
+h3{
+    font-family: sans-serif;
+    color: rgb(211, 211, 211);
+}
+
+
+.a3_parent {
+   position: relative;
+   width: 200px;
+   height: 200px;
+   display: flex;
+   gap:20px;
+   flex-flow: column;
+   align-items: center;
+   left: 100px;
+   top: 150px;
+   animation-duration: 4s;
+   animation-name: slide-in;
+   animation-iteration-count: infinite;
+   animation-direction: alternate;
+   animation-timing-function: ease-in-out;
+}
+
+@keyframes slide-in {
+  0% {
+    translate: 100vw 35vw;
+    scale: 200% 1;
+    transform: rotate(0deg); 
+  }
+
+  100% {
+    translate: 0 0;
+    scale: 100% 1;
+    transform: rotate(360deg);
+  }
+}
+
+.row {
+    display: flex;
+}
+#row2{
+    gap:20px;
+}
+#row3{
+    gap:50px;
+}
+#row4{
+    gap:75px
+}
+#row5 {
+    gap: 25px;
+}
+#row6 {
+    gap: 140px;
+}
+#row7 {
+    gap: 175px;
+}
+
+#row8 {
+    gap: 205px;
+}
+
+.a3_child{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+}
+
+.a3_parent .a3_child:nth-child(1) { background: rgb(210, 181, 255); }
+.a3_parent .a3_child:nth-child(2) { background: rgb(210, 181, 255); }
+.a3_parent .a3_child:nth-child(3) { background: rgb(210, 181, 255); }
+.a3_parent .a3_child:nth-child(4) { background: rgb(210, 181, 255); }
+
+
+.a3_parent:hover .a3_child {
+  transform: scale(2); /* scale down to 80% */
+  background: #a6e3f5;
+  transition: all 0.5s ease-in-out;
+}
+
+#nav-area {
+   position: fixed;
+   bottom: 20px;
+   display: flex;
+   width: 100%;
+   justify-content: space-around;
+   padding: 0 20px;
+   right: 20px;
+}
+
+.arrow-btn {
+  background: none; /* or transparent */
+  border: none;
+  padding: 10px;
+  right: 100px;
+  cursor: pointer;
+  pointer-events: auto; /* make buttons clickable again */
+}
+

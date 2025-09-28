@@ -1,0 +1,116 @@
+body {
+    background-color: #1f4a85;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 25px;
+    margin-bottom: 12px;
+    width: 100%;
+    gap: 4px;
+}
+
+p {
+    font-family: 'Inconsolata', monospace;
+    font-size: 18px;
+    line-height: 24px;
+}
+h3{
+    font-family: sans-serif;
+    color: rgb(211, 211, 211);
+}
+
+a {
+    color: #bcceff;
+}
+
+a:hover {
+    color: #748fdb;
+}
+
+#nav-area {
+   position: fixed;
+   bottom: 20px;
+   display: flex;
+   width: 100%;
+   justify-content: space-around;
+   padding: 0 20px;
+   right: 20px;
+}
+
+.arrow-btn {
+  background: none; /* or transparent */
+  border: none;
+  padding: 10px;
+  right: 100px;
+  cursor: pointer;
+  pointer-events: auto; /* make buttons clickable again */
+}
+
+
+.a1_parent {
+   position: relative;
+   display: block;
+   left: 37.5vw;
+   top: 10vw;
+   width: 200px;
+   height: 200px;
+}
+
+#triangle.a1_child {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    animation-name: color-change;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes color-change {
+  0% { border-bottom: 275px solid white; }
+  25% { border-bottom: 275px solid rgb(22, 50, 123); }
+  50% { border-bottom: 275px solid rgb(95, 140, 255); }
+  75% { border-bottom: 275px solid rgb(58, 186, 255); }
+  100% { border-bottom: 275px solid rgb(0, 40, 199); }
+}
+
+#circle_fill.a1_child {
+  position: absolute;
+  opacity: 100;  
+  transform: scale(1);
+  top: 85px;
+  left: 115px;
+  width: 70px;
+  height: 70px;
+  background: #1f4a85;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+#circle_bottom.a1_child {
+  position: absolute;
+  opacity: 100;  
+  transform: scale(1);
+  top: 200px;
+  left: 65px;
+  width: 175px;
+  height: 175px;
+  background: #1f4a85;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.a1_parent:hover #circle_fill, 
+.a1_parent:hover #circle_bottom { 
+    transform: scale(0);
+    transition: all 0.3s ease-in-out;
+} 

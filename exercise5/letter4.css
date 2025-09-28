@@ -1,0 +1,144 @@
+body {
+    background-color: #1f4a85;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 25px;
+    margin-bottom: 12px;
+    width: 100%;
+    gap: 4px;
+}
+
+p {
+    font-family: 'Inconsolata', monospace;
+    font-size: 18px;
+    line-height: 24px;
+}
+h3{
+    font-family: sans-serif;
+    color: rgb(211, 211, 211);
+}
+
+a {
+    color: #bcceff;
+}
+
+a:hover {
+    color: #748fdb;
+}
+
+#nav-area {
+   position: fixed;
+   bottom: 20px;
+   display: flex;
+   width: 100%;
+   justify-content: space-around;
+   padding: 0 20px;
+   right: 20px;
+}
+
+.arrow-btn {
+  background: none; /* or transparent */
+  border: none;
+  padding: 10px;
+  right: 100px;
+  cursor: pointer;
+  pointer-events: auto; /* make buttons clickable again */
+}
+
+
+.a3_parent {
+   position: relative;
+   width: 200px;
+   height: 200px;
+   display: flex;
+   gap:20px;
+   flex-flow: column;
+   align-items: center;
+   left: 40vw;
+   top: 10vw;
+}
+
+.row {
+    display: flex;
+}
+#row2{
+    gap:22px;
+}
+#row3{
+    gap:60px;
+}
+#row4{
+    gap:85px
+}
+#row5 {
+    gap: 120px;
+}
+#row6 {
+    gap: 25px;
+}
+#row7 {
+    gap: 195px;
+}
+
+#row8 {
+    gap: 225px;
+}
+
+#row9 {
+    gap: 260px;
+}
+
+.a3_child{
+    background: #a6e3f5; 
+    transition: all 0.5s ease-in-out;
+    animation-duration: 4s;
+    animation-name: shape-switch;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes shape-switch {
+  0% {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+    scale: 100% 1;
+    border-radius: 0;
+    transform: rotate(360deg);
+  }
+}
+
+.a3_parent .a3_child:nth-child(1) { 
+    animation-delay: 0s; 
+
+}
+.a3_parent .a3_child:nth-child(2) {
+    animation-delay: .25s;
+
+}
+.a3_parent .a3_child:nth-child(3) { 
+    animation-delay: .5s;
+
+}
+.a3_parent .a3_child:nth-child(4) { 
+    animation-delay: .75s;
+}
+
+
+.a3_child:hover {
+  transform: scale(3); /* scale down to 80% */
+  background: #e07bff;
+  transition: all 0.5s ease-in-out;
+}
