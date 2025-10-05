@@ -1,0 +1,60 @@
+#square2{
+    position: absolute;
+    background-color: rgb(255, 231, 48);
+    width: 50px;
+    height: 50px;
+    left: 75px; 
+    top: 100px;
+    animation-name: center-square;
+}
+
+#square1, #square3{
+    position: absolute;
+    background-color: rgb(48, 60, 226);
+    width: 50px;
+    height: 50px;
+}
+
+#square1{
+    left: 20px; 
+    animation-name: top-square;
+}
+
+#square3{
+    left: 130px; 
+    animation-name: bottom-square;
+}
+
+.shape7 {
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes center-square {
+  0%, 10% {
+    transform: rotate(0deg);
+  }
+  80%, 100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes top-square {
+  0%, 10% {
+    top: 50px;
+  }
+  80%, 100% {
+    top: 150px;
+  }
+}
+
+@keyframes bottom-square {
+  0%, 10% {
+    top: 150px;
+  }
+  80%, 100% {
+    top: 50px;
+  }
+}

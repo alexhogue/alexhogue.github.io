@@ -1,0 +1,60 @@
+#animation4 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 200px;
+    height: 200px;
+    left: 50px;
+    top: 65px;
+    
+}
+
+#big-triangle {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  left: -15px;
+  clip-path: polygon(0 100%, 100% 0, 0 0);
+  background: linear-gradient(90deg,rgb(230, 0, 255),rgb(210, 173, 230));
+  animation-name: triangle-flip;
+  animation-duration: 4s;
+}
+
+#diamond {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 25px;
+    top: 37.5px;
+    transform: rotate(45deg);
+    background-color: rgb(255, 119, 0);
+    animation-name: diamond-flip;
+    animation-duration: 2s;
+
+}
+
+.shape4{
+    
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes triangle-flip {
+  0%, 10% {
+    transform: scale(1, 1);
+  }
+  80%, 100% {
+    transform: scale(-1, -1);
+  }
+}
+
+@keyframes diamond-flip {
+  0%, 10% {
+    transform: rotate(45deg);
+  }
+  80%, 100% {
+    transform: rotate(225deg) scale(-1);
+  }
+}

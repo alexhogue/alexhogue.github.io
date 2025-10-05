@@ -1,0 +1,71 @@
+
+#semi-circle1 {
+    position: absolute;
+    background-color: green;
+    top: 60px;   
+    width: 50px;
+    height: 100px;
+    border-radius: 0 100px 100px 0;
+    animation-name: shape-1;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#semi-circle2{
+    position: absolute;
+    background-color: green;
+    top: 60px; 
+    width: 50px;
+    height: 100px;
+    border-radius: 100px 0 0 100px;
+    animation-name: shape-2;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+#little-circle{
+    position: absolute;
+    background-color: rgb(130, 178, 130);
+    top: 95px; 
+    left: 90px;  
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    animation-name: shape-3;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes shape-1 {
+  0%, 10% {
+    left: 55px; 
+  }
+  90%, 100% {
+    left: 105px; 
+  }
+}
+
+@keyframes shape-2 {
+  0%, 10% {
+    left: 105px; 
+  }
+  90%, 100% {
+    left: 55px; 
+  }
+}
+
+@keyframes shape-3 {
+  0%, 10% {
+    scale: 0;
+  }
+  90%, 100% {
+    scale: 1;
+  }
+}

@@ -1,0 +1,190 @@
+#special-animation {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 260px;
+    left: 208px;
+    z-index: 2000;
+  
+    
+}
+
+.shape6 {
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.middle-circle {
+  position: absolute;
+  background-color: rgb(255, 204, 0);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  left: 50px;
+  top: 75px;
+  animation-name: center-circle;
+}
+
+@keyframes center-circle {
+  0%, 10% {
+    scale: .5;
+  }
+  80%, 100% {
+    scale: 1;
+  }
+}
+
+.small-circle {
+  position: absolute;
+  background-color: rgb(255, 204, 0);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 125px;
+  left: 100px;
+
+  transform: rotate(calc(var(--i) * 90deg)) translateX(40px);
+  animation-name: pulse;
+  transform-origin: center;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateX(50px);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(calc(var(--i) * 90deg)) translateX(0px);
+  }
+}
+
+.circle-square {
+  position: absolute;
+  background-color: rgb(252, 91, 255);
+  width: 30px;
+  height: 30px;
+  top: 125px;
+  left: 100px;
+
+  transform: rotate(calc(var(--i) * 90deg + 45deg)) translateX(40px);
+  animation-name: square-pulse;
+  transform-origin: center;
+
+}
+
+@keyframes square-pulse {
+  0% {
+    transform: translate(-50%, -50%) rotate(calc(var(--j) * 90deg + 45deg)) translateX(70px);
+    border-radius: 50%;
+  }
+  100% {
+    transform: translate(-40%, -40%) rotate(calc(var(--j) * 90deg + 45deg)) translateX(0px);
+    scale: 1.25;
+  }
+}
+
+.shape6.far-circle {
+  position: absolute;
+  background-color: rgb(215, 152, 255);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  top: 128px;
+  left: 102px;
+
+  transform: rotate(calc(var(--j) * 60deg)) translateX(40px);
+  animation-name: circle-fade;
+  animation-direction: normal;
+  animation-duration: 4s;
+  transform-origin: center;
+}
+
+@keyframes circle-fade {
+  0% {
+    transform: translate(-50%, -50%) rotate(calc(var(--j) * 60deg)) translateX(0px);
+    border-radius: 50%;
+    scale: 1.25;
+  }
+  80% {
+    transform: translate(-40%, -40%) rotate(calc(var(--j) * 60deg)) translateX(200px);
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-40%, -40%) rotate(calc(var(--j) * 60deg)) translateX(220px);
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+  }
+}
+
+
+.rotating-circle {
+  position: absolute;
+  background-color: rgb(255, 170, 65);
+  width: 30px;
+  height: 30px;
+
+  top: 118px;
+  left: 96px;
+
+  transform: rotate(calc(var(--i) * 45deg)) translateX(40px);
+  animation-name: rotate;
+  animation-direction: normal;
+  animation-duration: 8s;
+  transform-origin: center;
+}
+
+@keyframes rotate {
+  0%, 10% {
+    transform: translateX(0px);
+    scale: 0;
+  }
+  50% {
+    transform: translate(-40%, -40%) rotate(calc(var(--i) * 45deg)) translateX(180px);
+    scale: .8;
+  }
+  75% {
+    transform: translate(-40%, -40%) rotate(calc(var(--i) * 45deg + 180deg)) translateX(200px);
+    scale: .8;
+  }
+  100% {
+    transform: translate(-40%, -40%) rotate(0) translateX(0px);
+    scale: .8;
+  }
+}
+
+.quick-circle {
+  position: absolute;
+  background-color: rgb(65, 151, 255);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  top: 125px;
+  left: 96px;
+
+  transform: rotate(calc(var(--i) * 30deg)) translateX(40px);
+  animation-name: quick-move;
+  animation-direction: normal;
+  animation-duration: 6s;
+  transform-origin: center;
+
+}
+
+@keyframes quick-move {
+  0% {
+    transform: translate(-40%, -40%) rotate(calc(var(--i) * 30deg)) translateX(0px);
+    scale: 0;
+  }
+  90% {
+    transform: translate(-40%, -40%) rotate(calc(var(--i) * 30deg + 360deg)) translateX(350px);
+    scale: 1;
+  }
+  100% {
+    transform: translate(-40%, -40%) rotate(calc(var(--i) * 30deg)) translateX(0px);
+    scale: 0;
+  }
+}
