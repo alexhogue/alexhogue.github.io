@@ -97,8 +97,8 @@ a:hover {
 }
 
 
-.bottom-door {
-    z-index: 0;
+.bottom-door .right-door{
+    z-index: -10000;
 }
 
 #special-door {
