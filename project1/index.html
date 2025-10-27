@@ -1,0 +1,585 @@
+<!DOCTYPE html><!--document type declaration-->
+<html>
+    <head><!-- a container for metadata -->
+        <meta charset="utf-8"><!--charset: character encoding capable of encoding all characters on the web  -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!--for browser compatibility: choose rendering engine to view the page in an correct view (for old ver. IE)  -->
+        <title>Hyperlinked Set</title><!--declaring the title, or name, of the HTML document. displayed in the browser's title bar-->
+        <meta name="description" content=""><!--keywords/snippet for search engines-->
+        <meta name="viewport" content="width=device-width"><!--the browser will (probably) render the width of the page at the width of its own screen -->
+        <!-- Add D3.js for CSV parsing -->
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <!-- Add ml-mds library -->
+        <script src="https://unpkg.com/ml-mds@2.0.0/dist/ml-mds.min.js"></script>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body><!--all the contents of an HTML document goes here-->
+        <div id="header-area">
+            <div id="title-area">
+                <h1>Away</h1>
+                <h1>We</h1>
+                <h1>Go!</h1>
+            </div>
+        </div>
+        <div id="map-container" style="width:100vw; height:100vh; overflow: auto;">
+            <svg id="map" width="4500" height="2500"></svg>
+        </div>
+        <div class="pop-up" id="pop-up-New_England">
+            <p class="pop-up-text">Visit New England!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Chicago">
+            <p class="pop-up-text">Visit Chicago!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Mexico">
+            <p class="pop-up-text">Visit Mexico!</p>
+        </div>
+        <div id="compass-area">
+            <img id="compass" src="./icons/compass.svg" alt=""/>
+            <div id="pop-up-compass">
+                <p class="pop-up-text"><b>?</b></p>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-New_England" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Summer in New England</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text">This poster, created by artist Sascha Maurer, promotes leisure travel via the New York, 
+                        New Haven, and Hartford Railroad. Featuring sun-soaked beaches and the promise of 
+                        relaxation, it reflects the early twentieth-century boom in railroad tourism, when 
+                        train travel opened new recreational opportunities for urban populations. While capturing 
+                        the excitement and accessibility of coastal vacations, the imagery also reflects broader 
+                        social and economic hierarchies of the era—travel by rail was largely accessible to those 
+                        with financial means, and the poster presents an idealized vision of leisure that omits 
+                        the experiences of marginalized communities.</p>
+                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
+                    <!-- <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div> -->
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
+                        New York, New Haven, and Hartford Railroad Company</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/New_England.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Chicago" style="display: none;">
+            <div class="arrow left-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Chicago</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text">This vibrant lithograph, produced by Latham Litho & Ptg. Co. for the New York Central 
+                        Lines, invites travelers to experience the energy and allure of Chicago, a city that 
+                        epitomized modern urban life in the early twentieth century. With bold colors and 
+                        dynamic composition, the poster captures the promise of rail travel: the ability to 
+                        move quickly from one bustling metropolis to another, connecting passengers to 
+                        commerce, culture, and new experiences. As part of the journey through these posters, 
+                        Chicago highlights how railroads shaped not just physical mobility but also cultural 
+                        imagination—painting cities as destinations of possibility while reflecting the era’s 
+                        social and economic realities.</p>
+                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
+                    <!-- <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div> -->
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Cities & towns; New York Central Lines</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Chicago.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow" onclick="showOverlay('page-overlay-New_England')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Mexico" style="display: none;">
+            <div class="arrow left-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Mexico</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text">This vibrant lithograph, produced by Latham Litho & Ptg. Co. for the New York Central 
+                        Lines, invites travelers to experience the energy and allure of Chicago, a city that 
+                        epitomized modern urban life in the early twentieth century. With bold colors and 
+                        dynamic composition, the poster captures the promise of rail travel: the ability to 
+                        move quickly from one bustling metropolis to another, connecting passengers to 
+                        commerce, culture, and new experiences. As part of the journey through these posters, 
+                        Chicago highlights how railroads shaped not just physical mobility but also cultural 
+                        imagination—painting cities as destinations of possibility while reflecting the era’s 
+                        social and economic realities.</p>
+                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
+                    <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Cities & towns; New York Central Lines</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Mexico.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Japan" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Summer in New England</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
+                        New York, New Haven, and Hartford Railroad Company</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Japan.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Portugal" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>No rain in Portugal but tourists pour in</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Publisher:</h3> <p>Lisboa [Lisbon, Portugal]: Bertrand (Irmãos) Lda.</p></div>
+                    <div class="additional-info"><h3>Date issued:</h3> <p>1954</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Sun, in traditional Portuguese costume, 
+                        holding an opened umbrella. Tourists from other countries, also in traditional costume, 
+                        frolic along the sides.</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Portugal.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Tasmania" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Tasmania. The anglers' paradise</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Published:</h3> <p>Melb., Vic., Australia : Troedel & Cooper Pty. Ltd., Photo-Print</p></div>
+                    <!-- <div class="additional-info"><h3>Date issued:</h3> <p>1954</p></div> -->
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Trout</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Tasmania.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Alaska" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Alaska via Canadian Pacific. Taku Glacier</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Glaciers; Ocean travel; Ocean liners; 
+                        Canadian Pacific Railway Company</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Alaska.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Peru" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Summer in New England</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
+                        New York, New Haven, and Hartford Railroad Company</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Peru.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Ireland" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Travel round the globe but first see Ireland</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Publisher:</h3> <p>Dublin : Printed by the Ormond Printing Co. Ltd.</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Globes; Hand lenses; Tourism</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Travel_Ireland.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Germany" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Motoring in Germany</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Hohlwein, Ludwig (1874-1949)</p></div>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1910-1959 (approximate)</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Berlin : Published by the Reichsbahnzentrale für den Deutschen Reiseverkehr</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Automobile travel</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Germany.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Austria" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Austria</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Binder, Joseph, 1898-1972 (artist)</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Wien [Austria] : Christoph Reisser's Söhne</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p> Tourism; Skiers</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Austria.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-India" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>See India</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Binder, Joseph, 1898-1972 (artist)</p></div> -->
+                    <div class="additional-info"><h3>Published:</h3> <p>Bombay : British India Press</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p> Tourism; Bazaars</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/See_India.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Italy" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Italia Garda</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Riccobaldi, Giuseppe, 1887-1976 (artist)</p></div>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1935</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Genova [Genoa, Italy] : Barabino & Graev</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Coastlines; Ente nazionale industrie turistiche (Italy)</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Italia.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Auvergne" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Auvergne Chatel-Guyon</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Falcucci, Robert (1900-1989)</p></div>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1932</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p> Imp. Spec: De l'agence Havas</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Compagnie des chemins de fer de Paris à Lyon et à la Méditerranée</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Auvergne.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Java_Indonesia" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Visit Java. Only 36 hours from Singapore</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Artist:</h3> <p>Falcucci, Robert (1900-1989)</p></div> -->
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1910-1959 (approximate)</p></div>
+                    <div class="additional-info"><h3>Publisher:</h3> <p>G. Kolff & Co.</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Java.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Australia" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Travel by Trans-Australian Railway across Australia</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1930 (approximate)</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Northfield Studios Pty. Ltd. & J. E. Hackett</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroads; Travel; Camels; Trans-Australian Railway</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Trans-australian_railway.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-USSR" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>By air to USSR</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1934</p></div>
+                    <!-- <div class="additional-info"><h3>Published:</h3> <p>Northfield Studios Pty. Ltd. & J. E. Hackett</p></div> -->
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Airplanes; Air travel</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/USSR.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Pacific_NW" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Visit the Pacific northwest wonderland… Travel by train</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1925 (approximate)</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Chicago : Newman-Monroe Co.</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Redwoods; Tourism</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Pacific_NW.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Egypt" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Marseille-Alexandrie La Route D'Egypte</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1927</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Paris : Imp. De Vaugirard, Impasse Ronsin</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Railroad travel; Ocean travel</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/La_route_d'égypte.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+        <div class="page-overlay" id="page-overlay-Algeria" style="display: none;">
+            <div class="arrow left-arrow" onclick="showOverlay('page-overlay-Chicago')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M16.09 2.53051C16.2254 2.3873 16.3312 2.21884 16.4014 2.03475C16.4716 1.85066 16.5049 1.65453 16.4993 1.45758C16.4937 1.26063 16.4494 1.0667 16.3689 0.886872C16.2884 0.707043 16.1732 0.544835 16.03 0.409507C15.8868 0.27418 15.7184 0.168385 15.5343 0.0981616C15.3502 0.0279383 15.1541 -0.00533773 14.9571 0.000233792C14.7602 0.00580531 14.5662 0.050115 14.3864 0.130633C14.2066 0.211151 14.0444 0.326301 13.909 0.469507L1.15904 13.9695C0.895733 14.248 0.749023 14.6167 0.749023 15C0.749023 15.3833 0.895733 15.752 1.15904 16.0305L13.909 29.532C14.0435 29.6783 14.2056 29.7965 14.3861 29.8797C14.5666 29.9628 14.7618 30.0092 14.9604 30.0163C15.159 30.0233 15.357 29.9909 15.543 29.9208C15.7289 29.8506 15.8991 29.7443 16.0435 29.6078C16.188 29.4714 16.3039 29.3076 16.3846 29.126C16.4652 28.9444 16.509 28.7486 16.5133 28.5499C16.5177 28.3512 16.4825 28.1537 16.4098 27.9687C16.3371 27.7838 16.2284 27.6151 16.09 27.4725L4.31204 15L16.09 2.53051Z" fill="black"/>
+                </svg>
+            </div>
+            <div class="overlay-content">
+                <div class="text-area">
+                    <h2>Algérie</h2>
+                    <h3>About the work</h3>
+                    <p class="paragraph_text"></p>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Cauvy, Léon (1874-1933)</p></div>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1930 (approximate)</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Paris : Imp. Cornille & Serre</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Harbors; Merchants</p></div>
+                </div>
+                <div class="image-area">
+                    <img class="big-image" id="new-england-img" src="./images/Algérie.png" alt=""/>
+                </div>
+            </div>
+            <div class="arrow right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="31" viewBox="0 0 17 31" fill="none">
+                    <path d="M0.908983 28.4695C0.773657 28.6127 0.667862 28.7812 0.597638 28.9653C0.527415 29.1493 0.494139 29.3455 0.49971 29.5424C0.505282 29.7394 0.549592 29.9333 0.63011 30.1131C0.710628 30.293 0.825777 30.4552 0.968984 30.5905C1.11219 30.7258 1.28065 30.8316 1.46474 30.9018C1.64884 30.9721 1.84496 31.0053 2.04191 30.9998C2.23886 30.9942 2.43279 30.9499 2.61262 30.8694C2.79245 30.7888 2.95466 30.6737 3.08998 30.5305L15.84 17.0305C16.1033 16.752 16.25 16.3833 16.25 16C16.25 15.6167 16.1033 15.248 15.84 14.9695L3.08999 1.468C2.95555 1.32165 2.79338 1.20348 2.61289 1.12034C2.4324 1.03721 2.23719 0.990763 2.0386 0.983708C1.84001 0.976651 1.64199 1.00913 1.45606 1.07925C1.27012 1.14936 1.09997 1.25573 0.955491 1.39216C0.81101 1.52859 0.695078 1.69237 0.614428 1.87399C0.533779 2.0556 0.49002 2.25143 0.485694 2.4501C0.481367 2.64877 0.516558 2.84632 0.589223 3.03128C0.66189 3.21623 0.770582 3.3849 0.908986 3.52749L12.687 16L0.908983 28.4695Z" fill="black"/>
+                </svg>
+            </div>
+        </div>
+    </body>
+    <script>
+        function showOverlay(id) {
+            document.querySelectorAll(".page-overlay")
+            .forEach((o) => (o.style.display = "none"));
+            document.getElementById(id).style.display = "block";
+            document.getElementById(id).classList.add("opened");
+        }
+     </script>
+     <script type="text/javascript" src="js/map.js"></script>
+</html>
