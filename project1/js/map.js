@@ -4,7 +4,7 @@ d3.csv("location_coordinates.csv").then((data) => {
   const width = 4000;
   const height = 2000;
 
-  const centerLon = -64; // point of New England
+  const centerLon = -54; // point of New England
   const container = document.getElementById("map-container");
 
   // Compute min/max of latitude and longitude
@@ -79,6 +79,7 @@ d3.csv("location_coordinates.csv").then((data) => {
     { source: "Austria", target: "USSR" },
     { source: "Pacific_NW", target: "Alaska" },
   ];
+
   const nodeByName = new Map(nodes.map((d) => [d.name, d]));
   const linesData = links.map((d) => ({
     source: nodeByName.get(d.source),
@@ -88,9 +89,27 @@ d3.csv("location_coordinates.csv").then((data) => {
   // create SVG and layers
   const svg = d3.select("#map").attr("width", width).attr("height", height); // main canvas
   const lineLayer = svg.append("g").attr("class", "link-layer");
+  const travelLayer = svg.append("g").attr("class", "travel-layer");
   const mapLayer = svg.append("g").attr("class", "map-layer"); // top-level group for all map content
   const nodeLayer = mapLayer.append("g").attr("class", "nodes"); // group for all nodes/images
 
+  const travelLine = document.getElementById("travel-line");
+
+  const image = svg.selectChild("#image");
+
+//   const { w, h } = image.node().getBoundingClientRect();
+//   const { w: svgWidth, h: svgHeight } = svg
+//     .node()
+//     .getBoundingClientRect();
+  const travelPath = travelLayer
+    .append("image")
+    .attr("href", "./icons/dotted-line.svg")
+    .attr("x", -490)
+    .attr("y", 160)
+    // .attr("transform", "scale(1)")
+    .attr("width", width/1.82)
+    .attr("height", height/1.82)
+    .lower();
 
   // D3 force simulation moves nodes dynamically
   const simulation = d3
@@ -116,7 +135,6 @@ d3.csv("location_coordinates.csv").then((data) => {
     .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
     .style("cursor", "pointer");
 
-
   nodeGroup
     .append("image")
     .attr("id", (d) => d.name)
@@ -133,15 +151,15 @@ d3.csv("location_coordinates.csv").then((data) => {
       posterPage.classList.add("opened");
     })
     .on("mouseover", (e, d) => {
-        const popUpMessage = document.getElementById("pop-up-" + d.name);
-        popUpMessage.classList.add("opened");
-        popUpMessage.style.left = e.pageX + 5 + "px"; // offset from mouse
-        popUpMessage.style.top = e.pageY + 5 + "px";
-        console.log(d.name + " hovered");
+      const popUpMessage = document.getElementById("pop-up-" + d.name);
+      popUpMessage.classList.add("opened");
+      popUpMessage.style.left = e.pageX + 5 + "px"; // offset from mouse
+      popUpMessage.style.top = e.pageY + 5 + "px";
+      console.log(d.name + " hovered");
     })
     .on("mouseout", (e, d) => {
-        const popUpMessage = document.getElementById("pop-up-" + d.name);
-        popUpMessage.classList.remove("opened");
+      const popUpMessage = document.getElementById("pop-up-" + d.name);
+      popUpMessage.classList.remove("opened");
     });
 
   // 7. Optional: draw faint lines showing anchor-to-relaxed position
@@ -150,7 +168,7 @@ d3.csv("location_coordinates.csv").then((data) => {
     .data(linesData)
     .join("line")
     .attr("stroke", "rgb(214, 214, 214)")
-    .attr("stroke-width", .75);
+    .attr("stroke-width", 0.75);
 
   // 8. Simulation tick handler
   function ticked() {
@@ -161,6 +179,7 @@ d3.csv("location_coordinates.csv").then((data) => {
       .attr("y1", (d) => d.source.y)
       .attr("x2", (d) => d.target.x)
       .attr("y2", (d) => d.target.y);
+
   }
   setTimeout(() => simulation.stop(), 15000);
 
@@ -171,40 +190,41 @@ d3.csv("location_coordinates.csv").then((data) => {
     .scaleExtent([1, 12]) // min/max zoom
     .translateExtent([
       [-400, 0],
-      [width - 300, height + 300],
+      [width - 600, height + 200],
     ])
     .on("zoom", (event) => {
       zoomTransform = event.transform;
       mapLayer.attr("transform", zoomTransform);
       lineLayer.attr("transform", zoomTransform);
+      travelPath.attr("transform", zoomTransform);
     });
 
-//   let targetDX = 0;
-//   let targetDY = 0;
+  //   let targetDX = 0;
+  //   let targetDY = 0;
 
-//   container.addEventListener("mousemove", (event) => {
-//     const rect = container.getBoundingClientRect();
-//     const margin = 100; // distance from edge to start panning
-//     const speed = 3; // pixels per frame
+  //   container.addEventListener("mousemove", (event) => {
+  //     const rect = container.getBoundingClientRect();
+  //     const margin = 100; // distance from edge to start panning
+  //     const speed = 3; // pixels per frame
 
-//     targetDX = 0;
-//     targetDY = 0;
+  //     targetDX = 0;
+  //     targetDY = 0;
 
-//     if (event.clientX - rect.left < margin) targetDX = speed;
-//     else if (rect.right - event.clientX < margin) targetDX = -speed;
+  //     if (event.clientX - rect.left < margin) targetDX = speed;
+  //     else if (rect.right - event.clientX < margin) targetDX = -speed;
 
-//     if (event.clientY - rect.top < margin) targetDY = speed;
-//     else if (rect.bottom - event.clientY < margin) targetDY = -speed;
-//   });
+  //     if (event.clientY - rect.top < margin) targetDY = speed;
+  //     else if (rect.bottom - event.clientY < margin) targetDY = -speed;
+  //   });
 
-//   function animatePan() {
-//     if (targetDX !== 0 || targetDY !== 0) {
-//       svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
-//     }
-//     requestAnimationFrame(animatePan);
-//   }
+  //   function animatePan() {
+  //     if (targetDX !== 0 || targetDY !== 0) {
+  //       svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
+  //     }
+  //     requestAnimationFrame(animatePan);
+  //   }
 
-//   requestAnimationFrame(animatePan);
+  //   requestAnimationFrame(animatePan);
 
   // 10. Center initial view on New England
   // Scroll container to center New England initially
@@ -212,22 +232,26 @@ d3.csv("location_coordinates.csv").then((data) => {
   const initialScale = 5;
   const initialTransform = d3.zoomIdentity
     .translate(
-      container.clientWidth / 2.15 - newEngland.x * initialScale,
-      container.clientHeight / 2.5 - newEngland.y * initialScale
+      container.clientWidth / 2 - newEngland.x * initialScale,
+      container.clientHeight / 2 - newEngland.y * initialScale
     )
     .scale(initialScale);
   svg.call(zoom).call(zoom.transform, initialTransform);
   // Stop simulation after settling
 
   const title = document.getElementById("title-area");
-  
   title.addEventListener("click", () => {
     const openOverlays = document.querySelectorAll(".page-overlay.opened");
     openOverlays.forEach((overlay) => {
-    overlay.style.display = "none";
-    overlay.classList.remove("opened");
-    })
+      overlay.style.display = "none";
+      overlay.classList.remove("opened");
+    });
   });
 
-  
+  const compass = document.getElementById("compass");
+  compass.addEventListener("click", () => {
+    const aboutPage = document.getElementById("page-overlay-about");
+    aboutPage.style.display = "block";
+    aboutPage.classList.add("opened");
+  });
 });

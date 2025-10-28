@@ -21,7 +21,9 @@
             </div>
         </div>
         <div id="map-container" style="width:100vw; height:100vh; overflow: auto;">
-            <svg id="map" width="4500" height="2500"></svg>
+            <svg id="map" width="4500" height="2500">
+                <!-- <image id="travel-line" href="./icons/dotted-line.png"></image> -->
+            </svg>
         </div>
         <div class="pop-up" id="pop-up-New_England">
             <p class="pop-up-text">Visit New England!</p>
@@ -572,6 +574,15 @@
                 </svg>
             </div>
         </div>
+
+        <div class="page-overlay" id="page-overlay-about" style="display: none;">
+            <div class="text-area">
+                <h2>Vintage Travel Posters</h2>
+                <h3>from the Collections of the Boston Public Library</h3>
+                <p></p>
+            </div>
+        </div>
+
     </body>
     <script>
         function showOverlay(id) {
