@@ -189,8 +189,8 @@ d3.csv("location_coordinates.csv").then((data) => {
     .zoom()
     .scaleExtent([1, 12]) // min/max zoom
     .translateExtent([
-      [-400, 0],
-      [width - 600, height + 200],
+      [-450, 0],
+      [width + 200, height + 550],
     ])
     .on("zoom", (event) => {
       zoomTransform = event.transform;
@@ -199,37 +199,37 @@ d3.csv("location_coordinates.csv").then((data) => {
       travelPath.attr("transform", zoomTransform);
     });
 
-  //   let targetDX = 0;
-  //   let targetDY = 0;
+    let targetDX = 0;
+    let targetDY = 0;
 
-  //   container.addEventListener("mousemove", (event) => {
-  //     const rect = container.getBoundingClientRect();
-  //     const margin = 100; // distance from edge to start panning
-  //     const speed = 3; // pixels per frame
+    container.addEventListener("mousemove", (event) => {
+      const rect = container.getBoundingClientRect();
+      const margin = 50; // distance from edge to start panning
+      const speed = 1; // pixels per frame
 
-  //     targetDX = 0;
-  //     targetDY = 0;
+      targetDX = 0;
+      targetDY = 0;
 
-  //     if (event.clientX - rect.left < margin) targetDX = speed;
-  //     else if (rect.right - event.clientX < margin) targetDX = -speed;
+      if (event.clientX - rect.left < margin) targetDX = speed;
+      else if (rect.right - event.clientX < margin) targetDX = -speed;
 
-  //     if (event.clientY - rect.top < margin) targetDY = speed;
-  //     else if (rect.bottom - event.clientY < margin) targetDY = -speed;
-  //   });
+      if (event.clientY - rect.top < margin) targetDY = speed;
+      else if (rect.bottom - event.clientY < margin) targetDY = -speed;
+    });
 
-  //   function animatePan() {
-  //     if (targetDX !== 0 || targetDY !== 0) {
-  //       svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
-  //     }
-  //     requestAnimationFrame(animatePan);
-  //   }
+    function animatePan() {
+      if (targetDX !== 0 || targetDY !== 0) {
+        svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
+      }
+      requestAnimationFrame(animatePan);
+    }
 
-  //   requestAnimationFrame(animatePan);
+    requestAnimationFrame(animatePan);
 
   // 10. Center initial view on New England
   // Scroll container to center New England initially
   const newEngland = nodes.find((d) => d.name === "New_England");
-  const initialScale = 5;
+  const initialScale = 3.4;
   const initialTransform = d3.zoomIdentity
     .translate(
       container.clientWidth / 2 - newEngland.x * initialScale,
@@ -254,4 +254,56 @@ d3.csv("location_coordinates.csv").then((data) => {
     aboutPage.style.display = "block";
     aboutPage.classList.add("opened");
   });
+
+  const aboutPopup = document.getElementById("about-popup");
+  setTimeout(function() {
+    aboutPopup.classList.add("hidden");
+    // aboutPopup.style.display = "none";
+  }, 6000)
+  aboutPopup.addEventListener("mouseover", () => {
+    aboutPopup.classList.remove("hidden");
+  })
+  aboutPopup.addEventListener("mouseout", () => {
+    aboutPopup.classList.add("hidden");
+  });
+
+  const zoomStep = 1.3;
+  document.getElementById("zoom-in").addEventListener("click", () => {
+    svg.transition().duration(500).call(zoom.scaleBy, zoomStep);
+  });
+  document.getElementById("zoom-out").addEventListener("click", () => {
+    svg
+      .transition()
+      .duration(500)
+      .call(zoom.scaleBy, 1 / zoomStep);
+  });
+
+  const currentTransform = d3.zoomTransform(d3.select(".target-element").node());
+
+  document.addEventListener('keydown', function(event) {
+      const t = d3.zoomTransform(svg.node());
+        switch (event.key) {
+            case 'ArrowUp':
+                svg
+                  .transition()
+                  .duration(500)
+                  .call(
+                    zoom.transform,
+                    d3.zoomIdentity.translate(t.x, t.y - 50).scale(t.k)
+                  );
+                break;
+            case 'ArrowDown':
+                console.log('Down arrow pressed!');
+                // Perform action for down arrow
+                break;
+            case 'ArrowLeft':
+                console.log('Left arrow pressed!');
+                // Perform action for left arrow
+                break;
+            case 'ArrowRight':
+                console.log('Right arrow pressed!');
+                // Perform action for right arrow
+                break;
+        }
+    })
 });

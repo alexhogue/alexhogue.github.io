@@ -37,7 +37,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     border: 2px solid rgb(179, 179, 179);
-    padding: 12px;
+    padding: 8px;
     background: white;
 }
 
@@ -45,16 +45,16 @@ h1 {
     padding: 0;
     margin: 0;
     font-family: 'Alegreya-title';
-    font-size: 36px;
+    font-size: 30px;
 }
 
 h2 {
     font-family: 'Alegreya-title';
-    font-size: 40px;
+    font-size: 36px;
 }
 p {
     font-family: 'Alegreya-body';
-    font-size: 24px;  
+    font-size: 18px;  
     padding: 0;
     margin: 0;
 }
@@ -67,7 +67,7 @@ p.paragraph_text {
 
 h3 {
    font-family: 'Alegreya-title';
-   font-size: 24px;
+   font-size: 22px;
 } 
 
 .additional-info {
@@ -130,13 +130,13 @@ h3 {
     position: fixed; 
     z-index: 10000;
     background: white;
-    top:0;
-    left:4px;
+    top:6px;
+    left:12px;
     padding: 8px 12px;
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1.5px solid rgb(87, 87, 87);
 }
-#compass-area:hover #pop-up-compass{
+#compass:hover + #pop-up-compass{
     visibility: visible;
     display: block;
     opacity: 1;
@@ -156,7 +156,7 @@ h3 {
     z-index: 9999;
     position: fixed;
     background-color: rgba(255, 255, 255, 0.9);
-    height: 91%;
+    height: 100%;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -168,13 +168,28 @@ h3 {
     overflow-y: scroll;
     transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
-
-#compass-area {
+#control-area{
+    display: flex;
+    flex-direction: column;
     position: fixed;
+    justify-content: center;
+    align-items: center;
     bottom: 0;
     right: 0;
-    padding: 18px;
+    gap:18px;
+    z-index: 5000;
+}
+#compass-area {
+    padding: 24px;
     transform: scale(1.2)
+}
+#zoom-controls{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.zoom-button:hover{
+    fill:rgb(236, 236, 236);
 }
 
 .overlay-content {
@@ -182,7 +197,7 @@ h3 {
     justify-content: center;
     align-items: flex-start;
     flex-direction: row-reverse;
-    margin: 6vw 8vw;
+    margin: 8vw 8vw;
     gap: 4vw;
 }
 
@@ -203,4 +218,47 @@ h3 {
     width: 70%;
     min-width: 300px;
     transform: rotate(-20deg);
+}
+
+#about-popup {
+    position: fixed;
+    /* width: 100%; */
+    width: 45%;
+    left: 50%;  
+    transform: translate(-50%, 0%);
+    padding-top: 25px;
+    z-index: 5000;
+    opacity: 1;            
+    transition: opacity .8s ease;
+    margin: 60px 0; 
+}
+
+#about-popup.hidden {
+    opacity: 0; 
+}
+
+#about-popup-message{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border: 2px solid rgb(179, 179, 179); */
+    padding: 12px;
+    text-align: center;
+}
+
+#disclaimer{
+    position: fixed;
+    left:0;
+    bottom:0;
+    padding: 4px;
+    z-index: 5000;
+    width: 30vw;
+    display: flex;
+    gap:4px;
+}
+
+p.disclaimer-message{
+    line-height: 1;
+    color: rgb(137, 137, 137);
+    font-size: 12px;
 }
