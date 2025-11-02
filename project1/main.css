@@ -34,12 +34,45 @@ body {
     width: 50vw;
     margin: 0 auto; 
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     border: 2px solid rgb(179, 179, 179);
-    padding: 8px;
     background: white;
+    transition: transform 0.3s ease-in-out;
 }
+
+#title-area:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+#title-text {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 50px;
+    transition: transform 0.3s ease-in-out;
+}
+#title-text:hover h1 {
+    animation: bob 1.8s alternate infinite ease-in-out;
+}
+
+@keyframes bob {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+#title-text h1:nth-child(1) {animation-delay: 0s;}
+#title-text h1:nth-child(2) {animation-delay: 0.6s;}
+#title-text h1:nth-child(3) {animation-delay: 1.2s;}
+
 
 h1 {
     padding: 0;
@@ -118,11 +151,13 @@ h3 {
     padding: 8px 12px;
     border-radius: 18px;
     border: 1.5px solid rgb(87, 87, 87);
+    pointer-events: none;
 }
 .pop-up.opened {
     visibility: visible;
     display: block;
     opacity: 1;
+    pointer-events: none;
 }
 #pop-up-compass{
     visibility: hidden;
@@ -166,8 +201,21 @@ h3 {
     justify-content: center;
     align-items: center;
     overflow-y: scroll;
-    transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
+.page-overlay.first-opened {
+    animation: slideUp 0.6s ease-out;
+}
+/* .page-overlay.closed {
+    animation: slideDown 0.6s ease-out;
+} */
+@keyframes slideUp {
+  from { bottom: -100%; }
+  to { bottom: 0; }
+}
+/* @keyframes slideDown {
+  from { bottom: 0; }
+  to { bottom: -100%; }
+} */
 #control-area{
     display: flex;
     flex-direction: column;
@@ -200,6 +248,9 @@ h3 {
     margin: 8vw 8vw;
     gap: 4vw;
 }
+img {
+  user-select: none;
+}
 
 .text-area {
     display: flex;
@@ -216,7 +267,7 @@ h3 {
 
 .big-image {
     width: 70%;
-    min-width: 300px;
+    min-width: 250px;
     transform: rotate(-20deg);
 }
 
@@ -261,4 +312,65 @@ p.disclaimer-message{
     line-height: 1;
     color: rgb(137, 137, 137);
     font-size: 12px;
+}
+
+#region-area{
+    position: fixed;
+    width: 45%;
+    left: 50%;  
+    transform: translate(-50%, 0%);
+    padding-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 4px;
+    /* top: 10px;
+    left: 10px; */
+    z-index: 999;
+    margin: 72px 0; 
+    opacity: 1;            
+    transition: opacity .8s ease;
+}
+
+#region-area.hidden {
+    opacity: 0;
+}
+
+#region-label {
+    font-weight: 900;
+}
+
+#page-overlay-about .text-area {
+    width: 50vw;
+}
+
+#page-overlay-about .text-area p {
+    font-size: 24px;
+}
+
+
+@media (max-width: 768px) {
+  .overlay-content {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 64px;
+  }
+  .text-area {
+    width: 100%;
+  }
+  .image-area {
+    width: 100%;
+  }
+  #title-area{
+    width: 90vw;
+  }
+  #region-area {
+    width: 90vw;
+  }
+  #about-popup {
+    width: 90vw;
+  }
+
+
+
 }

@@ -15,20 +15,26 @@
     <body><!--all the contents of an HTML document goes here-->
         <div id="header-area">
             <div id="title-area">
-                <h1>Away</h1>
-                <h1>We</h1>
-                <h1>Go!</h1>
+                <div id="title-text">
+                    <h1>Away</h1>
+                    <h1>We</h1>
+                    <h1>Go!</h1>
+                </div>
             </div>
         </div>
         <div id="about-popup"> 
-            <p id="about-popup-message">Explore a collection of vintage travel posters from around the world dating from approximately 1910-1959. Navigate around the map to
-                learn about this period of global travel.
+            <p id="about-popup-message">Explore a collection of vintage travel posters from around the world dating from approximately 1910-1959. 
+                <br> Navigate around the map to learn about this period of global travel.
             </p>
         </div>
         <div id="disclaimer">
             <p class="disclaimer-message">*</p>
             <p class="disclaimer-message">Note that while the relative geographic placements and proportions 
-                are accurate, <br> distances are compressed to support navigation</p>
+                are accurate, distances are compressed to support navigation</p>
+        </div>
+        <div class="hidden" id="region-area">
+            <p>You are in...</p>
+            <p id="region-label"></p>
         </div>
         <div id="map-container" style="width:100vw; height:100vh; overflow: auto;">
             <svg id="map" width="4500" height="2500">
@@ -37,12 +43,67 @@
         </div>
         <div class="pop-up" id="pop-up-New_England">
             <p class="pop-up-text">Visit New England!</p>
+            <!-- <p>This poster, created by artist <br> Sascha Maurer, promotes leisure...</p> -->
+        </div>
+        <div class="pop-up" id="pop-up-New_England2">
+            <p>This poster, created by artist <br> Sascha Maurer, promotes leisure...</p>
         </div>
         <div class="pop-up" id="pop-up-Chicago">
             <p class="pop-up-text">Visit Chicago!</p>
         </div>
         <div class="pop-up" id="pop-up-Mexico">
             <p class="pop-up-text">Visit Mexico!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Italy">
+            <p class="pop-up-text">Visit Italy!</p>
+        </div>
+        <div class="pop-up" id="pop-up-USSR">
+            <p class="pop-up-text">Visit the USSR!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Austria">
+            <p class="pop-up-text">Visit Austria!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Pacific_NW">
+            <p class="pop-up-text">Visit the Pacific Northwest!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Alaska">
+            <p class="pop-up-text">Visit Alaska!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Peru">
+            <p class="pop-up-text">Visit Peru!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Japan">
+            <p class="pop-up-text">Visit Japan!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Australia">
+            <p class="pop-up-text">Visit Australia!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Tasmania">
+            <p class="pop-up-text">Visit Tasmania!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Java_Indonesia">
+            <p class="pop-up-text">Visit Java!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Portugal">
+            <p class="pop-up-text">Visit Portugal!</p>
+        </div>
+        <div class="pop-up" id="pop-up-India">
+            <p class="pop-up-text">Visit India!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Algeria">
+            <p class="pop-up-text">Visit Algeria!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Germany">
+            <p class="pop-up-text">Visit Germany!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Ireland">
+            <p class="pop-up-text">Visit Ireland!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Auvergne">
+            <p class="pop-up-text">Visit Auvergne, France!</p>
+        </div>
+        <div class="pop-up" id="pop-up-Egypt">
+            <p class="pop-up-text">Visit Egypt!</p>
         </div>
         <div id="control-area">
             <div id="zoom-controls">
@@ -80,7 +141,7 @@
                         social and economic hierarchies of the era—travel by rail was largely accessible to those 
                         with financial means, and the poster presents an idealized vision of leisure that omits 
                         the experiences of marginalized communities.</p>
-                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Maurer, Sascha (1897-1961)</p></div>
                     <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
                         New York, New Haven, and Hartford Railroad Company</p></div>
@@ -114,7 +175,6 @@
                         Chicago highlights how railroads shaped not just physical mobility but also cultural 
                         imagination—painting cities as destinations of possibility while reflecting the era’s 
                         social and economic realities.</p>
-                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
                     <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p>Cities & towns; New York Central Lines</p></div>
                 </div>
@@ -136,20 +196,17 @@
             </div>
             <div class="overlay-content">
                 <div class="text-area">
-                    <h2>Mexico</h2>
+                    <h2>Mexico. Volcan Paricutin</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text">This vibrant lithograph, produced by Latham Litho & Ptg. Co. for the New York Central 
-                        Lines, invites travelers to experience the energy and allure of Chicago, a city that 
-                        epitomized modern urban life in the early twentieth century. With bold colors and 
-                        dynamic composition, the poster captures the promise of rail travel: the ability to 
-                        move quickly from one bustling metropolis to another, connecting passengers to 
-                        commerce, culture, and new experiences. As part of the journey through these posters, 
-                        Chicago highlights how railroads shaped not just physical mobility but also cultural 
-                        imagination—painting cities as destinations of possibility while reflecting the era’s 
-                        social and economic realities.</p>
+                    <p class="paragraph_text">This poster showcases Volcán Paricutin, which famously emerged in 
+                        February 1943. Printed in Mexico by the Asociacion Mexicana de Turismo, it captures the 
+                        dramatic beauty of the newly born volcano with vivid colors and dynamic composition. The 
+                        design reflects mid-20th century fascination with natural wonders and the allure of travel, 
+                        inviting viewers to imagine experiencing the power and spectacle of this remarkable landscape.</p>
                     <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
                     <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div>
-                    <div class="additional-info"><h3>Subjects:</h3> <p>Cities & towns; New York Central Lines</p></div>
+                    <div class="additional-info"><h3>Published:</h3> <p>Mexico : Asociacion Mexicana de Turismo (Printed at Offset Galas)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Volcanoes</p></div>
                 </div>
                 <div class="image-area">
                     <img class="big-image" id="new-england-img" src="./images/Mexico.png" alt=""/>
@@ -169,12 +226,17 @@
             </div>
             <div class="overlay-content">
                 <div class="text-area">
-                    <h2>Summer in New England</h2>
+                    <h2>Japan</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
-                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
-                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
-                        New York, New Haven, and Hartford Railroad Company</p></div>
+                    <p class="paragraph_text">This poster depicts a high-speed train cutting through the Japanese 
+                        countryside, with motion conveyed through blurred lines and a sense of rapid movement. Printed 
+                        in Japan, it emphasizes technological progress and the efficiency of the nation’s rail system, 
+                        presenting the landscape as a dynamic backdrop rather than a focus in itself. The composition 
+                        highlights speed and modernity, framing travel as both thrilling and emblematic of national 
+                        advancement.</p>
+                    <div class="additional-info"><h3>Artist:</h3> <p>Satomi, Mune (1904- )</p></div>
+                    <div class="additional-info"><h3>Date issued:</h3> <p>1937 (inferred)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Landscape; Railroads; Japan. Tetsudōshō</p></div>
                 </div>
                 <div class="image-area">
                     <img class="big-image" id="new-england-img" src="./images/Japan.png" alt=""/>
@@ -196,7 +258,13 @@
                 <div class="text-area">
                     <h2>No rain in Portugal but tourists pour in</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This 1954 Portuguese travel poster combines humor and national pride 
+                        to advertise a climate of perpetual sunshine. The central figure, a personified sun in 
+                        traditional Portuguese dress, holds an umbrella while tourists—also depicted in traditional 
+                        attire from various countries—move energetically across the scene. The composition emphasizes 
+                        bright colors and playful exaggeration, reflecting mid-century advertising’s optimism and visual
+                         wit. At the same time, the caricatured treatment of both locals and foreign visitors hints at the 
+                         era’s simplified and sometimes stereotypical approach to representing culture.</p>
                     <div class="additional-info"><h3>Publisher:</h3> <p>Lisboa [Lisbon, Portugal]: Bertrand (Irmãos) Lda.</p></div>
                     <div class="additional-info"><h3>Date issued:</h3> <p>1954</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p>Sun, in traditional Portuguese costume, 
@@ -223,9 +291,17 @@
                 <div class="text-area">
                     <h2>Tasmania. The anglers' paradise</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This Tasmanian travel poster, printed by Troedel & Cooper for the 
+                        Tasmanian Tourist Bureau, is striking in its simplicity. Against a bright green background, 
+                        a single trout is shown beside a tape measure marking 31 centimeters—a modest yet exacting 
+                        image that functions as both proof and promise. By focusing solely on the fish, the poster 
+                        appeals directly to anglers, positioning Tasmania as “the anglers’ paradise” through evidence 
+                        rather than scenery. The design’s precision and lack of landscape suggest an almost scientific 
+                        framing of nature, one that measures value in size and yield rather than in beauty or experience. 
+                        In doing so, it reflects a utilitarian strain of mid-century tourism imagery, where travel was 
+                        often marketed through the quantifiable pleasures of sport and conquest.</p>
+                    <div class="additional-info"><h3>Date issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Melb., Vic., Australia : Troedel & Cooper Pty. Ltd., Photo-Print</p></div>
-                    <!-- <div class="additional-info"><h3>Date issued:</h3> <p>1954</p></div> -->
                     <div class="additional-info"><h3>Subjects:</h3> <p>Tourism; Trout</p></div>
                 </div>
                 <div class="image-area">
@@ -246,10 +322,18 @@
             </div>
             <div class="overlay-content">
                 <div class="text-area">
-                    <h2>Alaska via Canadian Pacific. Taku Glacier</h2>
+                    <h2>Alaska via Canadian Pacific: Taku Glacier</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
-                    <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div> -->
+                    <p class="paragraph_text">This poster presents the Taku Glacier with a Canadian Pacific ocean liner 
+                        in the foreground, emphasizing the industrialized accessibility of Alaska through ocean travel. 
+                        The composition is visually appealing, with bold color contrasts highlighting the icy expanse and 
+                        the sleek ship, yet it simplifies and sanitizes the rugged Alaskan landscape, giving a romanticized 
+                        view that prioritizes commercial promotion over geographic or environmental accuracy. The poster 
+                        reflects the era’s fascination with both the remote and the modern, framing travel as adventurous 
+                        but comfortably controlled. While the design effectively communicates the allure of a northern 
+                        voyage, it also glosses over the harsher realities of Alaskan travel and the complexities of the 
+                        natural environment.</p>
+                    <div class="additional-info"><h3>Date Issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p>Glaciers; Ocean travel; Ocean liners; 
                         Canadian Pacific Railway Company</p></div>
                 </div>
@@ -271,12 +355,18 @@
             </div>
             <div class="overlay-content">
                 <div class="text-area">
-                    <h2>Summer in New England</h2>
+                    <h2>Peru of the Incas</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
-                    <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Maurer, Sascha, 1897-1961 (artist)</p></div>
-                    <div class="additional-info"><h3>Subjects:</h3> <p>Railroad travel; Railroads; Beaches; 
-                        New York, New Haven, and Hartford Railroad Company</p></div>
+                    <p class="paragraph_text">This poster juxtaposes the ancient and the modern, showing local inhabitants at 
+                        Machu Picchu beneath a massive Pan American Airways plane soaring overhead. The scale of the aircraft 
+                        against the historic ruins creates an uncanny contrast, highlighting the intrusion of modern air travel 
+                        into a landscape steeped in history. Printed in 1938, the work frames Peru as both a destination of 
+                        cultural heritage and a node in emerging global transportation networks, blending admiration for the 
+                        past with the spectacle of technological progress. However, this framing imposes a Western, 
+                        commercialized perspective on a deeply cultural site, reducing the lived reality of the local 
+                        communities to a backdrop for tourism and aviation spectacle.</p>
+                    <div class="additional-info"><h3>Date issued:</h3> <p>1938 (approximate)</p></div>
+                    <div class="additional-info"><h3>Subjects:</h3> <p>Mountains; Indigenous peoples; Air travel; Pan American Airways Corporation</p></div>
                 </div>
                 <div class="image-area">
                     <img class="big-image" id="new-england-img" src="./images/Peru.png" alt=""/>
@@ -298,7 +388,14 @@
                 <div class="text-area">
                     <h2>Travel round the globe but first see Ireland</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster presents a globe with a single hand holding a magnifying 
+                        glass over Ireland, emphasizing the country as a focal point for travelers. The composition 
+                        is straightforward yet conceptually clever, visually directing attention while suggesting a 
+                        broader context of world travel. The imagery balances simplicity with a subtle promotional 
+                        message, though the design is more illustrative than atmospheric, offering little sense of 
+                        the country’s landscapes or culture beyond its geographic position. The title reinforces the 
+                        idea that Ireland deserves notice before embarking on a global journey, combining a light sense 
+                        of humor with national pride.</p>
                     <div class="additional-info"><h3>Publisher:</h3> <p>Dublin : Printed by the Ormond Printing Co. Ltd.</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p>Globes; Hand lenses; Tourism</p></div>
                 </div>
@@ -322,7 +419,13 @@
                 <div class="text-area">
                     <h2>Motoring in Germany</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">The poster foregrounds a sleek, early automobile, symbolizing technological 
+                        progress and the modern conveniences of motoring. Behind it, a red castle, a city with a church, 
+                        and snowcapped mountains stretch into the distance, suggesting a journey through Germany’s diverse 
+                        landscapes. The composition underscores travel as both an adventurous and accessible pursuit, 
+                        using the car as a visual anchor for mobility and exploration. While the imagery conveys excitement 
+                        and the promise of modern travel, the arrangement of elements prioritizes spectacle over realism, 
+                        creating an idealized vision of Germany where technology and tourism intersect.</p>
                     <div class="additional-info"><h3>Artist:</h3> <p>Hohlwein, Ludwig (1874-1949)</p></div>
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Berlin : Published by the Reichsbahnzentrale für den Deutschen Reiseverkehr</p></div>
@@ -348,7 +451,10 @@
                 <div class="text-area">
                     <h2>Austria</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This vibrant poster captures the energy of Austria’s winter landscapes, 
+                        featuring skiers in motion against a crisp alpine backdrop. Designed by Joseph Binder, the 
+                        composition conveys both the excitement of sport and the allure of the mountains, reflecting 
+                        early 20th-century enthusiasm for travel, leisure, and outdoor adventure.</p>
                     <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Binder, Joseph, 1898-1972 (artist)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Wien [Austria] : Christoph Reisser's Söhne</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p> Tourism; Skiers</p></div>
@@ -373,7 +479,13 @@
                 <div class="text-area">
                     <h2>See India</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster presents a stylized, idealized view of an Indian city, with 
+                        clean, abstracted forms and a palette of rich, vibrant colors that emphasizes visual appeal. 
+                        Printed in India, it reflects a marketing-oriented approach to tourism, focusing on the city as 
+                        a destination for foreign visitors rather than capturing the everyday realities of urban life. 
+                        The emphasis on bazaars and bustling but organized streets conveys a sense of harmony and accessibility, 
+                        almost inviting the viewer in, revealing how travel imagery of the period prioritized spectacle and 
+                        commercial allure.</p>
                     <!-- <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Binder, Joseph, 1898-1972 (artist)</p></div> -->
                     <div class="additional-info"><h3>Published:</h3> <p>Bombay : British India Press</p></div>
                     <div class="additional-info"><h3>Subjects:</h3> <p> Tourism; Bazaars</p></div>
@@ -398,7 +510,11 @@
                 <div class="text-area">
                     <h2>Italia Garda</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">The poster presents a sunlit Italian coastline where gentle waves lap against a sandy beach, 
+                        dotted with local trees. An airplane arcs across the sky while a boat drifts on the water, signaling both 
+                        technological progress and the growing accessibility of travel. By juxtaposing natural beauty with modern transport, 
+                        the composition emphasizes Italy as a destination open to exploration, though the scene is idealized, offering a polished, 
+                        almost promotional view rather than a realistic portrayal of daily life along the Garda coast.</p>
                     <div class="additional-info"><h3>Creator/Contributor:</h3> <p>Riccobaldi, Giuseppe, 1887-1976 (artist)</p></div>
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1935</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Genova [Genoa, Italy] : Barabino & Graev</p></div>
@@ -424,7 +540,13 @@
                 <div class="text-area">
                     <h2>Auvergne Chatel-Guyon</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This 1932 poster for Auvergne Chatel-Guyon, created by Robert Falcucci, presents a colorful 
+                        and slightly abstracted landscape dominated by a large silhouetted tree in the foreground, which frames the scene like 
+                        a keyhole. Beyond it, a fountain and layered countryside with buildings suggest the region’s spa town character, though 
+                        much of the detail is intentionally obscured. The composition balances decorative abstraction with a clear focal 
+                        point, while the bright yellow title at the bottom draws immediate attention. While visually striking, the design 
+                        prioritizes graphic impact over precise geographic representation, reflecting the period’s modernist approach to 
+                        promotional imagery.</p>
                     <div class="additional-info"><h3>Artist:</h3> <p>Falcucci, Robert (1900-1989)</p></div>
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1932</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p> Imp. Spec: De l'agence Havas</p></div>
@@ -450,7 +572,12 @@
                 <div class="text-area">
                     <h2>Visit Java. Only 36 hours from Singapore</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster presents a woman in traditional attire positioned prominently in the 
+                        foreground, set against a backdrop of ceremonial architecture rendered in monochromatic blue. Above, 
+                        the island of Java is mapped, situating the scene geographically and reinforcing the poster’s 
+                        promotional intent. While visually striking, the composition simplifies local culture into easily 
+                        digestible motifs for tourists, reflecting an external, promotional perspective rather than a 
+                        nuanced portrayal of everyday life.</p>
                     <!-- <div class="additional-info"><h3>Artist:</h3> <p>Falcucci, Robert (1900-1989)</p></div> -->
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1910-1959 (approximate)</p></div>
                     <div class="additional-info"><h3>Publisher:</h3> <p>G. Kolff & Co.</p></div>
@@ -476,7 +603,12 @@
                 <div class="text-area">
                     <h2>Travel by Trans-Australian Railway across Australia</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster depicts an outback rider on a camel in the foreground while a train speeds 
+                        across the desert in the background, emphasizing the contrast between traditional and modern modes 
+                        of travel. Printed around 1930, it highlights the technological reach of the Trans-Australian Railway, 
+                        framing Australia’s vast interior as both exotic and traversable. The composition elevates the drama 
+                        of movement and distance, yet it presents a Western-centric view of the landscape, prioritizing 
+                        spectacle over the region’s inhabitants and natural environment.</p>
                     <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div>
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1930 (approximate)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Northfield Studios Pty. Ltd. & J. E. Hackett</p></div>
@@ -502,7 +634,12 @@
                 <div class="text-area">
                     <h2>By air to USSR</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster promotes air travel to the USSR, emphasizing speed and connectivity, with 
+                        airlines linking European cities to the Soviet Union’s major urban centers. While the design remains austere 
+                        and industrial, its purpose is unmistakably promotional: advertising tourism, commercial achievement, and the 
+                        efficiency of Soviet aviation. The geometrical, mustard-toned map and the modest airplane signal less glamour 
+                        than Western counterparts, yet they still frame travel as an organized, modern, and economically significant 
+                        endeavor.</p>
                     <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1934</p></div>
                     <!-- <div class="additional-info"><h3>Published:</h3> <p>Northfield Studios Pty. Ltd. & J. E. Hackett</p></div> -->
@@ -528,7 +665,11 @@
                 <div class="text-area">
                     <h2>Visit the Pacific northwest wonderland… Travel by train</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster depicts two travelers, likely a couple, standing among redwoods and looking out over the mountains 
+                        and a city by the water. It emphasizes the natural beauty of the Pacific Northwest, with dense forests 
+                        and dramatic terrain presented as a scenic destination. While the composition celebrates leisure and 
+                        exploration, it also underscores the commercial intent: the promotion of train travel as the ideal way 
+                        to access these landscapes, framing the region as both a wilderness to admire and a product to be consumed.</p>
                     <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1925 (approximate)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Chicago : Newman-Monroe Co.</p></div>
@@ -554,7 +695,12 @@
                 <div class="text-area">
                     <h2>Marseille-Alexandrie La Route D'Egypte</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster depicts a stylized pharaoh positioned over a simplified map of 
+                        the Mediterranean, holding a train above Marseille and a ship above Alexandria. Produced in France, 
+                        it emphasizes the French perspective on Egypt as a destination defined by modern transportation and 
+                        tourism rather than by local experience. The combination of railroad and maritime imagery highlights 
+                        technological achievement and connectivity, while the pharaoh figure reinforces a romanticized, 
+                        exoticized vision shaped by colonial-era French promotional aims.</p>
                     <!-- <div class="additional-info"><h3>Artist:</h3> <p>Northfield, James (1887-1973)</p></div> -->
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1927</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Paris : Imp. De Vaugirard, Impasse Ronsin</p></div>
@@ -580,7 +726,12 @@
                 <div class="text-area">
                     <h2>Algérie</h2>
                     <h3>About the work</h3>
-                    <p class="paragraph_text"></p>
+                    <p class="paragraph_text">This poster depicts an Algerian port where a goat and local men move among cargo, 
+                        rendered with bright, precise colors that emphasize the bustling activity of trade. Created in France, 
+                        the work reflects a distinctly external perspective, presenting Algeria through the lens of French visual 
+                        culture during the colonial period. The composition subtly frames the port and its inhabitants as objects 
+                        of observation, highlighting both the commercial importance of the region and the power dynamics inherent 
+                        in colonial representation, rather than providing a nuanced, local perspective.</p>
                     <div class="additional-info"><h3>Artist:</h3> <p>Cauvy, Léon (1874-1933)</p></div>
                     <div class="additional-info"><h3>Date Issued:</h3> <p>1930 (approximate)</p></div>
                     <div class="additional-info"><h3>Published:</h3> <p>Paris : Imp. Cornille & Serre</p></div>
@@ -600,7 +751,7 @@
         <div class="page-overlay" id="page-overlay-about" style="display: none;">
             <div class="overlay-content">
                 <div class="text-area">
-                    <h2>Vintage Travel Posters</h2>
+                    <h2>Around the World through Vintage Travel Posters</h2>
                     <h3>from the Collections of the Boston Public Library</h3>
                     <p>Away We Go! is a digital exploration of early twentieth-century travel posters—vivid 
                         artifacts from an era often celebrated as the “golden age of travel.” These posters, 

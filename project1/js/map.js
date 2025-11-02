@@ -87,7 +87,11 @@ d3.csv("location_coordinates.csv").then((data) => {
   }));
 
   // create SVG and layers
-  const svg = d3.select("#map").attr("width", width).attr("height", height); // main canvas
+  const svg = d3
+    .select("#map")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("tabindex", 0); // main canvas
   const lineLayer = svg.append("g").attr("class", "link-layer");
   const travelLayer = svg.append("g").attr("class", "travel-layer");
   const mapLayer = svg.append("g").attr("class", "map-layer"); // top-level group for all map content
@@ -149,17 +153,26 @@ d3.csv("location_coordinates.csv").then((data) => {
       const posterPage = document.getElementById("page-overlay-" + d.name);
       posterPage.style.display = "block";
       posterPage.classList.add("opened");
+    //   posterPage.classList.toggle("opened", !overlay.classList.contains("closed"));
+      posterPage.classList.add("first-opened");
+    //   overlay.classList.remove("closed");
     })
     .on("mouseover", (e, d) => {
       const popUpMessage = document.getElementById("pop-up-" + d.name);
       popUpMessage.classList.add("opened");
-      popUpMessage.style.left = e.pageX + 5 + "px"; // offset from mouse
-      popUpMessage.style.top = e.pageY + 5 + "px";
+      popUpMessage.style.left = e.pageX - 35 + "px"; // offset from mouse
+      popUpMessage.style.top = e.pageY - 35 + "px";
       console.log(d.name + " hovered");
+      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+      popUpMessage2.classList.add("opened");
+      popUpMessage2.style.left = e.pageX + 25 + "px"; // offset from mouse
+      popUpMessage2.style.top = e.pageY + 25 + "px";
     })
     .on("mouseout", (e, d) => {
       const popUpMessage = document.getElementById("pop-up-" + d.name);
       popUpMessage.classList.remove("opened");
+      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+      popUpMessage2.classList.remove("opened");
     });
 
   // 7. Optional: draw faint lines showing anchor-to-relaxed position
@@ -183,14 +196,69 @@ d3.csv("location_coordinates.csv").then((data) => {
   }
   setTimeout(() => simulation.stop(), 15000);
 
+
+  const regions = [
+    { name: "North America", lon: [-96, -14], lat: [21, 64] },
+    { name: "South America", lon: [-90, -30], lat: [-25, 21] },
+    { name: "Europe", lon: [14, 118], lat: [35, 70] },
+    { name: "Russia", lon: [119, 190], lat: [58, 80] },
+    { name: "Africa", lon: [35, 96], lat: [-9, 28] },
+    { name: "Asia", lon: [-222, -136], lat: [-2, 54] },
+    { name: "Australia", lon: [110, 155], lat: [-45, -10] },
+    { name: "Oceania", lon: [-185, -129], lat: [-25, -3] },
+    { name: "South Asia", lon: [111, 170], lat: [14, 31] },
+    // Add Antarctica, etc. if needed
+  ];
+
+  function getRegionForCenter([lon, lat]) {
+    for (const region of regions) {
+      if (
+        lon >= region.lon[0] &&
+        lon <= region.lon[1] &&
+        lat >= region.lat[0] &&
+        lat <= region.lat[1]
+      ) {
+        return region.name;
+      }
+    }
+    return " ";
+  }
+  const regionLabel = document.getElementById("region-label");
+
+  svg.on("mousemove", (event) => {
+    // Get the current zoom transform from the SVG
+    const currentTransform = d3.zoomTransform(svg.node());
+
+    // Mouse position relative to SVG
+    const [mouseX, mouseY] = d3.pointer(event, svg.node());
+
+    // Invert the transform to get map coordinates
+    const [mapX, mapY] = currentTransform.invert([mouseX, mouseY]);
+
+    // Convert SVG coordinates to longitude/latitude
+    const lon = xScale.invert(mapX);
+    const lat = yScale.invert(mapY);
+
+    // Determine region based on lon/lat
+    const region = getRegionForCenter([lon, lat]);
+    console.log(lon, lat)
+
+    // Update label
+    regionLabel.textContent = region;
+  });
+
   let zoomTransform = d3.zoomIdentity;
+  const scaleX = container.clientWidth / width;
+  const scaleY = container.clientHeight / height;
+  const minScale = Math.max(scaleX, scaleY) * 1.8; // not too tiny
+  const maxScale = 14;
 
   const zoom = d3
     .zoom()
-    .scaleExtent([1, 12]) // min/max zoom
+    .scaleExtent([minScale, 14]) // min/max zoom
     .translateExtent([
       [-450, 0],
-      [width + 200, height + 550],
+      [width, height + 500],
     ])
     .on("zoom", (event) => {
       zoomTransform = event.transform;
@@ -230,6 +298,7 @@ d3.csv("location_coordinates.csv").then((data) => {
   // Scroll container to center New England initially
   const newEngland = nodes.find((d) => d.name === "New_England");
   const initialScale = 3.4;
+
   const initialTransform = d3.zoomIdentity
     .translate(
       container.clientWidth / 2 - newEngland.x * initialScale,
@@ -245,6 +314,18 @@ d3.csv("location_coordinates.csv").then((data) => {
     openOverlays.forEach((overlay) => {
       overlay.style.display = "none";
       overlay.classList.remove("opened");
+    //   overlay.classList.replace("opened", "closed");
+      overlay.classList.remove("first-opened");
+    //   overlay.classList.add("closed");
+    });
+  });
+
+
+  const nextButtons = document.querySelectorAll(".arrow");
+  nextButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      overlay.classList.remove("first-opened");
+      overlay.classList.remove("opened");
     });
   });
 
@@ -253,57 +334,68 @@ d3.csv("location_coordinates.csv").then((data) => {
     const aboutPage = document.getElementById("page-overlay-about");
     aboutPage.style.display = "block";
     aboutPage.classList.add("opened");
+    aboutPage.classList.add("first-opened");
   });
 
+
+  const regionArea = document.getElementById("region-area")
   const aboutPopup = document.getElementById("about-popup");
   setTimeout(function() {
     aboutPopup.classList.add("hidden");
+    regionArea.classList.remove("hidden");
     // aboutPopup.style.display = "none";
   }, 6000)
   aboutPopup.addEventListener("mouseover", () => {
     aboutPopup.classList.remove("hidden");
+    regionArea.classList.add("hidden");
   })
   aboutPopup.addEventListener("mouseout", () => {
     aboutPopup.classList.add("hidden");
+    regionArea.classList.remove("hidden");
   });
 
   const zoomStep = 1.3;
   document.getElementById("zoom-in").addEventListener("click", () => {
-    svg.transition().duration(500).call(zoom.scaleBy, zoomStep);
+    const cx = container.clientWidth / 2;
+    const cy = container.clientHeight / 2;
+    svg.transition().duration(500).call(zoom.scaleBy, zoomStep, [cx, cy]);
   });
   document.getElementById("zoom-out").addEventListener("click", () => {
+    const cx = container.clientWidth / 2;
+    const cy = container.clientHeight / 2;
     svg
       .transition()
       .duration(500)
-      .call(zoom.scaleBy, 1 / zoomStep);
+      .call(zoom.scaleBy, 1 / zoomStep, [cx, cy]);
   });
 
-  const currentTransform = d3.zoomTransform(d3.select(".target-element").node());
 
-  document.addEventListener('keydown', function(event) {
-      const t = d3.zoomTransform(svg.node());
-        switch (event.key) {
-            case 'ArrowUp':
-                svg
-                  .transition()
-                  .duration(500)
-                  .call(
-                    zoom.transform,
-                    d3.zoomIdentity.translate(t.x, t.y - 50).scale(t.k)
-                  );
-                break;
-            case 'ArrowDown':
-                console.log('Down arrow pressed!');
-                // Perform action for down arrow
-                break;
-            case 'ArrowLeft':
-                console.log('Left arrow pressed!');
-                // Perform action for left arrow
-                break;
-            case 'ArrowRight':
-                console.log('Right arrow pressed!');
-                // Perform action for right arrow
-                break;
-        }
-    })
+  svg.node().focus();
+
+  svg.on("keydown", function(event) {
+    const panAmount = 30;
+    const transform = d3.zoomTransform(svg.node());
+    let newTransform = transform;
+
+    switch (event.key) {
+      case "ArrowUp":
+        newTransform = transform.translate(0, panAmount);
+        break;
+      case "ArrowDown":
+        newTransform = transform.translate(0, -panAmount);
+        break;
+      case "ArrowLeft":
+        newTransform = transform.translate(panAmount, 0);
+        break;
+      case "ArrowRight":
+        newTransform = transform.translate(-panAmount, 0);
+        break;
+      default:
+        return; // ignore other keys
+    }
+
+    svg.transition().duration(250).call(zoom.transform, newTransform);
+  });
+
+
 });
