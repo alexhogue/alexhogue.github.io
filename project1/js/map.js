@@ -278,8 +278,8 @@ d3.csv("location_coordinates.csv").then((data) => {
     .zoom()
     .scaleExtent([minScale, 14]) // min/max zoom
     .translateExtent([
-      [-450, 0],
-      [width, height + 500],
+      [-450, 30],
+      [width + 1000, height + 1000],
     ])
     .on("zoom", (event) => {
       zoomTransform = event.transform;
@@ -315,7 +315,7 @@ d3.csv("location_coordinates.csv").then((data) => {
 
     requestAnimationFrame(animatePan);
 
-  // 10. Center initial view on New England
+  // Center initial view on New England
   // Scroll container to center New England initially
   const newEngland = nodes.find((d) => d.name === "New_England");
   const initialScale = 3.4;
