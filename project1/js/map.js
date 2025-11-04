@@ -157,22 +157,43 @@ d3.csv("location_coordinates.csv").then((data) => {
       posterPage.classList.add("first-opened");
     //   overlay.classList.remove("closed");
     })
-    .on("mouseover", (e, d) => {
-      const popUpMessage = document.getElementById("pop-up-" + d.name);
-      popUpMessage.classList.add("opened");
-      popUpMessage.style.left = e.pageX - 35 + "px"; // offset from mouse
-      popUpMessage.style.top = e.pageY - 35 + "px";
-      console.log(d.name + " hovered");
-      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
-      popUpMessage2.classList.add("opened");
-      popUpMessage2.style.left = e.pageX + 25 + "px"; // offset from mouse
-      popUpMessage2.style.top = e.pageY + 25 + "px";
+
+  nodeGroup.on("mouseover", (e, d) => {
+        const scale = zoomTransform.k; // current zoom scale
+        const adjustedR = d.r * scale;
+        
+        const popUpMessage = document.getElementById("pop-up-" + d.name);
+        popUpMessage.classList.add("opened");
+        popUpMessage.style.left = e.pageX - 5 + "px"; // offset from mouse
+        popUpMessage.style.top = e.pageY - 5 + "px";
+     
+        const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+        popUpMessage2.classList.add("opened");
+        popUpMessage2.style.left = e.pageX + d.r * 4 + 60 + "px"; // offset from mouse
+        popUpMessage2.style.top = e.pageY + d.r * 2 - 5 + "px";
+        
+        const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
+        popUpMessage3.classList.add("opened");
+        popUpMessage3.style.left = e.pageX - 28 + "px"; // offset from mouse
+        popUpMessage3.style.top = e.pageY + 36 + "px";
+
+        const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
+        popUpMessage4.classList.add("opened");
+        popUpMessage4.style.left = e.pageX + 10 + "px"; // offset from mouse
+        popUpMessage4.style.top = e.pageY + 65 + "px";
     })
     .on("mouseout", (e, d) => {
-      const popUpMessage = document.getElementById("pop-up-" + d.name);
-      popUpMessage.classList.remove("opened");
-      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
-      popUpMessage2.classList.remove("opened");
+        const popUpMessage = document.getElementById("pop-up-" + d.name);
+        popUpMessage.classList.remove("opened");
+        
+        const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+        popUpMessage2.classList.remove("opened");
+
+        const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
+        popUpMessage3.classList.remove("opened");
+
+        const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
+        popUpMessage4.classList.remove("opened");
     });
 
   // 7. Optional: draw faint lines showing anchor-to-relaxed position
@@ -311,14 +332,31 @@ d3.csv("location_coordinates.csv").then((data) => {
   const title = document.getElementById("title-area");
   title.addEventListener("click", () => {
     const openOverlays = document.querySelectorAll(".page-overlay.opened");
-    openOverlays.forEach((overlay) => {
-      overlay.style.display = "none";
-      overlay.classList.remove("opened");
-    //   overlay.classList.replace("opened", "closed");
-      overlay.classList.remove("first-opened");
-    //   overlay.classList.add("closed");
+    for (const overlay of openOverlays) {
+        if (overlay.style.display === "block") {
+            overlay.style.display = "none";
+            overlay.classList.remove("opened");
+            //   overlay.classList.replace("opened", "closed");
+            overlay.classList.remove("first-opened");
+            //   overlay.classList.add("closed");
+            return;
+        }
+    };
+    svg.call(zoom).call(zoom.transform, initialTransform);
+  });
+
+  const closeIcons = document.querySelectorAll(".close-icon");
+  closeIcons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+        const openOverlays = document.querySelectorAll(".page-overlay.opened");
+        for (const overlay of openOverlays) {
+            overlay.classList.remove("opened");
+            overlay.classList.remove("first-opened");
+            overlay.style.display = "none";
+        }
     });
   });
+
 
 
   const nextButtons = document.querySelectorAll(".arrow");
@@ -396,6 +434,5 @@ d3.csv("location_coordinates.csv").then((data) => {
 
     svg.transition().duration(250).call(zoom.transform, newTransform);
   });
-
 
 });
