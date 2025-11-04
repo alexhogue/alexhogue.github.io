@@ -329,6 +329,7 @@ img {
     opacity: 1;            
     transition: opacity .8s ease;
     margin: 60px 0; 
+    cursor: default;
 }
 
 #about-popup.hidden {
