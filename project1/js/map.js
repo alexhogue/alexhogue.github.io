@@ -277,12 +277,29 @@ d3.csv("location_coordinates.csv").then((data) => {
   const zoom = d3
     .zoom()
     .scaleExtent([minScale, 14]) // min/max zoom
-    .translateExtent([
-      [-450, 30],
-      [width + 1000, height + 1000],
-    ])
+    // .translateExtent([
+    //   [-450, 30],
+    //   [width + 1000, height + 1000],
+    // ])
     .on("zoom", (event) => {
-      zoomTransform = event.transform;
+        const k = event.transform.k; // current zoom scale
+        zoomTransform = event.transform;
+
+        // --- Dynamic translate extent ---
+        // When zoomed out (small k), allow larger movement bounds.
+        // When zoomed in (large k), tighten the panning limits.
+        const loosenessBottom = Math.max(0, (14 - k) * 2); // adjust multiplier to taste
+        const loosenessTop = Math.max(0, (8 - k) * 150);
+        let dynamicTranslateExtent = [
+          [-450 - loosenessBottom, 30 - loosenessBottom],
+          [width + loosenessTop, height + loosenessTop],
+        ];
+
+        // Update translate extent dynamically
+        d3.select(svg.node()).call(
+          zoom.translateExtent(dynamicTranslateExtent)
+        );
+    //   zoomTransform = event.transform;
       mapLayer.attr("transform", zoomTransform);
       lineLayer.attr("transform", zoomTransform);
       travelPath.attr("transform", zoomTransform);

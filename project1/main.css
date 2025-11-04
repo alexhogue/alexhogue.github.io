@@ -180,6 +180,9 @@ h3 {
     color: rgb(239, 239, 239);
     border: 1.5px solid rgb(115, 115, 115);
 }
+.pop-up.classifier p {
+    font-size: 16px;
+}
 .pop-up.opened {
     visibility: visible;
     display: block;
@@ -390,7 +393,8 @@ p.disclaimer-message{
 }
 
 #page-overlay-about .text-area p {
-    font-size: 24px;
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 
