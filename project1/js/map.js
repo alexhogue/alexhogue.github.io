@@ -101,18 +101,18 @@ d3.csv("location_coordinates.csv").then((data) => {
 
   const image = svg.selectChild("#image");
 
-//   const { w, h } = image.node().getBoundingClientRect();
-//   const { w: svgWidth, h: svgHeight } = svg
-//     .node()
-//     .getBoundingClientRect();
+  //   const { w, h } = image.node().getBoundingClientRect();
+  //   const { w: svgWidth, h: svgHeight } = svg
+  //     .node()
+  //     .getBoundingClientRect();
   const travelPath = travelLayer
     .append("image")
     .attr("href", "./icons/dotted-line.svg")
     .attr("x", -490)
     .attr("y", 160)
     // .attr("transform", "scale(1)")
-    .attr("width", width/1.82)
-    .attr("height", height/1.82)
+    .attr("width", width / 1.82)
+    .attr("height", height / 1.82)
     .lower();
 
   // D3 force simulation moves nodes dynamically
@@ -153,47 +153,48 @@ d3.csv("location_coordinates.csv").then((data) => {
       const posterPage = document.getElementById("page-overlay-" + d.name);
       posterPage.style.display = "block";
       posterPage.classList.add("opened");
-    //   posterPage.classList.toggle("opened", !overlay.classList.contains("closed"));
+      //   posterPage.classList.toggle("opened", !overlay.classList.contains("closed"));
       posterPage.classList.add("first-opened");
-    //   overlay.classList.remove("closed");
-    })
+      //   overlay.classList.remove("closed");
+    });
 
-  nodeGroup.on("mouseover", (e, d) => {
-        const scale = zoomTransform.k; // current zoom scale
-        const adjustedR = d.r * scale;
-        
-        const popUpMessage = document.getElementById("pop-up-" + d.name);
-        popUpMessage.classList.add("opened");
-        popUpMessage.style.left = e.pageX - 5 + "px"; // offset from mouse
-        popUpMessage.style.top = e.pageY - 5 + "px";
-     
-        const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
-        popUpMessage2.classList.add("opened");
-        popUpMessage2.style.left = e.pageX + d.r * 4 + 60 + "px"; // offset from mouse
-        popUpMessage2.style.top = e.pageY + d.r * 2 - 5 + "px";
-        
-        const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
-        popUpMessage3.classList.add("opened");
-        popUpMessage3.style.left = e.pageX - 28 + "px"; // offset from mouse
-        popUpMessage3.style.top = e.pageY + 36 + "px";
+  nodeGroup
+    .on("mouseover", (e, d) => {
+      const scale = zoomTransform.k; // current zoom scale
+      const adjustedR = d.r * scale;
 
-        const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
-        popUpMessage4.classList.add("opened");
-        popUpMessage4.style.left = e.pageX + 10 + "px"; // offset from mouse
-        popUpMessage4.style.top = e.pageY + 65 + "px";
+      const popUpMessage = document.getElementById("pop-up-" + d.name);
+      popUpMessage.classList.add("opened");
+      popUpMessage.style.left = e.pageX - 5 + "px"; // offset from mouse
+      popUpMessage.style.top = e.pageY - 5 + "px";
+
+      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+      popUpMessage2.classList.add("opened");
+      popUpMessage2.style.left = e.pageX + d.r * 4 + 60 + "px"; // offset from mouse
+      popUpMessage2.style.top = e.pageY + d.r * 2 - 5 + "px";
+
+      const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
+      popUpMessage3.classList.add("opened");
+      popUpMessage3.style.left = e.pageX - 28 + "px"; // offset from mouse
+      popUpMessage3.style.top = e.pageY + 36 + "px";
+
+      const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
+      popUpMessage4.classList.add("opened");
+      popUpMessage4.style.left = e.pageX + 10 + "px"; // offset from mouse
+      popUpMessage4.style.top = e.pageY + 65 + "px";
     })
     .on("mouseout", (e, d) => {
-        const popUpMessage = document.getElementById("pop-up-" + d.name);
-        popUpMessage.classList.remove("opened");
-        
-        const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
-        popUpMessage2.classList.remove("opened");
+      const popUpMessage = document.getElementById("pop-up-" + d.name);
+      popUpMessage.classList.remove("opened");
 
-        const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
-        popUpMessage3.classList.remove("opened");
+      const popUpMessage2 = document.getElementById("pop-up-" + d.name + "2");
+      popUpMessage2.classList.remove("opened");
 
-        const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
-        popUpMessage4.classList.remove("opened");
+      const popUpMessage3 = document.getElementById("pop-up-" + d.name + "3");
+      popUpMessage3.classList.remove("opened");
+
+      const popUpMessage4 = document.getElementById("pop-up-" + d.name + "4");
+      popUpMessage4.classList.remove("opened");
     });
 
   // 7. Optional: draw faint lines showing anchor-to-relaxed position
@@ -213,10 +214,8 @@ d3.csv("location_coordinates.csv").then((data) => {
       .attr("y1", (d) => d.source.y)
       .attr("x2", (d) => d.target.x)
       .attr("y2", (d) => d.target.y);
-
   }
   setTimeout(() => simulation.stop(), 15000);
-
 
   const regions = [
     { name: "North America", lon: [-96, -14], lat: [21, 64] },
@@ -262,7 +261,7 @@ d3.csv("location_coordinates.csv").then((data) => {
 
     // Determine region based on lon/lat
     const region = getRegionForCenter([lon, lat]);
-    console.log(lon, lat)
+    console.log(lon, lat);
 
     // Update label
     regionLabel.textContent = region;
@@ -277,60 +276,18 @@ d3.csv("location_coordinates.csv").then((data) => {
   const zoom = d3
     .zoom()
     .scaleExtent([minScale, 14]) // min/max zoom
-    // .translateExtent([
-    //   [-450, 30],
-    //   [width + 1000, height + 1000],
-    // ])
+    .translateExtent([
+      [-450, 30],
+      [width + 1000, height + 1000],
+    ])
     .on("zoom", (event) => {
-        const k = event.transform.k; // current zoom scale
-        zoomTransform = event.transform;
+      const k = event.transform.k; // current zoom scale
+      zoomTransform = event.transform;
 
-        // --- Dynamic translate extent ---
-        // When zoomed out (small k), allow larger movement bounds.
-        // When zoomed in (large k), tighten the panning limits.
-        const loosenessBottom = Math.max(0, (14 - k) * 2); // adjust multiplier to taste
-        const loosenessTop = Math.max(0, (8 - k) * 150);
-        let dynamicTranslateExtent = [
-          [-450 - loosenessBottom, 30 - loosenessBottom],
-          [width + loosenessTop, height + loosenessTop],
-        ];
-
-        // Update translate extent dynamically
-        d3.select(svg.node()).call(
-          zoom.translateExtent(dynamicTranslateExtent)
-        );
-    //   zoomTransform = event.transform;
       mapLayer.attr("transform", zoomTransform);
       lineLayer.attr("transform", zoomTransform);
       travelPath.attr("transform", zoomTransform);
     });
-
-    let targetDX = 0;
-    let targetDY = 0;
-
-    container.addEventListener("mousemove", (event) => {
-      const rect = container.getBoundingClientRect();
-      const margin = 50; // distance from edge to start panning
-      const speed = 1; // pixels per frame
-
-      targetDX = 0;
-      targetDY = 0;
-
-      if (event.clientX - rect.left < margin) targetDX = speed;
-      else if (rect.right - event.clientX < margin) targetDX = -speed;
-
-      if (event.clientY - rect.top < margin) targetDY = speed;
-      else if (rect.bottom - event.clientY < margin) targetDY = -speed;
-    });
-
-    function animatePan() {
-      if (targetDX !== 0 || targetDY !== 0) {
-        svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
-      }
-      requestAnimationFrame(animatePan);
-    }
-
-    requestAnimationFrame(animatePan);
 
   // Center initial view on New England
   // Scroll container to center New England initially
@@ -346,35 +303,60 @@ d3.csv("location_coordinates.csv").then((data) => {
   svg.call(zoom).call(zoom.transform, initialTransform);
   // Stop simulation after settling
 
+  let targetDX = 0;
+  let targetDY = 0;
+
+  container.addEventListener("mousemove", (event) => {
+    const rect = container.getBoundingClientRect();
+    const margin = 50; // distance from edge to start panning
+    const speed = 1; // pixels per frame
+
+    targetDX = 0;
+    targetDY = 0;
+
+    if (event.clientX - rect.left < margin) targetDX = speed;
+    else if (rect.right - event.clientX < margin) targetDX = -speed;
+
+    if (event.clientY - rect.top < margin) targetDY = speed;
+    else if (rect.bottom - event.clientY < margin) targetDY = -speed;
+  });
+
+  function animatePan() {
+    if (targetDX !== 0 || targetDY !== 0) {
+      svg.transition().duration(20).call(zoom.translateBy, targetDX, targetDY);
+    }
+    requestAnimationFrame(animatePan);
+  }
+
+  requestAnimationFrame(animatePan);
+
   const title = document.getElementById("title-area");
   title.addEventListener("click", () => {
     const openOverlays = document.querySelectorAll(".page-overlay.opened");
     for (const overlay of openOverlays) {
-        if (overlay.style.display === "block") {
-            overlay.style.display = "none";
-            overlay.classList.remove("opened");
-            //   overlay.classList.replace("opened", "closed");
-            overlay.classList.remove("first-opened");
-            //   overlay.classList.add("closed");
-            return;
-        }
-    };
+      if (overlay.style.display === "block") {
+        overlay.style.display = "none";
+        overlay.classList.remove("opened");
+        //   overlay.classList.replace("opened", "closed");
+        overlay.classList.remove("first-opened");
+        //   overlay.classList.add("closed");
+        return;
+      }
+    }
     svg.call(zoom).call(zoom.transform, initialTransform);
   });
 
   const closeIcons = document.querySelectorAll(".close-icon");
   closeIcons.forEach((icon) => {
     icon.addEventListener("click", () => {
-        const openOverlays = document.querySelectorAll(".page-overlay.opened");
-        for (const overlay of openOverlays) {
-            overlay.classList.remove("opened");
-            overlay.classList.remove("first-opened");
-            overlay.style.display = "none";
-        }
+      const openOverlays = document.querySelectorAll(".page-overlay.opened");
+      for (const overlay of openOverlays) {
+        overlay.classList.remove("opened");
+        overlay.classList.remove("first-opened");
+        overlay.style.display = "none";
+      }
     });
   });
-
-
 
   const nextButtons = document.querySelectorAll(".arrow");
   nextButtons.forEach((button) => {
@@ -392,18 +374,17 @@ d3.csv("location_coordinates.csv").then((data) => {
     aboutPage.classList.add("first-opened");
   });
 
-
-  const regionArea = document.getElementById("region-area")
+  const regionArea = document.getElementById("region-area");
   const aboutPopup = document.getElementById("about-popup");
-  setTimeout(function() {
+  setTimeout(function () {
     aboutPopup.classList.add("hidden");
     regionArea.classList.remove("hidden");
     // aboutPopup.style.display = "none";
-  }, 6000)
+  }, 6000);
   aboutPopup.addEventListener("mouseover", () => {
     aboutPopup.classList.remove("hidden");
     regionArea.classList.add("hidden");
-  })
+  });
   aboutPopup.addEventListener("mouseout", () => {
     aboutPopup.classList.add("hidden");
     regionArea.classList.remove("hidden");
@@ -424,10 +405,9 @@ d3.csv("location_coordinates.csv").then((data) => {
       .call(zoom.scaleBy, 1 / zoomStep, [cx, cy]);
   });
 
-
   svg.node().focus();
 
-  svg.on("keydown", function(event) {
+  svg.on("keydown", function (event) {
     const panAmount = 30;
     const transform = d3.zoomTransform(svg.node());
     let newTransform = transform;
@@ -451,5 +431,4 @@ d3.csv("location_coordinates.csv").then((data) => {
 
     svg.transition().duration(250).call(zoom.transform, newTransform);
   });
-
 });
