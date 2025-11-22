@@ -1,0 +1,80 @@
+<!DOCTYPE html><!--document type declaration-->
+<html>
+    <head><!-- a container for metadata -->
+        <meta charset="utf-8"><!--charset: character encoding capable of encoding all characters on the web  -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!--for browser compatibility: choose rendering engine to view the page in an correct view (for old ver. IE)  -->
+        <title>Letterforms</title><!--declaring the title, or name, of the HTML document. displayed in the browser's title bar-->
+        <meta name="description" content=""><!--keywords/snippet for search engines-->
+        <meta name="viewport" content="width=device-width"><!--the browser will (probably) render the width of the page at the width of its own screen -->
+        <link rel="stylesheet" href="pattern1.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js" integrity="sha512-vPeZ7JCboHcfpqSx5ZD+/jpEhS4JpXxfz9orSvAPPj0EKUVShU2tgy7XkU+oujBJKnWmu4hU7r9MMQNWPfXsYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </head>
+    <body>
+        <canvas></canvas>
+        <a class="next label" href="./pattern2.html">next ></a>
+        <a class="prev label" href="../index.html">< home</a>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const canvas = document.querySelector("canvas");
+                const ctx = canvas.getContext("2d");
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                canvas.width = viewportWidth;
+                canvas.height = viewportHeight;
+                let stripeWidth = viewportWidth;
+
+                let totalHeight = 0;
+                let barSize;
+
+                // parse any color into r, g, b value (got from online)
+                function parseColor(color) {
+                    const temp = document.createElement("div");
+                    temp.style.color = color;
+                    document.body.appendChild(temp);
+
+                    const rgb = window.getComputedStyle(temp).color;
+                    document.body.removeChild(temp);
+
+                    const [r, g, b] = rgb.match(/\d+/g).map(Number);
+                    return { r, g, b };
+                }
+
+                function interpolateColor(color1, color2, t) {
+                    // Convert colors to RGB
+                    const c1 = parseColor(color1);
+                    const c2 = parseColor(color2);
+
+                    // Linear interpolation
+                    const r = c1.r + (c2.r - c1.r) * t;
+                    console.log(r)
+                    const g = c1.g + (c2.g - c1.g) * t;
+                    const b = c1.b + (c2.b - c1.b) * t;
+
+                    return `rgb(${r}, ${g}, ${b})`;
+                }
+
+                function createStripes(height, color1, color2, gap) {
+                    while (totalHeight < viewportHeight) {
+    
+                        const t = totalHeight / viewportHeight;
+                        console.log(t);
+
+                        const gradientColor = interpolateColor(color1, color2, t)
+
+                        ctx.fillStyle = gradientColor;  // temporary
+                        ctx.fillRect(0, totalHeight, viewportWidth, height);
+                        totalHeight = totalHeight + height + gap;
+
+                    }
+
+
+                }
+
+                createStripes(50, "blue", `${"#F54927"}`, 0)
+
+                
+            })
+        </script>
+
+    </body>
+</html>

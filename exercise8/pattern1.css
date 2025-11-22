@@ -1,0 +1,29 @@
+.body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.canvas {
+    left: -10px;
+    top: -10px;
+}
+
+.label {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: none;  
+}
+.label:hover{
+    text-decoration: underline;  
+}
+.next {
+    right: 10px;
+}
+.prev {
+    left: 10px;
+}
