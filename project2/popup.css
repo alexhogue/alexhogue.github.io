@@ -2,6 +2,7 @@
     position:fixed;
     display: flex;
     flex-direction: column;
+    gap: 24px;
     z-index: 100;
     top: 50%;
     left: 50%;
@@ -10,6 +11,7 @@
     border: 1px solid var(--primary-color);
     border-radius: 18px;
     background: rgba(253, 247, 237, 0.50);
+    backdrop-filter: blur(5px);
     width: 70vw;
     min-width: 300px;
 }
@@ -23,22 +25,26 @@
 .content-area{
     display: flex;
     gap: 56px;
+    /* flex-wrap: wrap; */
 }
 
 .data-area {
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    width: 30vw;
     min-width: 250px;
 }
 
 .instruction-area{
     display: flex;
     flex-direction: column;
+    min-width: 250px;
 }
 
 ol {
     font-family: "heebo-body";
-    font-size: 12px;
+    font-size: 14px;
     color: var(--primary-color)
 }
 
@@ -48,3 +54,61 @@ label {
     color: var(--primary-color)
 }
 
+.input-type {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+input {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--primary-color);
+    padding: 6px 18px;
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    padding: 24px 0px;
+    justify-content: flex-end;
+}
+
+.visualize-button {
+    display: flex;
+    padding: 12px 24px;
+    gap: 18px;
+    align-items: center;
+}
+
+.heart-icon {
+    width: 94px;
+    height: 82px;
+}
+
+.activity-button-area label {
+    display: inline-block;
+    padding: 4px 10px;
+    border: solid 1px #ccc;
+    font-size: 16px;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.activity-button-area input[type="radio"] {
+  display: none;
+}
+
+.activity-button-area input[type="radio"]:checked + label {
+  outline: solid 2px var(--primary-color);
+  outline-offset: -1px;
+}
+
+.learn-more-btn {
+    border: none;
+    color: var(--primary-color);
+    font-size: 16px;
+    text-decoration: underline;
+}

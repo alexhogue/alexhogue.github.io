@@ -14,22 +14,32 @@
         <link rel="stylesheet" href="popup.css">
     </head>
     <body><!--all the contents of an HTML document goes here-->
-        <div id="inital-popup" class="overlay">
-            <h1>The Heart Rate Atlas</h1>
+        <div class="overlay inital-overlay">
+            <!-- <h1>The Heart Rate Atlas</h1> -->
             <img class="close-icon" src="./icons/close.svg"/>
             <div class="content-area">
                 <div class="data-area">
-                    <p>Get your pulse here:</p>
+                    <p>Find your pulse here:</p>
                     <div class="input-type" id="age-area">
                         <label for="age-input">Enter your age</label>
                         <input type="text" id="age-input" placeholder="Your age...">
                     </div>
                     <div class="input-type" id="activity-area">
                         <label for="activity-level">Indicate your activity level</label>
+                        <div class="activity-button-area">
+                            <input type="radio" id="low" name="activity-level" value="low">
+                            <label for="low">Low</label>
+
+                            <input type="radio" id="moderate" name="activity-level" value="moderate">
+                            <label for="moderate">Moderate</label>
+                            <input type="radio" id="high" name="activity-level" value="high">
+                            <label for="high">High</label>
+                        </div>
                     </div>
 
                     <div class="input-type" id="heartbeat-area">
                         <label for="heartbeat">Click the heart for every pulse</label>
+                        <img class="heart-icon" src="./icons/heart.svg"/>
                     </div>
 
                 </div>
@@ -42,11 +52,29 @@
                         <li>With the other hand, click the heart icon each time you feel a beat for one minute. 
                             You can also tap the spacebar.</li>
                     </ol>
-                    <div>Learn more about the heart</div>
+                    <div class="button-container">
+                        <button class="learn-more-btn">Learn more about the heart</button>
+                    </div>
 
                 </div>
             </div>
+            <div class="button-container">
+                <button class="visualize-button">
+                    <p>Visualize your heartbeat</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div>
         </div>
+
+        <div id="learn-more-overlay" class="overlay" style="display: none;">
+            <img class="close-icon" src="./icons/close.svg"/>
+
+        </div>
+
         <div id="main-area">
             <div id="header-area">
                 <button class="settings-button">
@@ -54,8 +82,19 @@
                 </button>
                 <h1>The Heart Rate Atlas</h1>
             </div>
-            <div id="sidebar-area">
-                <div>Current settings:</div>
+            <div class="sidebar-area">
+                <div class="metrics-container">
+                    <p>Current metrics:</p>
+                    <div class="metric">
+                        <div>Resting heart rate:</div>
+                    </div>
+                    <div class="metric">
+                        <div>Age:</div>
+                    </div>
+                    <div class="metric">
+                        <div>Activity level:</div>
+                    </div>
+                </div>
                 <div class="states-container">
                 </div>
             </div>
