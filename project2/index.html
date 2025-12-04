@@ -164,6 +164,42 @@
             </div>
         </div>
 
+        <div class="overlay about-overlay" id="stressed-overlay">
+            <img class="close-icon" src="./icons/close.svg"/>
+            <h1>The Stressed Heart Rate</h1>
+            <div class="about-body">
+                <p></p>
+            </div>
+            <div class="button-container">
+                <button class="learn-more-button">
+                    <p>Learn more</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div>
+        </div>
+
+        <div class="overlay about-overlay" id="sleeping-overlay">
+            <img class="close-icon" src="./icons/close.svg"/>
+            <h1>The Sleeping Heart Rate</h1>
+            <div class="about-body">
+                <p></p>
+            </div>
+            <div class="button-container">
+                <button class="learn-more-button">
+                    <p>Learn more</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div>
+        </div>
+
         <div id="learn-more-overlay" class="overlay" style="display: none;">
             <img class="close-icon" src="./icons/close.svg"/>
 
@@ -195,7 +231,7 @@
                         <div class="state-line"></div>
                         <div class="state-label">Resting</div>
                         <div class="current-rate-display active">
-                            Heart rate: <span id="state-rate-display"></span> 
+                            HR: <span id="state-rate-display"></span> 
                             <img class="about-icon" src="icons/about-icon.svg"/> 
                         </div>
                     </div>
@@ -204,41 +240,50 @@
                         <div class="state-line"></div>
                         <div class="state-label">Active</div>
                         <div class="current-rate-display" style="display: none;">
-                            Heart rate: <span id="state-rate-display"></span>
+                            <div>HR: <span id="state-rate-display"></span></div>
                             <img class="about-icon" src="icons/about-icon.svg"/> 
                         </div>
                     </div>
-                    <!-- <div class="state-item" data-state="stressed">
+                    <div class="state-item" data-state="stressed">
                         <div class="state-dot"></div>
                         <div class="state-line"></div>
                         <div class="state-label">Stressed</div>
+                        <div class="current-rate-display" style="display: none;">
+                            <div>HR: <span id="state-rate-display"></span></div>
+                            <img class="about-icon" src="icons/about-icon.svg"/> 
+                        </div>
                     </div>
                     <div class="state-item" data-state="sleeping">
                         <div class="state-dot"></div>
+                        <div class="state-line"></div>
                         <div class="state-label">Sleeping</div>
-                    </div> -->
+                        <div class="current-rate-display" style="display: none;">
+                            <div>HR: <span id="state-rate-display"></span></div>
+                            <img class="about-icon" src="icons/about-icon.svg"/> 
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="heart-container">
                 <div class="shape shape1">
-                    <img class="shape-img img1A" src="./shapes/shape1A.png" />
-                    <img class="shape-img img1B" src="./shapes/shape1B.png"/>
+                    <img class="shape-img img1A" src="./shapes/shape1a.png" />
+                    <img class="shape-img img1B" src="./shapes/shape1b.png"/>
                 </div>
                 <div class="shape shape2">
-                    <img class="shape-img img2A" src="./shapes/shape2A.png" />
-                    <img class="shape-img img2B" src="./shapes/shape2B.png"/>
+                    <img class="shape-img img2A" src="./shapes/shape2a.png" />
+                    <img class="shape-img img2B" src="./shapes/shape2b.png"/>
                 </div>
                 <div class="shape shape3">
-                    <img class="shape-img img3A" src="./shapes/shape3A.png" />
-                    <img class="shape-img img3B" src="./shapes/shape3B.png"/>
+                    <img class="shape-img img3A" src="./shapes/shape3a.png" />
+                    <img class="shape-img img3B" src="./shapes/shape3b.png"/>
                 </div>
                 <div class="shape shape4">
-                    <img class="shape-img img4A" src="./shapes/shape4A.png" />
-                    <img class="shape-img img4B" src="./shapes/shape4A.png"/>
+                    <img class="shape-img img4A" src="./shapes/shape4a.png" />
+                    <img class="shape-img img4B" src="./shapes/shape4a.png"/>
                 </div>
                 <div class="shape shape5">
-                    <img class="shape-img img5A" src="./shapes/shape5A.png" />
-                    <img class="shape-img img5B" src="./shapes/shape5B.png"/>
+                    <img class="shape-img img5A" src="./shapes/shape5a.png" />
+                    <img class="shape-img img5B" src="./shapes/shape5b.png"/>
                 </div>
             </div>
         </div>

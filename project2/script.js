@@ -66,40 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let backgroundColorInterval = null;
   let isOriginalColor = true;
 
-  function animateBackground() {
-    if (backgroundColorInterval) {
-      clearInterval(backgroundColorInterval);
-    }
-
-    if (currentMode === "active" && !paused) {
-        backgroundColorInterval = setInterval(() => {
-        document.body.style.backgroundColor = isOriginalColor
-            ? "#FDF7ED"
-            : "#efd0cf";
-        isOriginalColor = !isOriginalColor;
-        }, currentDuration);
-    }
-  }
-
-  function stopBackgroundAnimate() {
-    if (backgroundColorInterval) {
-      clearInterval(backgroundColorInterval);
-      backgroundColorInterval = null;
-    }
-    // Reset to original color when stopping
-    document.body.style.backgroundColor = "#FDF7ED";
-    isOriginalColor = true;
-  }
-
-  // Start/stop based on mode and pause state
-  function updateBackgroundColorTransition() {
-    if (currentMode === "active" && !paused) {
-      animateBackground();
-    } else {
-      stopBackgroundAnimate();
-    }
-  }
-
 
   closeIcon.forEach((icon) => {
     icon.addEventListener("click", () => {
@@ -251,20 +217,20 @@ document.addEventListener("DOMContentLoaded", function () {
       selector: ".shape1",
       images: {
         resting: {
-          A: "./shapes_active/shape1A.png",
-          B: "./shapes_active/shape1B.png",
+          A: "./shapes_active/shape1a.png",
+          B: "./shapes_active/shape1b.png",
         },
         active: {
-          A: "./shapes_active/shape1A.png",
-          B: "./shapes_active/shape1B.png",
+          A: "./shapes_active/shape1a.png",
+          B: "./shapes_active/shape1b.png",
         },
         stressed: {
-          A: "./shapes_stressed/shape1A.png",
-          B: "./shapes_stressed/shape1B.png",
+          A: "./shapes_stressed/shape1a.png",
+          B: "./shapes_stressed/shape1b.png",
         },
         sleeping: {
-          A: "./shapes_sleeping/shape1A.png",
-          B: "./shapes_sleeping/shape1B.png",
+          A: "./shapes_sleeping/shape1a.png",
+          B: "./shapes_sleeping/shape1b.png",
         },
       },
       A: {
@@ -288,20 +254,20 @@ document.addEventListener("DOMContentLoaded", function () {
       selector: ".shape2",
       images: {
         resting: {
-          A: "./shapes_active/shape2A.png",
-          B: "./shapes_active/shape2B.png",
+          A: "./shapes_active/shape2a.png",
+          B: "./shapes_active/shape2b.png",
         },
         active: {
-          A: "./shapes_active/shape2A.png",
-          B: "./shapes_active/shape2B.png",
+          A: "./shapes_active/shape2a.png",
+          B: "./shapes_active/shape2b.png",
         },
         stressed: {
-          A: "./shapes_stressed/shape2A.png",
-          B: "./shapes_stressed/shape2B.png",
+          A: "./shapes_stressed/shape2a.png",
+          B: "./shapes_stressed/shape2b.png",
         },
         sleeping: {
-          A: "./shapes_sleeping/shape2A.png",
-          B: "./shapes_sleeping/shape2B.png",
+          A: "./shapes_sleeping/shape2a.png",
+          B: "./shapes_sleeping/shape2b.png",
         },
       },
       A: {
@@ -323,8 +289,8 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape3",
-      svgA: "./shapes_active/shape3A.png",
-      svgB: "./shapes_active/shape3B.png",
+      svgA: "./shapes_active/shape3a.png",
+      svgB: "./shapes_active/shape3b.png",
       A: {
         x: -200,
         y: 500,
@@ -344,8 +310,8 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape4",
-      svgA: "./shapes_active/shape4A.png",
-      svgB: "./shapes_active/shape4A.png",
+      svgA: "./shapes_active/shape4a.png",
+      svgB: "./shapes_active/shape4a.png",
       A: {
         x: 170,
         y: 470,
@@ -365,8 +331,8 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape5",
-      svgA: "./shapes_active/shape5A.png",
-      svgB: "./shapes_active/shape5B.png",
+      svgA: "./shapes_active/shape5a.png",
+      svgB: "./shapes_active/shape5b.png",
       A: {
         x: -140,
         y: 200,
@@ -459,6 +425,50 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+
+
+  function getHeartRate(age, activity, RHR) {
+    const activityMap = {
+        Low: "low",
+        Moderate: "moderate",
+        High: "high"
+    }
+
+    let mappedLevel;
+    let maxHR;
+    let activeHR;
+
+    if (activity === null || activityLevel === undefined) {
+      mappedLevel = "moderate";
+    } else {
+      mappedLevel = activityMap[activity] || activityLevel;
+    }
+
+    if (age === null || age === undefined) {
+        activeHR = RHR * 2;
+    } else {
+        maxHR = 220 - age;
+        activeHR =
+          maxHR * { low: 0.55, moderate: 0.65, high: 0.75 }[mappedLevel];
+    }
+
+
+    let sleepHR = RHR * { low: 0.9, moderate: 0.85, high: 0.75 }[mappedLevel];
+
+
+    let stressedHR = RHR + { low: 25, moderate: 18, high: 10 }[mappedLevel];
+
+    return {
+      sleepHR: Math.round(sleepHR),
+      activeHR: Math.round(activeHR),
+      stressedHR: Math.round(stressedHR),
+      restingHR: RHR,
+    };
+
+  }
+
+  
+
   let currentDuration = 1000;
   let restingSpeed = currentDuration;
   let activeSpeed = currentDuration;
@@ -475,23 +485,82 @@ document.addEventListener("DOMContentLoaded", function () {
   updateTransition();
 
   function updateHeartbeatSpeed(bpm) {
+    const heartRates = getHeartRate(ageValue, activityLevel, restingHeartRate);
+    console.log(heartRates);
+
     // Convert BPM → ms per beat, and clamp so it never gets crazy fast/slow
     restingSpeed = Math.max(300, Math.min(2000, Math.round(60000 / bpm)));
-    activeSpeed = restingSpeed * .5;
-    activeHeartRate = Math.round(60000 / activeSpeed);
+    activeHeartRate = heartRates.activeHR;
+    activeSpeed = Math.max(
+      300,
+      Math.min(2000, Math.round(60000 / activeHeartRate))
+    );
+    sleepingHeartRate = heartRates.sleepHR;
+    sleepSpeed = Math.max(
+      300,
+      Math.min(2000, Math.round(60000 / sleepingHeartRate))
+    );
+    stressedHeartRate = heartRates.stressedHR;
+    stressedSpeed = Math.max(
+      300,
+      Math.min(2000, Math.round(60000 / stressedHeartRate))
+    );
+    
+    // activeHeartRate = Math.round(60000 / activeSpeed);
 
     if (currentMode === "resting") {
-        console.log(currentMode);
-        currentDuration = restingSpeed;
-
+      console.log(currentMode);
+      currentDuration = restingSpeed;
+      console.log("duration resting: " + currentDuration);
     } else if (currentMode === "active") {
-        currentDuration = activeSpeed;
-        console.log(currentMode);
+      currentDuration = activeSpeed;
+      console.log("duration active: " + currentDuration);
+    } else if (currentMode === "stressed") {
+      currentDuration = stressedSpeed;
+      console.log("duration stressed: " + currentDuration);
+    } else if (currentMode === "sleeping") {
+      currentDuration = sleepSpeed;
+      console.log("duration sleeping: " + currentDuration);
     }
 
     clearInterval(heartbeatInterval);
     updateTransition();
     heartbeatInterval = setInterval(heartbeat, currentDuration);
+  }
+
+  function animateBackground() {
+    if (backgroundColorInterval) {
+      clearInterval(backgroundColorInterval);
+    }
+
+    if (currentMode === "active" && !paused) {
+      console.log("duration active: " + currentDuration);
+      backgroundColorInterval = setInterval(() => {
+        document.body.style.backgroundColor = isOriginalColor
+          ? "#FDF7ED"
+          : "#efd0cf";
+        isOriginalColor = !isOriginalColor;
+      }, currentDuration);
+    }
+  }
+
+  function stopBackgroundAnimate() {
+    if (backgroundColorInterval) {
+      clearInterval(backgroundColorInterval);
+      backgroundColorInterval = null;
+    }
+    // Reset to original color when stopping
+    document.body.style.backgroundColor = "#FDF7ED";
+    isOriginalColor = true;
+  }
+
+  // Start/stop based on mode and pause state
+  function updateBackgroundColorTransition() {
+    if (currentMode === "active" && !paused) {
+      animateBackground();
+    } else {
+      stopBackgroundAnimate();
+    }
   }
   
 
@@ -550,7 +619,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "#state-rate-display"
         );
         if (rateSpan) {
-          rateSpan.textContent = restingHeartRate;
+          rateSpan.textContent = restingHeartRate + " BPM";
           restingRateDisplay.style.display = "flex";
           restingRateDisplay.classList.add("active");
         }
@@ -618,7 +687,6 @@ document.addEventListener("DOMContentLoaded", function () {
       currentMode = state;
       unpauseHeart();
 
-      updateBackgroundColorTransition();
 
       if (item.classList.contains("active")) {
         pauseHeart();
@@ -650,16 +718,22 @@ document.addEventListener("DOMContentLoaded", function () {
           "#state-rate-display"
         );
         if (currentMode === "active" && activeHeartRate) {
-          rateSpan.textContent = activeHeartRate;
+          rateSpan.textContent = activeHeartRate + " BPM";
           console.log(activeHeartRate);
         } else if (currentMode === "resting" && restingHeartRate) {
-          rateSpan.textContent = restingHeartRate;
+          rateSpan.textContent = restingHeartRate + " BPM";
+        } else if (currentMode === "sleeping" && sleepingHeartRate) {
+          rateSpan.textContent = sleepingHeartRate + " BPM";
+        } else if (currentMode === "stressed" && stressedHeartRate) {
+          rateSpan.textContent = stressedHeartRate + " BPM";
         }
       }
 
       if (restingHeartRate) {
         updateHeartbeatSpeed(restingHeartRate);
       }
+
+      updateBackgroundColorTransition();
 
       if (!overlayEl) return;
     });
