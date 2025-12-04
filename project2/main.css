@@ -8,6 +8,11 @@ font-family: 'Heebo-body';
   	src:  url('./fonts/heebo.regular.ttf') format('truetype');
 }
 
+@font-face {
+font-family: 'Heebo-medium';
+  	src:  url('./fonts/heebo.medium.ttf') format('truetype');
+}
+
 :root {
 --primary-color: #722021;
 --background-color: #FDF7ED;
@@ -17,8 +22,10 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--background-color);
+    -ms-overflow-style: none;
+    transition: background-color 1s ease;
 }
-
+ 
 #main-area {
     width: 100%;
     height: 100%;
@@ -31,6 +38,9 @@ h1 {
     font-family: 'Heebo-title';
     font-size: 24px;
     color: var(--primary-color);
+}
+#main-title {
+    z-index: 100;
 }
 
 #header-area {
@@ -53,7 +63,13 @@ button {
     border: 1px solid var(--primary-color);
     border-radius: 12px;
     backdrop-filter: blur(5px);
-    background: rgba(255, 255, 255, 0.1);
+}
+
+.web-link {
+    color: var(--primary-color);
+}
+.web-link:hover {
+    color: #440001;
 }
 
 .settings-button {
@@ -62,9 +78,24 @@ button {
     top: 10px;
     padding: 18px 24px;
 }
+.metrics-container{
+    padding-left: 10px;
+    gap: 10px;
+}
+.metric{
+    font-family: "heebo-body";
+    color: var(--primary-color);
+}
+body.popup-open #heart-container,
+body.popup-open .sidebar-area, body.popup-open .settings-button {
+  filter: blur(6px);
+  pointer-events: none;    /* prevent clicks on blurred content */
+  transition: filter 0.3s ease;
+}
 
 
 #heart-container{
+    position: relative; 
     width: 100%;
     height: 100%;
     display: flex;
@@ -72,11 +103,25 @@ button {
     justify-content: center;
 }
 .shape {
-    width: 20px;
-    height: 20px;
-    background-color: #722021;
-    will-change: transform;
+    /* transition: all 0.3s ease-in-out; */
+    position: absolute;      /* important for translate */
+    display: block;
+    transform-origin: center center;
 }
+/* .shape1 {
+  width: 50px;
+  height: 50px;
+  background: red;
+} */
+ .shape-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.6s ease;
+}
+
+
 
 .disclaimer {
     font-family: "Heebo-body";
@@ -88,4 +133,81 @@ button {
     position: absolute;
     left: 10px;
     top: 84px;
+}
+
+.states-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+.about-icon {
+    width: 24px;
+    height: auto;
+}
+.state-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+.current-rate-display {
+    display: flex;
+    padding-left: 24px;
+    font-family: "heebo-body";
+    font-size: 18px;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color)
+}
+.state-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #B68673; /* light brown */
+    position: absolute;
+    left: -20px;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+.state-item.active .state-dot {
+    background-color: #8B3A3A; /* darker red-brown */
+    width: 14px;
+    height: 14px;
+    left: -21px;
+}
+.state-line {
+    position: absolute;
+    left: -14px;
+    top: 24px;
+    width: 1.5px;
+    height: 48px;
+    background-color: #B68673; /* dark red */
+    z-index: 1;
+}
+.state-item:last-child .state-line {
+    display: none;
+}
+.state-label {
+    font-family: 'Heebo-body';
+    font-size: 18px;
+    color: #B68673; /* light brown */
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+.state-item.active .state-label {
+    color: #8B3A3A; /* darker red-brown */
+    text-decoration: underline;
+    font-weight: 500;
+}
+.state-item:hover .state-label {
+    color: #722021;
+}
+.img1A {
+    transform: rotate(100deg);
 }

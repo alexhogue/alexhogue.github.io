@@ -12,38 +12,76 @@
         <script src="script.js"></script>
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="popup.css">
+        <link rel="stylesheet" href="about-popup.css">
     </head>
     <body><!--all the contents of an HTML document goes here-->
         <div class="overlay inital-overlay">
             <!-- <h1>The Heart Rate Atlas</h1> -->
-            <img class="close-icon" src="./icons/close.svg"/>
+            <img class="close-icon" id="inital-close-icon" src="./icons/close.svg"/>
             <div class="content-area">
                 <div class="data-area">
-                    <p>Find your pulse here:</p>
-                    <div class="input-type" id="age-area">
-                        <label for="age-input">Enter your age</label>
-                        <input type="text" id="age-input" placeholder="Your age...">
+                    <p id="instruction-header">To visualize your heart rate, follow these easy steps:</p>
+                    <div id="initial-instructions">
+                        <p>These steps will be used to calculate your pulse. To start at a resting baseline, 
+                            relax and take steady breaths. If your heartrate is elevated, wait a minute or 
+                            so for it to slow back down.
+                        </p>
                     </div>
-                    <div class="input-type" id="activity-area">
-                        <label for="activity-level">Indicate your activity level</label>
-                        <div class="activity-button-area">
-                            <input type="radio" id="low" name="activity-level" value="low">
-                            <label for="low">Low</label>
+                    <div class="input-area-cont">
+                        <div class="age-activity-cont">
+                            <div class="input-type" id="age-area">
+                                <div class="step-number">1.</div>
+                                <div class="input-cont">
+                                    <label for="age-input">Enter your age</label>
+                                    <input type="text" id="age-input" placeholder="Your age...">
+                                </div>
+                            </div>
+                            <div class="input-type" id="activity-area">
+                                <div class="step-number">2.</div>
+                                <div class="input-cont">
+                                    <label for="activity-level">Indicate your activity level</label>
+                                    <div class="activity-button-area">
+                                        <input type="radio" id="low" name="activity-level" value="low">
+                                        <label for="low">Low</label>
+                                        <input type="radio" id="moderate" name="activity-level" value="moderate">
+                                        <label for="moderate">Moderate</label>
+                                        <input type="radio" id="high" name="activity-level" value="high">
+                                        <label for="high">High</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <input type="radio" id="moderate" name="activity-level" value="moderate">
-                            <label for="moderate">Moderate</label>
-                            <input type="radio" id="high" name="activity-level" value="high">
-                            <label for="high">High</label>
+                        <div class="input-type" id="heartbeat-area">
+                            <div class="step-number">3.</div>
+                            <div class="input-cont">
+                                <label for="heartbeat"> <ul>
+                                    <li>With one hand, feel your pulse by placing your index and middle fingers on your 
+                                        lower neck, on either side of the windpipe. Press lightly until you feel a pulse.</li>
+                                    <li>With the other hand, click the heart icon each time you feel a beat for one minute. 
+                                        You can also tap the spacebar.</li>
+                                </ul></label>
+                                <div class="heart-pulse-container">
+                                    <img class="heart-icon" src="./icons/abstract-heart.png"/>
+                                    <div class="pulse-info">
+                                        <div id="pulse-count-sec">
+                                            <div id="timer-display">00:60</div>
+                                            <div id="pulse-count">Beats: 0</div>
+                                        </div>
+                                        <div id="heartrate-output-sec">
+                                            <div id="bpm-display" style="display: none;">BPM: --</div>
+                                            <button id="use-average-btn" class="avg-hr-button">
+                                                Use average resting heart rate (72 BPM)
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="input-type" id="heartbeat-area">
-                        <label for="heartbeat">Click the heart for every pulse</label>
-                        <img class="heart-icon" src="./icons/heart.svg"/>
-                    </div>
-
                 </div>
-                <div class="instruction-area">
+                <!-- <div class="instruction-area">
                     <p>To visualize your heart rate, follow these easy steps:</p>
                     <ol>
                         <li>Enter your age.</li>
@@ -56,11 +94,67 @@
                         <button class="learn-more-btn">Learn more about the heart</button>
                     </div>
 
-                </div>
+                </div> -->
             </div>
             <div class="button-container">
                 <button class="visualize-button">
                     <p>Visualize your heartbeat</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div>
+        </div>
+
+        <div class="overlay about-overlay" id="resting-overlay">
+            <img class="close-icon" src="./icons/close.svg"/>
+            <h1>The Resting Heart Rate</h1>
+            <div class="about-body">
+                <p>Your resting heart rate (RHR) is the number of times your heart beats per minute when you're 
+                    awake, calm, and completely at rest. For most healthy adults, a normal RHR falls between 60 
+                    and 100 beats per minute.</p>
+                <p>A lower resting rate often means your heart is more efficient—it doesn’t need to work as 
+                    hard to circulate blood. Very fit people or athletes can have a resting heart rate as low as 
+                    40-60 bpm.</p>
+                <p>Your RHR is a useful baseline for understanding your cardiovascular health, because it reflects 
+                    how relaxed or strained your heart is in everyday life. This visualization uses your resting 
+                    heart rate as the baseline for all other heartbeat states—showing how your heart naturally 
+                    rises and falls throughout moments of activity, stress, and sleep.</p>
+            </div>
+            <div class="button-container">
+                <button class="learn-more-button">
+                    <p>Learn more</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div>
+        </div>
+
+        <div class="overlay about-overlay" id="active-overlay">
+            <img class="close-icon" src="./icons/close.svg"/>
+            <h1>The Active Heart Rate</h1>
+            <div class="about-body">
+                <p>When you’re moving — walking, jogging, doing daily chores — your heart rate rises into a “training zone” 
+                    to meet your body’s increased demands. For many people, this means working at 50–85% of their maximum heart 
+                    rate, depending on how hard they’re going.</p>
+                <p>In this zone, your heart is getting stronger. It’s efficient, sustainable, and a key part of building 
+                    cardiovascular fitness. Experts like the American Heart Association recommend regularly exercising 
+                    within this range for heart health.</p>
+                <p>To find your personal target (<a class="web-link" href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/exercise-intensity/art-20046887?utm_source=chatgpt.com" target="_blank">Mayo Clinic</a>): </p>
+                <ol>
+                    <li>Estimate your max heart rate: ~220 − your age (Mayo Clinic)</li>
+                    <li>Use your resting heart rate (which you provided) to calculate a more accurate “reserve” — often called Heart Rate Reserve (HRR).</li>
+                    <li>Multiply that reserve by your target intensity (like 60–85%) and add your resting rate back.</li>
+                 </ol>
+            </div>
+            <div class="button-container">
+                <button class="learn-more-button">
+                    <p>Learn more</p>
                     <img class="caret-icon" src="./icons/caret.svg"/>
                 </button>
             </div>
@@ -80,30 +174,72 @@
                 <button class="settings-button">
                     <p>Heart rate settings</p>
                 </button>
-                <h1>The Heart Rate Atlas</h1>
+                <h1 id="main-title">The Heart Rate Atlas</h1>
             </div>
             <div class="sidebar-area">
                 <div class="metrics-container">
-                    <p>Current metrics:</p>
+                    <p>Current metrics</p>
                     <div class="metric">
-                        <div>Resting heart rate:</div>
+                        <div>Resting heart rate: <span id="rate-display"></span></div>
                     </div>
                     <div class="metric">
-                        <div>Age:</div>
+                        <div>Age: <span id="age-display"></span></div>
                     </div>
                     <div class="metric">
-                        <div>Activity level:</div>
+                        <div>Activity level: <span id="activity-display"></span></div>
                     </div>
                 </div>
                 <div class="states-container">
+                    <div class="state-item active" data-state="resting">
+                        <div class="state-dot"></div>
+                        <div class="state-line"></div>
+                        <div class="state-label">Resting</div>
+                        <div class="current-rate-display active">
+                            Heart rate: <span id="state-rate-display"></span> 
+                            <img class="about-icon" src="icons/about-icon.svg"/> 
+                        </div>
+                    </div>
+                    <div class="state-item" data-state="active">
+                        <div class="state-dot"></div>
+                        <div class="state-line"></div>
+                        <div class="state-label">Active</div>
+                        <div class="current-rate-display" style="display: none;">
+                            Heart rate: <span id="state-rate-display"></span>
+                            <img class="about-icon" src="icons/about-icon.svg"/> 
+                        </div>
+                    </div>
+                    <!-- <div class="state-item" data-state="stressed">
+                        <div class="state-dot"></div>
+                        <div class="state-line"></div>
+                        <div class="state-label">Stressed</div>
+                    </div>
+                    <div class="state-item" data-state="sleeping">
+                        <div class="state-dot"></div>
+                        <div class="state-label">Sleeping</div>
+                    </div> -->
                 </div>
             </div>
             <div id="heart-container">
-                <div class="shape shape1"></div>
-                <div class="shape shape2"></div>
-                <div class="shape shape3"></div>
-                <div class="shape shape4"></div>
-                <div class="shape shape5"></div>
+                <div class="shape shape1">
+                    <img class="shape-img img1A" src="./shapes/shape1A.png" />
+                    <img class="shape-img img1B" src="./shapes/shape1B.png"/>
+                </div>
+                <div class="shape shape2">
+                    <img class="shape-img img2A" src="./shapes/shape2A.png" />
+                    <img class="shape-img img2B" src="./shapes/shape2B.png"/>
+                </div>
+                <div class="shape shape3">
+                    <img class="shape-img img3A" src="./shapes/shape3A.png" />
+                    <img class="shape-img img3B" src="./shapes/shape3B.png"/>
+                </div>
+                <div class="shape shape4">
+                    <img class="shape-img img4A" src="./shapes/shape4A.png" />
+                    <img class="shape-img img4B" src="./shapes/shape4A.png"/>
+                </div>
+                <div class="shape shape5">
+                    <img class="shape-img img5A" src="./shapes/shape5A.png" />
+                    <img class="shape-img img5B" src="./shapes/shape5B.png"/>
+                </div>
             </div>
         </div>
     </body>

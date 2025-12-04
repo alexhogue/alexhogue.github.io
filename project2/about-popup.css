@@ -1,0 +1,23 @@
+.about-overlay {
+  display: none;
+}
+
+.about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.learn-more-button {
+    display: flex;
+    padding: 12px 24px;
+    gap: 18px;
+    align-items: center;
+}
+
+ol li {
+    font-family: "heebo-body";
+    font-size: 18px;
+    color: var(--primary-color)
+
+}

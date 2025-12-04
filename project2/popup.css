@@ -1,100 +1,172 @@
 .overlay {
-    position:fixed;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    z-index: 100;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 36px 48px;
-    border: 1px solid var(--primary-color);
-    border-radius: 18px;
-    background: rgba(253, 247, 237, 0.50);
-    backdrop-filter: blur(5px);
-    width: 70vw;
-    min-width: 300px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 36px 56px 24px 56px;
+  border: 1px solid var(--primary-color);
+  border-radius: 18px;
+  background: rgba(253, 247, 237, 0.5);
+  backdrop-filter: blur(5px);
+  width: 55vw;
+  min-width: 300px;
 }
 
-.close-icon{
-    position: absolute;
-    right:10px;
-    top:10px;
+.close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
-.content-area{
-    display: flex;
-    gap: 56px;
-    /* flex-wrap: wrap; */
+.content-area {
+  display: flex;
 }
 
 .data-area {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 30vw;
-    min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 250px;
 }
 
-.instruction-area{
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
+#initial-instructions p {
+  font-size: 16px;
 }
 
-ol {
-    font-family: "heebo-body";
-    font-size: 14px;
-    color: var(--primary-color)
+.instruction-area {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+}
+
+#instruction-header {
+  font-family: "heebo-medium";
+}
+
+ul {
+  font-family: "heebo-body";
+  font-size: 16px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: var(--primary-color);
+}
+ul li {
+  margin-bottom: 4px;
+}
+
+.input-area-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.age-activity-cont {
+  display: flex;
+  justify-content: space-between;
 }
 
 label {
-    font-family: "heebo-body";
-    font-size: 12px;
-    color: var(--primary-color)
+  font-family: "heebo-body";
+  font-size: 12px;
+  color: var(--primary-color);
+}
+
+.step-number {
+  font-family: "heebo-title";
+  font-size: 48px;
+  padding-right: 12px;
+  color: var(--primary-color);
 }
 
 .input-type {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.input-cont {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  gap: 6px;
 }
 
 input {
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    border-radius: 12px;
-    font-size: 16px;
-    color: var(--primary-color);
-    padding: 6px 18px;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--primary-color);
+  padding: 6px 18px;
 }
 
 .button-container {
-    width: 100%;
-    display: flex;
-    padding: 24px 0px;
-    justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  padding: 0px 0px 12px 0px;
+  justify-content: flex-end;
 }
 
 .visualize-button {
-    display: flex;
-    padding: 12px 24px;
-    gap: 18px;
-    align-items: center;
+  display: flex;
+  padding: 12px 24px;
+  gap: 24px;
+  align-items: center;
 }
-
+#heartbeat-area {
+  width: 100%;
+}
+.heart-pulse-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: -12px;
+  margin-bottom: -24px;
+}
 .heart-icon {
-    width: 94px;
-    height: 82px;
+  width: 200px;
+  height: auto;
 }
-
+.pulse-info {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  font-family: "heebo-body";
+  font-size: 16px;
+  color: var(--primary-color);
+}
+#pulse-count-sec {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#heartrate-output-sec {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-left: 24px;
+  border-left: 1.5px solid var(--primary-color);
+}
+.activity-button-area {
+  display: flex;
+  justify-content: space-between;
+}
 .activity-button-area label {
-    display: inline-block;
-    padding: 4px 10px;
-    border: solid 1px #ccc;
-    font-size: 16px;
-    border-radius: 12px;
-    transition: all 0.3s;
+  display: inline-block;
+  padding: 4px 12px;
+  border: solid 1px #ccc;
+  font-size: 16px;
+  border-radius: 12px;
+  transition: all 0.3s;
 }
 
 .activity-button-area input[type="radio"] {
@@ -107,8 +179,24 @@ input {
 }
 
 .learn-more-btn {
-    border: none;
-    color: var(--primary-color);
-    font-size: 16px;
-    text-decoration: underline;
+  border: none;
+  color: var(--primary-color);
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.heart-icon {
+  transition: transform 0.2s ease;
+}
+
+.avg-hr-button {
+  margin-top: 8px;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  color: var(--primary-color);
+  font-family: "heebo-body";
+  font-size: 16px;
+  text-decoration: underline;
+  cursor: pointer;
 }
