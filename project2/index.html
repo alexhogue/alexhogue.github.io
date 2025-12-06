@@ -39,7 +39,7 @@
                             <div class="input-type" id="activity-area">
                                 <div class="step-number">2.</div>
                                 <div class="input-cont">
-                                    <label for="activity-level">Indicate your activity level</label>
+                                    <label for="activity-level">Select how active you are in a typical week</label>
                                     <div class="activity-button-area">
                                         <input type="radio" id="low" name="activity-level" value="low">
                                         <label for="low">Low</label>
@@ -58,14 +58,14 @@
                                 <label for="heartbeat"> <ul>
                                     <li>With one hand, feel your pulse by placing your index and middle fingers on your 
                                         lower neck, on either side of the windpipe. Press lightly until you feel a pulse.</li>
-                                    <li>With the other hand, click the heart icon each time you feel a beat for one minute. 
+                                    <li>With the other hand, click the heart icon each time you feel a beat for 30 seconds. 
                                         You can also tap the spacebar.</li>
                                 </ul></label>
                                 <div class="heart-pulse-container">
                                     <img class="heart-icon" src="./icons/abstract-heart.png"/>
                                     <div class="pulse-info">
                                         <div id="pulse-count-sec">
-                                            <div id="timer-display">00:60</div>
+                                            <div id="timer-display">00:30</div> 
                                             <div id="pulse-count">Beats: 0</div>
                                         </div>
                                         <div id="heartrate-output-sec">
@@ -123,12 +123,12 @@
                     heart rate as the baseline for all other heartbeat states—showing how your heart naturally 
                     rises and falls throughout moments of activity, stress, and sleep.</p>
             </div>
-            <div class="button-container">
+            <!-- <div class="button-container">
                 <button class="learn-more-button">
                     <p>Learn more</p>
                     <img class="caret-icon" src="./icons/caret.svg"/>
                 </button>
-            </div>
+            </div> -->
             <div class="disclaimer">
                 <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
                 and should not be used to measure, diagnose, or monitor any health condition. 
@@ -152,12 +152,12 @@
                     <li>Multiply that reserve by your target intensity (like 60–85%) and add your resting rate back.</li>
                  </ol>
             </div>
-            <div class="button-container">
+            <!-- <div class="button-container">
                 <button class="learn-more-button">
                     <p>Learn more</p>
                     <img class="caret-icon" src="./icons/caret.svg"/>
                 </button>
-            </div>
+            </div> -->
             <div class="disclaimer">
                 <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
                 and should not be used to measure, diagnose, or monitor any health condition. 
@@ -170,12 +170,12 @@
             <div class="about-body">
                 <p></p>
             </div>
-            <div class="button-container">
+            <!-- <div class="button-container">
                 <button class="learn-more-button">
                     <p>Learn more</p>
                     <img class="caret-icon" src="./icons/caret.svg"/>
                 </button>
-            </div>
+            </div> -->
             <div class="disclaimer">
                 <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
                 and should not be used to measure, diagnose, or monitor any health condition. 
@@ -188,12 +188,12 @@
             <div class="about-body">
                 <p></p>
             </div>
-            <div class="button-container">
+            <!-- <div class="button-container">
                 <button class="learn-more-button">
                     <p>Learn more</p>
                     <img class="caret-icon" src="./icons/caret.svg"/>
                 </button>
-            </div>
+            </div> -->
             <div class="disclaimer">
                 <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
                 and should not be used to measure, diagnose, or monitor any health condition. 
@@ -231,7 +231,7 @@
                         <div class="state-line"></div>
                         <div class="state-label">Resting</div>
                         <div class="current-rate-display active">
-                            HR: <span id="state-rate-display"></span> 
+                            <div>HR: <span id="state-rate-display"></span></div> 
                             <img class="about-icon" src="icons/about-icon.svg"/> 
                         </div>
                     </div>

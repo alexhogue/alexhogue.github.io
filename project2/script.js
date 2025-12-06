@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const closeIcon = document.querySelectorAll(".close-icon");
-  const initialClose = document.getElementById("inital-close-icon");
   const overlay = document.querySelector(".overlay");
   const settingBtn = document.querySelector(".settings-button");
   const shapes = document.querySelectorAll(".shape");
@@ -39,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-
   window.addEventListener("keydown", function (event) {
     if (event.code === "Space" || event.keyCode === 32) {
       document.body.style.overflow = "hidden";
@@ -60,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let lastPulseTime = null;
   let restingHeartRate = null;
   let activeHeartRate = null;
-  let timerSeconds = 60;
+  let timerSeconds = 30;
   let timerInterval = null;
   let currentMode = "resting";
   let backgroundColorInterval = null;
@@ -90,8 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
-
-
   settingBtn.addEventListener("click", () => {
     overlay.style.display = "block";
     document.body.classList.add("popup-open");
@@ -101,16 +97,34 @@ document.addEventListener("DOMContentLoaded", function () {
   function recordPulse() {
     const now = Date.now();
 
-   if (!pulseStartTime) {
+    console.log("pulse start" + pulseStartTime);
+
+   if (!pulseStartTime || timerSeconds === 0) {
+     pulseCount = 0;
+     lastPulseTime = null;
      pulseStartTime = now;
-     timerSeconds = 60;
-    //  if (timerDisplay) {
-    //    timerDisplay.textContent = "0:59";
-    //  }
+     timerSeconds = 30;
+
+     if (timerInterval) {
+       clearInterval(timerInterval);
+       timerInterval = null;
+     }
+
+     // Reset displays
+     if (timerDisplay) {
+       timerDisplay.textContent = "00:30";
+     }
+     if (pulseCountDisplay) {
+       pulseCountDisplay.textContent = "Beats: 0";
+     }
+     if (bpmDisplay) {
+       bpmDisplay.style.display = "none";
+     }
+
      timerInterval = setInterval(() => {
        timerSeconds--;
-       const m = Math.floor(timerSeconds / 60);
-       const s = timerSeconds % 60;
+       const m = Math.floor(timerSeconds / 30);
+       const s = timerSeconds % 30;
        if (timerDisplay) {
          timerDisplay.textContent = `${m.toString().padStart(2, "0")}:${s
            .toString()
@@ -181,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return null;
     }
 
-    const bpm = Math.round((pulseCount / elapsedSeconds) * 60);
+    const bpm = Math.round((pulseCount / elapsedSeconds) * 30) * 2;
     return bpm;
   }
   
@@ -660,12 +674,37 @@ document.addEventListener("DOMContentLoaded", function () {
       bpmDisplay.textContent = `BPM: ${restingHeartRate}`;
       bpmDisplay.style.display = "block";
     }
+    
+    stateItems.forEach((item) => {
+      const rateDisplay = item.querySelectorAll(".current-rate-display");
+      rateDisplay.forEach((display) => {
+        const bpmDisplay = display.querySelector("#state-rate-display");
+        if (
+          bpmDisplay ||
+          display.style.display === "flex" ||
+          display.classList.contains("active")
+        ) {
+          bpmDisplay.textContent = "";
+          display.style.display = "none";
+          display.classList.remove("active");
+        }
+      });
+    });
+
+    currentMode = "resting";
+    updateShapeImagesForMode(currentMode);
+
+    stateItems.forEach((item) => {
+      item.classList.remove("active");
+    });
+
 
     // Update the rateSpan in the resting state item immediately
     const restingStateItem = document.querySelector(
       '.state-item[data-state="resting"]'
     );
     if (restingStateItem) {
+      restingStateItem.classList.add("active");
       const restingRateDisplay = restingStateItem.querySelector(
         ".current-rate-display"
       );
@@ -719,10 +758,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (rateDisplay) {
       rateDisplay.textContent = bpm;
-    } 
+    }
     if (bpmDisplay) {
       bpmDisplay.textContent = `BPM: ${bpm}`;
       bpmDisplay.style.display = "block";
+    }
+
+    stateItems.forEach((item) => {
+      const rateDisplay = item.querySelectorAll(".current-rate-display");
+      rateDisplay.forEach((display) => {
+        const bpmDisplay = display.querySelector("#state-rate-display");
+        if (
+          bpmDisplay ||
+          display.style.display === "flex" ||
+          display.classList.contains("active")
+        ) {
+          bpmDisplay.textContent = "";
+          display.style.display = "none";
+          display.classList.remove("active");
+        }
+      });
+    });
+
+    stateItems.forEach((item) => {
+        const rateDisplay = item.querySelectorAll(".current-rate-display");
+        rateDisplay.forEach((display) => {
+            const bpmDisplay = display.querySelector("#state-rate-display");
+            if (display.style.display === "flex" || display.classList.contains("active")) {
+                rateSpan.textContent = "";
+                display.style.display = "none";
+                display.classList.remove("active");
+            }
+        })
+    })
+
+    currentMode = "resting";
+    updateShapeImagesForMode(currentMode);
+
+    stateItems.forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    // Update the rateSpan in the resting state item immediately
+    const restingStateItem = document.querySelector(
+      '.state-item[data-state="resting"]'
+    );
+    if (restingStateItem) {
+      restingStateItem.classList.add("active");
+      const restingRateDisplay = restingStateItem.querySelector(
+        ".current-rate-display"
+      );
+      if (restingRateDisplay) {
+        const rateSpan = restingRateDisplay.querySelector(
+          "#state-rate-display"
+        );
+        if (rateSpan) {
+          rateSpan.textContent = restingHeartRate + " BPM";
+          restingRateDisplay.style.display = "flex";
+          restingRateDisplay.classList.add("active");
+        }
+      }
     }
 
     // Match visual heartbeat speed to measured BPM
