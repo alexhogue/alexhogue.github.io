@@ -131,8 +131,10 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
 
 .sidebar-area {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     left: 10px;
-    top: 84px;
+    top: 96px;
 }
 
 .states-container {
@@ -140,7 +142,7 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
     flex-direction: column;
     gap: 0;
     position: relative;
-    padding-left: 20px;
+    padding-left: 30px;
     margin-top: 20px;
 }
 .about-icon {

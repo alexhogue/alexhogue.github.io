@@ -191,7 +191,11 @@ document.addEventListener("DOMContentLoaded", function () {
     return restingHeartRate * 2;
   }
 
-  ageValue = 0;
+  ageValue = null;
+
+  if (ageValue === null) {
+    ageDisplay.textContent = "not provided";
+  }
 
   ageInput.addEventListener("input", () => {
     ageValue = ageInput.value;
@@ -199,6 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   activityLevel = null;
+  if (activityLevel === null) {
+    actDisplay.textContent = "not provided";
+  }
 
   activityRadios.forEach((radio) => {
     radio.addEventListener("change", () => {
@@ -217,8 +224,8 @@ document.addEventListener("DOMContentLoaded", function () {
       selector: ".shape1",
       images: {
         resting: {
-          A: "./shapes_active/shape1a.png",
-          B: "./shapes_active/shape1b.png",
+          A: "./shapes_resting/shape1a.png",
+          B: "./shapes_resting/shape1b.png",
         },
         active: {
           A: "./shapes_active/shape1a.png",
@@ -254,8 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
       selector: ".shape2",
       images: {
         resting: {
-          A: "./shapes_active/shape2a.png",
-          B: "./shapes_active/shape2b.png",
+          A: "./shapes_resting/shape2a.png",
+          B: "./shapes_resting/shape2b.png",
         },
         active: {
           A: "./shapes_active/shape2a.png",
@@ -289,8 +296,24 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape3",
-      svgA: "./shapes_active/shape3a.png",
-      svgB: "./shapes_active/shape3b.png",
+      images: {
+        resting: {
+          A: "./shapes_resting/shape3a.png",
+          B: "./shapes_resting/shape3b.png",
+        },
+        active: {
+          A: "./shapes_active/shape3a.png",
+          B: "./shapes_active/shape3b.png",
+        },
+        stressed: {
+          A: "./shapes_stressed/shape3a.png",
+          B: "./shapes_stressed/shape3b.png",
+        },
+        sleeping: {
+          A: "./shapes_sleeping/shape3a.png",
+          B: "./shapes_sleeping/shape3b.png",
+        },
+      },
       A: {
         x: -200,
         y: 500,
@@ -310,8 +333,24 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape4",
-      svgA: "./shapes_active/shape4a.png",
-      svgB: "./shapes_active/shape4a.png",
+      images: {
+        resting: {
+          A: "./shapes_resting/shape4a.png",
+          B: "./shapes_resting/shape4b.png",
+        },
+        active: {
+          A: "./shapes_active/shape4a.png",
+          B: "./shapes_active/shape4b.png",
+        },
+        stressed: {
+          A: "./shapes_stressed/shape4a.png",
+          B: "./shapes_stressed/shape4b.png",
+        },
+        sleeping: {
+          A: "./shapes_sleeping/shape4a.png",
+          B: "./shapes_sleeping/shape4b.png",
+        },
+      },
       A: {
         x: 170,
         y: 470,
@@ -331,8 +370,24 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       selector: ".shape5",
-      svgA: "./shapes_active/shape5a.png",
-      svgB: "./shapes_active/shape5b.png",
+      images: {
+        resting: {
+          A: "./shapes_resting/shape5a.png",
+          B: "./shapes_resting/shape5b.png",
+        },
+        active: {
+          A: "./shapes_active/shape5a.png",
+          B: "./shapes_active/shape5b.png",
+        },
+        stressed: {
+          A: "./shapes_stressed/shape5a.png",
+          B: "./shapes_stressed/shape5b.png",
+        },
+        sleeping: {
+          A: "./shapes_sleeping/shape5a.png",
+          B: "./shapes_sleeping/shape5b.png",
+        },
+      },
       A: {
         x: -140,
         y: 200,
