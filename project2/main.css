@@ -21,6 +21,7 @@ font-family: 'Heebo-medium';
 body {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     background-color: var(--background-color);
     -ms-overflow-style: none;
     transition: background-color 1s ease;
@@ -74,7 +75,7 @@ button {
 
 .settings-button {
     position:absolute;
-    left: 10px;
+    left: 20px;
     top: 10px;
     padding: 18px 24px;
 }
@@ -133,6 +134,7 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
     position: absolute;
     display: flex;
     flex-direction: column;
+    gap: 24px;
     left: 10px;
     top: 96px;
 }
@@ -143,7 +145,6 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
     gap: 0;
     position: relative;
     padding-left: 30px;
-    margin-top: 20px;
 }
 .about-icon {
     width: 24px;
@@ -213,3 +214,21 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
 .img1A {
     transform: rotate(100deg);
 }
+
+.learn-more-area{
+    padding-left: 5px;
+}
+.learn-more-button {
+    display: flex;
+    padding: 6px 12px;
+    gap: 18px;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: border 0.3s ease, color 0.3s ease;
+}
+.learn-more-button:hover {
+    color: #5b0c0e;
+    border: 1px solid var(--primary-color);
+    transition: border 0.3s ease, color 0.3s ease;
+}
+

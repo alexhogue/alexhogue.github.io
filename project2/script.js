@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerDisplay = document.getElementById("timer-display");
   const pulseCountDisplay = document.getElementById("pulse-count");
   const bpmDisplay = document.getElementById("bpm-display");
+  const learnMoreBtn = document.querySelector(".learn-more-button");
+  const learnOverlay = document.querySelector(".learn-more-overlay");
 
   let paused = true;
   document.body.classList.add("popup-open");
@@ -87,12 +89,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-
   settingBtn.addEventListener("click", () => {
     overlay.style.display = "block";
     document.body.classList.add("popup-open");
     pauseHeart();
   });
+
+  learnMoreBtn.addEventListener("click", () => {
+    learnOverlay.style.display = "block";
+    document.body.classList.add("popup-open");
+    pauseHeart();
+  })
 
   function recordPulse() {
     const now = Date.now();
@@ -361,8 +368,8 @@ document.addEventListener("DOMContentLoaded", function () {
           B: "./shapes_stressed/shape4b.png",
         },
         sleeping: {
-          A: "./shapes_sleeping/shape4a.png",
-          B: "./shapes_sleeping/shape4b.png",
+          A: "./shapes_sleeping/shape4b.png",
+          B: "./shapes_sleeping/shape4a.png",
         },
       },
       A: {
@@ -370,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
         y: 470,
         width: 225,
         height: 221,
-        rotate: "220deg",
+        rotate: "-190deg",
         //   filter: "blur(50px)",
       },
       B: {
@@ -404,10 +411,10 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       A: {
         x: -140,
-        y: 200,
+        y: 180,
         width: 160,
         height: 165,
-        rotate: "0deg",
+        rotate: "180deg",
         //   filter: "blur(50px)",
       },
       B: {
@@ -415,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function () {
         y: 650,
         width: 200,
         height: 200,
-        rotate: "-50deg",
+        rotate: "100deg",
         //   filter: "blur(50px)",
       },
     },
@@ -514,18 +521,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (age === null || age === undefined) {
-        activeHR = RHR * 2;
+        maxHR = 200;
+        activeHR = maxHR * { low: 0.55, moderate: 0.65, high: 0.80 }[mappedLevel];
     } else {
         maxHR = 220 - age;
         activeHR =
-          maxHR * { low: 0.55, moderate: 0.65, high: 0.75 }[mappedLevel];
+          maxHR * { low: 0.55, moderate: 0.65, high: 0.80 }[mappedLevel];
     }
 
+    let sleepHR = RHR * 0.85;
 
-    let sleepHR = RHR * { low: 0.9, moderate: 0.85, high: 0.75 }[mappedLevel];
 
-
-    let stressedHR = RHR + { low: 25, moderate: 18, high: 10 }[mappedLevel];
+    let stressedHR = RHR * 1.15;
 
     return {
       sleepHR: Math.round(sleepHR),
@@ -607,7 +614,18 @@ document.addEventListener("DOMContentLoaded", function () {
       backgroundColorInterval = setInterval(() => {
         document.body.style.backgroundColor = isOriginalColor
           ? "#FDF7ED"
-          : "#efd0cf";
+          : "#F9CCCA";
+        isOriginalColor = !isOriginalColor;
+      }, currentDuration);
+    }
+    if (currentMode === "sleeping") {
+        document.body.style.backgroundColor = "#EEDEEE";
+    }
+    if (currentMode === "stressed") {
+      backgroundColorInterval = setInterval(() => {
+        document.body.style.backgroundColor = isOriginalColor
+          ? "#FFAE99"
+          : "#FDF7ED";
         isOriginalColor = !isOriginalColor;
       }, currentDuration);
     }
@@ -625,7 +643,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Start/stop based on mode and pause state
   function updateBackgroundColorTransition() {
-    if (currentMode === "active" && !paused) {
+    if (currentMode !== "resting" && !paused) {
       animateBackground();
     } else {
       stopBackgroundAnimate();
