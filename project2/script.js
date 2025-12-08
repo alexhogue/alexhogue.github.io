@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const alertOverlay = document.querySelector(".alert-overlay");
   const alertButton = document.querySelector(".alert-button");
   const alertMessage = document.querySelector(".alert-message");
+  const bpmOverlay = document.querySelector(".bpm-overlay");
+  const bpmMessage = document.querySelector(".bpm-message");
 
   let paused = true;
   document.body.classList.add("popup-open");
@@ -54,6 +56,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.remove("alert-open");
   }
 
+  function showBPMAlert(message) {
+    bpmMessage.textContent = message;
+    bpmOverlay.style.display = "flex";
+    document.body.classList.add("alert-open");
+  }
+  function removeBPMAlert() {
+    bpmMessage.textContent = "none";
+    bpmOverlay.style.display = "none";
+    document.body.classList.remove("alert-open");
+  }
+
   alertButton.addEventListener("click", () => {
     removeAlert();
   })
@@ -83,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentMode = "resting";
   let backgroundColorInterval = null;
   let isOriginalColor = true;
+  let pulseClickDisabled = false;
 
 
   closeIcon.forEach((icon) => {
@@ -122,67 +136,90 @@ document.addEventListener("DOMContentLoaded", function () {
     pauseHeart();
   })
 
+  let bpm;
+
   function recordPulse() {
+    if (pulseClickDisabled) {
+      return; // Exit early if clicks are disabled
+    }
+
     const now = Date.now();
 
     console.log("pulse start" + pulseStartTime);
 
    if (!pulseStartTime || timerSeconds === 0) {
-     pulseCount = 0;
-     lastPulseTime = null;
-     pulseStartTime = now;
-     timerSeconds = 30;
+        pulseCount = 0;
+        lastPulseTime = null;
+        pulseStartTime = now;
+        timerSeconds = 30;
 
-     if (timerInterval) {
-       clearInterval(timerInterval);
-       timerInterval = null;
-     }
+        if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        }
 
-     // Reset displays
-     if (timerDisplay) {
-       timerDisplay.textContent = "00:30";
-     }
-     if (pulseCountDisplay) {
-       pulseCountDisplay.textContent = "Beats: 0";
-     }
-     if (bpmDisplay) {
-       bpmDisplay.style.display = "none";
-     }
+        // Reset displays
+        if (timerDisplay) {
+        timerDisplay.textContent = "Time left: 00:30";
+        }
+        if (pulseCountDisplay) {
+        pulseCountDisplay.textContent = "Beats: 0";
+        }
+        if (bpmDisplay) {
+        bpmDisplay.style.display = "none";
+        }
 
-     timerInterval = setInterval(() => {
-       timerSeconds--;
-       const m = Math.floor(timerSeconds / 30);
-       const s = timerSeconds % 30;
-       if (timerDisplay) {
-         timerDisplay.textContent = `${m.toString().padStart(2, "0")}:${s
-           .toString()
-           .padStart(2, "0")}`;
-       }
+        timerInterval = setInterval(() => {
+        timerSeconds--;
+        const m = Math.floor(timerSeconds / 30);
+        const s = timerSeconds % 30;
+        if (timerDisplay) {
+            timerDisplay.textContent = `Time left: ${m.toString().padStart(2, "0")}:${s
+            .toString()
+            .padStart(2, "0")}`;
+        }
 
-       if (timerSeconds <= 0) {
-         clearInterval(timerInterval);
-         timerInterval = null;
+        if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
 
-         const bpm = computeRestingHeartRate();
-         if (bpm && bpmDisplay) {
-           bpmDisplay.textContent = `BPM: ${bpm}`;
-           bpmDisplay.style.display = "block";
-         }
-       }
-     }, 1000);
-   }
-   lastPulseTime = now;
-   pulseCount++;
+            bpm = computeRestingHeartRate();
+            
+            if (bpm && bpmDisplay) {
+            bpmDisplay.textContent = `Your resting heart rate: ${bpm}`;
+            bpmDisplay.style.display = "block";
+            }
 
-   if (pulseCountDisplay) {
-     pulseCountDisplay.textContent = `Beats: ${pulseCount}`;
-   } 
+            restingHeartRate = bpm;
 
-   // Visual feedback
-   heartCalc.style.transform = "scale(1.3)";
-   setTimeout(() => {
-     heartCalc.style.transform = "scale(1)";
-   }, 120);
+            console.log("in if" + restingHeartRate);
+
+            pulseClickDisabled = true;
+
+            heartCalc.style.opacity = "0.5";
+            heartCalc.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                pulseClickDisabled = false;
+                heartCalc.style.opacity = "1";
+                heartCalc.style.pointerEvents = "auto";
+            }, 4000);
+        }
+        }, 1000);
+    }
+
+    lastPulseTime = now;
+    pulseCount++;
+
+    if (pulseCountDisplay) {
+        pulseCountDisplay.textContent = `Beats: ${pulseCount}`;
+    } 
+
+    // Visual feedback
+    heartCalc.style.transform = "scale(1.3)";
+    setTimeout(() => {
+        heartCalc.style.transform = "scale(1)";
+    }, 120);
   }
 
   // Click on heart = one beat
@@ -216,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Need at least a couple of taps
-    if (!pulseStartTime || !lastPulseTime || pulseCount < 10) {
+    if (!pulseStartTime || !lastPulseTime || pulseCount < 20) {
         // alert(
         //   "Please click the heart icon according to your pulse for 30 seconds to get an accurate estimate."
         // );
@@ -240,7 +277,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const bpm = Math.round((pulseCount / elapsedSeconds) * 30) * 2;
-    return bpm;
+
+    if (bpm >= 110) {
+      showAlert(
+        "Your resting heart rate is above the usual 60–100 bpm range. Many things (stress, caffeine, or recent activity, etc.) can raise it temporarily. If your heart rate stays elevated or you’re feeling unwell, consider checking in with a healthcare professional."
+      );
+      timerDisplay.textContent = "Time left: 00:30";
+      pulseCountDisplay.textContent = "Beats: 0";
+      bpmDisplay.style.display = "none";
+      return null;
+    } else {
+      showAlert(
+        `Your resting heart rate is ${bpm} beats per minute! Continue to visualize your heart beat under various conditions.`
+      ); 
+    }
+    return bpm; 
   }
 
 
@@ -726,7 +777,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rateDisplay.textContent = restingHeartRate;
     }
     if (bpmDisplay) {
-      bpmDisplay.textContent = `BPM: ${restingHeartRate}`;
+      bpmDisplay.textContent = `Your resting heart rate: ${restingHeartRate}`;
       bpmDisplay.style.display = "block";
     }
     
@@ -800,7 +851,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   visualizeBtn.addEventListener("click", () => {
-    const bpm = computeRestingHeartRate();
+    // const bpm = computeRestingHeartRate();
+    const bpm = restingHeartRate;
+    console.log("visualize" + restingHeartRate);
 
     if (!bpm) {
     //   alert(
@@ -815,7 +868,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rateDisplay.textContent = bpm;
     }
     if (bpmDisplay) {
-      bpmDisplay.textContent = `BPM: ${bpm}`;
+      bpmDisplay.textContent = `Your resting heart rate: ${bpm}`;
       bpmDisplay.style.display = "block";
     }
 

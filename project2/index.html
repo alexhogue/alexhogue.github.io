@@ -22,9 +22,8 @@
                 <div class="data-area">
                     <p id="instruction-header">To visualize your heart rate, follow these easy steps:</p>
                     <div id="initial-instructions">
-                        <p>These steps will be used to calculate your pulse. To start at a resting baseline, 
-                            relax and take steady breaths. If your heartrate is elevated, wait a minute or 
-                            so for it to slow back down.
+                        <p>We will estimate your resting heart rate (RHR). To start at a resting baseline, relax and take steady 
+                            breaths. If your heart rate is elevated, wait a minute or so for it to slow back down.
                         </p>
                     </div>
                     <div class="input-area-cont">
@@ -59,28 +58,33 @@
                                     <label for="heartbeat"> <ul>
                                         <li>With one hand, feel your pulse by placing your index and middle fingers on your 
                                             lower neck, on either side of the windpipe. Press lightly until you feel a pulse.</li>
-                                        <li>With the other hand, click the heart icon each time you feel a beat for 30 seconds. 
-                                            You can also tap the spacebar.</li>
+                                        <li>With the other, click the heart icon each time you feel a beat for 30 seconds. 
+                                            You can also tap the spacebar. This will give your resting heart rate (RHR).</li>
                                     </ul></label>
                                 </div>
                             </div>
                             <div class="heart-pulse-container">
-                                <img class="heart-icon" src="./icons/abstract-heart.png"/>
                                 <div class="pulse-info">
+                                    <img class="heart-icon" src="./icons/abstract-heart.png"/>
                                     <div id="pulse-count-sec">
-                                        <div id="timer-display">00:30</div> 
-                                        <div id="pulse-count">Beats: 0</div>
-                                        <div id="bpm-display" style="display: none;">BPM: --</div>
-                                    </div>
-                                    <div id="heartrate-output-sec">
-                                        <p>Or use</p>
-                                        <button id="use-average-btn" class="avg-hr-button">
-                                            average resting heart rate (72 BPM)
-                                        </button>
+                                        <div>
+                                            <div id="timer-display">Time left: 00:30</div> 
+                                            <div id="pulse-count">Beats: 0</div>
+                                        </div>
+                                        <div id="bpm-display" style="display: none;">Your resting heart rate: --</div>
                                     </div>
                                 </div>
+                            </div>  
+                            <div id="heartrate-output-sec">
+                                <div class="divider-area">
+                                    <div class="divider-line"></div>
+                                    <p>Or</p>
+                                    <div class="divider-line"></div>
+                                </div>
+                                <button id="use-average-btn" class="avg-hr-button">
+                                    Use the average RHR (72 BPM)
+                                </button>
                             </div>
-                            
                         </div>
                     </div>
 

@@ -14,6 +14,7 @@ ol {
 }
 ol li {
     font-family: "heebo-body";
+    line-height: 22px;
     font-size: 18px;
     color: var(--primary-color);
 }

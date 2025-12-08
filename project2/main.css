@@ -56,7 +56,8 @@ p {
     margin: 0;
     font-family: 'Heebo-body';
     font-size: 18px;
-    color: var(--primary-color)
+    color: var(--primary-color);
+    line-height: 22px;
 }
 
 p b {
