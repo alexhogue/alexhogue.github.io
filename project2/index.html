@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="about-popup.css">
     </head>
     <body><!--all the contents of an HTML document goes here-->
-        <div class="overlay inital-overlay">
+        <div class="overlay initial-overlay">
             <!-- <h1>The Heart Rate Atlas</h1> -->
             <img class="close-icon" id="inital-close-icon" src="./icons/close.svg"/>
             <div class="content-area">
@@ -53,31 +53,34 @@
                         </div>
 
                         <div class="input-type" id="heartbeat-area">
-                            <div class="step-number">3.</div>
-                            <div class="input-cont">
-                                <label for="heartbeat"> <ul>
-                                    <li>With one hand, feel your pulse by placing your index and middle fingers on your 
-                                        lower neck, on either side of the windpipe. Press lightly until you feel a pulse.</li>
-                                    <li>With the other hand, click the heart icon each time you feel a beat for 30 seconds. 
-                                        You can also tap the spacebar.</li>
-                                </ul></label>
-                                <div class="heart-pulse-container">
-                                    <img class="heart-icon" src="./icons/abstract-heart.png"/>
-                                    <div class="pulse-info">
-                                        <div id="pulse-count-sec">
-                                            <div id="timer-display">00:30</div> 
-                                            <div id="pulse-count">Beats: 0</div>
-                                            <div id="bpm-display" style="display: none;">BPM: --</div>
-                                        </div>
-                                        <div id="heartrate-output-sec">
-                                            <p>Or use</p>
-                                            <button id="use-average-btn" class="avg-hr-button">
-                                                average resting heart rate (72 BPM)
-                                            </button>
-                                        </div>
+                            <div class="pulse-instruction-area">
+                                <div class="step-number">3.</div>
+                                <div class="input-cont">
+                                    <label for="heartbeat"> <ul>
+                                        <li>With one hand, feel your pulse by placing your index and middle fingers on your 
+                                            lower neck, on either side of the windpipe. Press lightly until you feel a pulse.</li>
+                                        <li>With the other hand, click the heart icon each time you feel a beat for 30 seconds. 
+                                            You can also tap the spacebar.</li>
+                                    </ul></label>
+                                </div>
+                            </div>
+                            <div class="heart-pulse-container">
+                                <img class="heart-icon" src="./icons/abstract-heart.png"/>
+                                <div class="pulse-info">
+                                    <div id="pulse-count-sec">
+                                        <div id="timer-display">00:30</div> 
+                                        <div id="pulse-count">Beats: 0</div>
+                                        <div id="bpm-display" style="display: none;">BPM: --</div>
+                                    </div>
+                                    <div id="heartrate-output-sec">
+                                        <p>Or use</p>
+                                        <button id="use-average-btn" class="avg-hr-button">
+                                            average resting heart rate (72 BPM)
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
 
@@ -249,6 +252,16 @@
                     ” overview page: describes how to gauge your exercise intensity by understanding your heart.</p>
                 <p>Harvard Health Publishing — “<a class="web-link" href="https://www.health.harvard.edu/blog/how-does-sleep-affect-your-heart-rate-2021012921846?" target="_blank">How does sleep affect your heart rate?</a> 
                     ” article: explains what happens to your heart rate while you sleep.</p>
+            </div>
+        </div>
+
+        <div class="overlay alert-overlay" style="display: none;">
+            <!-- <img class="close-icon" src="./icons/close.svg"/> -->
+            <div><span class="alert-message"></span></div>
+            <div class="button-container">
+                <button class="alert-button">
+                    OK
+                </button>
             </div>
         </div>
 

@@ -32,4 +32,39 @@ ol li {
 .about-body {
     margin-bottom: 24px;
 }
+.alert-overlay {
+    backdrop-filter: blur(6px);
+    max-width: 35vw;
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transform: translate(-50%, -75%);
+}
+.alert-button {
+    padding: 6px 18px;
+    align-items: center;
+    color: var(--primary-color);
+    font-family: "Heebo-body";
+    font-size: 18px;
+    border-radius: 16px;
+    transition: background-color 0.3s ease;
+}
+.alert-button:hover {
+    background-color: rgba(62, 0, 0, 0.098);
+    transition: background-color 0.3s ease;
+}
+.alert-message {
+    font-size: 18px;
+    font-family: "Heebo-body";
+    color: var(--primary-color);
+}
 
+@media (max-width: 1124px) {
+    .alert-overlay {
+        position: fixed;
+        top: 25vh;
+        overflow-y: hidden;
+        transform: translate(-50%, -50%);
+    }
+}

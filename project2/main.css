@@ -98,6 +98,13 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
   pointer-events: none;    /* prevent clicks on blurred content */
   transition: filter 0.3s ease;
 }
+body.alert-open .initial-overlay,
+body.alert-open #heart-container {
+  filter: blur(4px);
+  pointer-events: none;   
+  background-color: rgba(69, 0, 0, 0.08);
+  transition: filter 0.3s ease, background-color 0.3s ease;
+}
 
 
 #heart-container{
@@ -239,7 +246,19 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
 @media (max-width: 1024px) {
     body {
         overflow: scroll;
+        -ms-overflow-style: auto;
     }
-
-
+}
+@media (max-width: 768px) {
+    #header-area {
+        width: 100vw;
+        justify-content: flex-end;
+    }
+    #main-title {
+        transform: translate(-15%, 0); 
+    }
+    .learn-more-area{
+        position: fixed;
+        bottom: 12px;
+    }
 }

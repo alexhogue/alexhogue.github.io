@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const bpmDisplay = document.getElementById("bpm-display");
   const learnMoreBtn = document.querySelector(".learn-more-button");
   const learnOverlay = document.querySelector(".learn-more-overlay");
+  const alertOverlay = document.querySelector(".alert-overlay");
+  const alertButton = document.querySelector(".alert-button");
+  const alertMessage = document.querySelector(".alert-message");
 
   let paused = true;
   document.body.classList.add("popup-open");
@@ -39,6 +42,21 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.remove("popup-open");
     });
   }
+
+  function showAlert(message) {
+    alertMessage.textContent = message;
+    alertOverlay.style.display = "flex";
+    document.body.classList.add("alert-open");
+  }
+  function removeAlert() {
+    alertMessage.textContent = "none";
+    alertOverlay.style.display = "none";
+    document.body.classList.remove("alert-open");
+  }
+
+  alertButton.addEventListener("click", () => {
+    removeAlert();
+  })
 
   window.addEventListener("keydown", function (event) {
     if (event.code === "Space" || event.keyCode === 32) {
@@ -72,7 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(restingHeartRate);
       if (icon.id === "inital-close-icon") {
         if (!restingHeartRate) {
-          alert(
+        //   alert(
+        //     "Please measure your heart rate or use the average (72 BPM) before closing."
+        //   );
+          showAlert(
             "Please measure your heart rate or use the average (72 BPM) before closing."
           );
           return;
@@ -176,7 +197,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Spacebar = one beat (only when popup is open)
   document.addEventListener("keydown", (e) => {
-    if (e.code === "Space" && overlay.style.display !== "none") {
+    if (
+      e.code === "Space" &&
+      overlay.style.display !== "none" &&
+      !document.body.classList.contains("alert-open")
+    ) {
       e.preventDefault();
       recordPulse();
     }
@@ -192,8 +217,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Need at least a couple of taps
     if (!pulseStartTime || !lastPulseTime || pulseCount < 10) {
-        alert(
-          "Please click the heart icon accourding to your pulse for 30 seconds to get an accurate estimate."
+        // alert(
+        //   "Please click the heart icon according to your pulse for 30 seconds to get an accurate estimate."
+        // );
+        showAlert(
+          "Please click the heart icon according to your pulse for 30 seconds to get an accurate estimate."
         );
         return null;
     }
@@ -202,8 +230,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (elapsedSeconds < 15) {
       // Too short to be reliable
-      alert(
-        "Please click the heart icon accourding to your pulse for 30 seconds to get an accurate estimate."
+    //   alert(
+    //     "Please click the heart icon according to your pulse for 30 seconds to get an accurate estimate."
+    //   );
+      showAlert(
+        "Please click the heart icon according to your pulse for 30 seconds to get an accurate estimate."
       );
       return null;
     }
@@ -525,9 +556,10 @@ document.addEventListener("DOMContentLoaded", function () {
         maxHR = 200;
         activeHR = maxHR * { low: 0.55, moderate: 0.65, high: 0.80 }[mappedLevel];
     } else if (age > 120 || age == 0) {
-        alert(
-          "Please provide a valid age."
-        );
+        // alert(
+        //   "Please provide a valid age."
+        // );
+        showAlert("Please provide a valid age.");
         return;
     } else {
       maxHR = 220 - age;
@@ -911,6 +943,5 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!overlayEl) return;
     });
   });
-
-
-})
+  
+});
