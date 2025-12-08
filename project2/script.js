@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
    if (pulseCountDisplay) {
      pulseCountDisplay.textContent = `Beats: ${pulseCount}`;
-   }
+   } 
 
    // Visual feedback
    heartCalc.style.transform = "scale(1.3)";
@@ -192,25 +192,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Need at least a couple of taps
     if (!pulseStartTime || !lastPulseTime || pulseCount < 10) {
-      return null;
+        alert(
+          "Please click the heart icon accourding to your pulse for 30 seconds to get an accurate estimate."
+        );
+        return null;
     }
 
     const elapsedSeconds = (lastPulseTime - pulseStartTime) / 1000;
 
     if (elapsedSeconds < 15) {
       // Too short to be reliable
+      alert(
+        "Please click the heart icon accourding to your pulse for 30 seconds to get an accurate estimate."
+      );
       return null;
     }
 
     const bpm = Math.round((pulseCount / elapsedSeconds) * 30) * 2;
     return bpm;
   }
-  
 
-  function computeActiveHR() {
-    console.log(restingHeartRate * 2);
-    return restingHeartRate * 2;
-  }
 
   ageValue = null;
 
@@ -523,10 +524,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (age === null || age === undefined) {
         maxHR = 200;
         activeHR = maxHR * { low: 0.55, moderate: 0.65, high: 0.80 }[mappedLevel];
+    } else if (age > 120 || age == 0) {
+        alert(
+          "Please provide a valid age."
+        );
+        return;
     } else {
-        maxHR = 220 - age;
-        activeHR =
-          maxHR * { low: 0.55, moderate: 0.65, high: 0.80 }[mappedLevel];
+      maxHR = 220 - age;
+      activeHR = maxHR * { low: 0.55, moderate: 0.65, high: 0.8 }[mappedLevel];
     }
 
     let sleepHR = RHR * 0.85;
@@ -614,7 +619,7 @@ document.addEventListener("DOMContentLoaded", function () {
       backgroundColorInterval = setInterval(() => {
         document.body.style.backgroundColor = isOriginalColor
           ? "#FDF7ED"
-          : "#F9CCCA";
+          : "#BD4D4A";
         isOriginalColor = !isOriginalColor;
       }, currentDuration);
     }
@@ -624,7 +629,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentMode === "stressed") {
       backgroundColorInterval = setInterval(() => {
         document.body.style.backgroundColor = isOriginalColor
-          ? "#FFAE99"
+          ? "#F19B61"
           : "#FDF7ED";
         isOriginalColor = !isOriginalColor;
       }, currentDuration);
@@ -766,9 +771,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const bpm = computeRestingHeartRate();
 
     if (!bpm) {
-      alert(
-        "Click the heart icon for about one minute so we can estimate your resting heart rate."
-      );
+    //   alert(
+    //     "Click the heart icon for 30 seconds according to your pulse so we can estimate your resting heart rate."
+    //   );
       return;
     }
 

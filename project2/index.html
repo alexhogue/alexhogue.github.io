@@ -33,7 +33,7 @@
                                 <div class="step-number">1.</div>
                                 <div class="input-cont">
                                     <label for="age-input">Enter your age</label>
-                                    <input type="text" id="age-input" placeholder="Your age...">
+                                    <input type="text" id="age-input" placeholder="Type here">
                                 </div>
                             </div>
                             <div class="input-type" id="activity-area">
@@ -67,11 +67,12 @@
                                         <div id="pulse-count-sec">
                                             <div id="timer-display">00:30</div> 
                                             <div id="pulse-count">Beats: 0</div>
+                                            <div id="bpm-display" style="display: none;">BPM: --</div>
                                         </div>
                                         <div id="heartrate-output-sec">
-                                            <div id="bpm-display" style="display: none;">BPM: --</div>
+                                            <p>Or use</p>
                                             <button id="use-average-btn" class="avg-hr-button">
-                                                Use average resting heart rate (72 BPM)
+                                                average resting heart rate (72 BPM)
                                             </button>
                                         </div>
                                     </div>
@@ -113,11 +114,10 @@
             <h1>The Resting Heart Rate</h1>
             <div class="about-body">
                 <p>Your resting heart rate (RHR) is the number of times your heart beats per minute when you're 
-                    awake, calm, and completely at rest. For most healthy adults, a normal RHR falls between 60 
-                    and 100 beats per minute.</p>
-                <p>A lower resting rate often means your heart is more efficient—it doesn’t need to work as 
-                    hard to circulate blood. Very fit people or athletes can have a resting heart rate as low as 
-                    40-60 bpm.</p>
+                    awake, calm, and completely at rest.</p>
+                <p>For most healthy adults, a normal RHR falls between 60 and 100 beats per minute.A lower resting 
+                    rate often means your heart is more efficient—it doesn’t need to work as hard to circulate blood. 
+                    Very fit people or athletes can have a resting heart rate as low as 40-60 bpm.</p>
                 <p>Your RHR is a useful baseline for understanding your cardiovascular health, because it reflects 
                     how relaxed or strained your heart is in everyday life. This visualization uses your resting 
                     heart rate as the baseline for all other heartbeat states—showing how your heart naturally 
@@ -139,18 +139,29 @@
             <img class="close-icon" src="./icons/close.svg"/>
             <h1>The Active Heart Rate</h1>
             <div class="about-body">
-                <p>When you’re moving — walking, jogging, doing daily chores — your heart rate rises into a “training zone” 
+                <p>When you’re moving—walking, jogging, doing daily chores—your heart rate rises into a “training zone” 
                     to meet your body’s increased demands. For many people, this means working at 50–85% of their maximum heart 
                     rate, depending on how hard they’re going.</p>
                 <p>In this zone, your heart is getting stronger. It’s efficient, sustainable, and a key part of building 
                     cardiovascular fitness. Experts like the American Heart Association recommend regularly exercising 
                     within this range for heart health.</p>
-                <p>To find your personal target (<a class="web-link" href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/exercise-intensity/art-20046887?utm_source=chatgpt.com" target="_blank">Mayo Clinic</a>): </p>
+                <p>How we estimate your active heart rate:</p>
                 <ol>
-                    <li>Estimate your max heart rate: ~220 − your age (Mayo Clinic)</li>
-                    <li>Use your resting heart rate (which you provided) to calculate a more accurate “reserve” — often called Heart Rate Reserve (HRR).</li>
-                    <li>Multiply that reserve by your target intensity (like 60–85%) and add your resting rate back.</li>
-                 </ol>
+                    <li>Estimate your max heart rate: ~220 − your age</li>
+                    <ul class="inner-list">
+                        <li>If you don’t provide an age, we use a standard estimated max of 200 beats per minute.</li>
+                    </ul>
+                    <li>From that maximum, we estimate your active heart rate based on the activity level you choose:</li>
+                    <ul class="inner-list">
+                        <li>Low activity: ~55% of your maximum</li>
+                        <li>Moderate activity: ~65% of your maximum</li>
+                        <li>High activity: ~80% of your maximum</li>
+                    </ul>
+                </ol>
+                <ul class="outer-list">
+                    <li>These percentages are widely used in exercise science to represent different training intensity zones, 
+                        and the result gives you a reasonable estimate of what your heart rate might be during activity.</li>
+                </ul>
             </div>
             <!-- <div class="button-container">
                 <button class="learn-more-button">
@@ -175,6 +186,14 @@
                     physical activity, though the exact change varies widely depending on age, fitness level, and 
                     overall health. Managing stress through breathing, rest, and movement can help your heart 
                     return to its resting rhythm.</p>
+                <p>How we estimate your stressed heart rate:</p>
+                <ul class="outer-list">
+                    <li>Your stressed heart rate is calculated by increasing your resting heart rate (RHR) by 15%</li>
+                    <li>We use a 15% increase above your resting heart rate as an approximation of how the heart often responds 
+                        to mild to moderate psychological stress. Studies show that everyday stressors like deadlines, emotional 
+                        tension, or cognitive load typically raise heart rate by 10–20%, though the exact response varies widely 
+                        between individuals.</li>
+                </ul>
             </div>
             <!-- <div class="button-container">
                 <button class="learn-more-button">
@@ -198,6 +217,11 @@
                     rate is generally associated with good cardiovascular health and effective overnight recovery, though 
                     individual values naturally vary based on age, fitness, stress, and sleep quality. Understanding your 
                     sleeping heart rate can provide insight into how well your body is resting and restoring itself.</p>
+                <p>How we estimate your stressed heart rate:</p>
+                <ul class="outer-list">
+                    <li>Your sleeping heart rate is estimated as 85% of your resting heart rate.</li>
+                    <li>During healthy sleep, heart rate typically drops by 10–20% as the body shifts into a calmer, restorative state.</li>
+                </ul>
             </div>
             <!-- <div class="button-container">
                 <button class="learn-more-button">
@@ -213,13 +237,18 @@
 
         <div class="overlay learn-more-overlay" style="display: none;">
             <img class="close-icon" src="./icons/close.svg"/>
-            <h1>Learn More about Your Heart from Trusted Sources</h1>
+            <h1>Learn More about Your Heart</h1>
             <div class="about-body">
-                <p></p>
-            </div>
-            <div class="disclaimer">
-                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
-                and should not be used to measure, diagnose, or monitor any health condition. 
+                <p>Here are some additional sources to dig deeper into heart‑rate science, healthy norms, and how sleep or activity 
+                    affect heart rate:</p>
+                <p>American Heart Association (AHA) — “<a class="web-link" href="https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse?" target="_blank">All About Heart Rate (Pulse)</a> 
+                    ”: a clear overview of what constitutes normal resting heart rate, what affects it, and why it matters.</p>
+                <p>Cleveland Clinic — “<a class="web-link" href="https://my.clevelandclinic.org/health/diagnostics/heart-rate?" target="_blank">Heart Rate</a> 
+                    ” overview page: discusses factors affecting heart rate, what’s normal, and when to worry.</p>
+                <p>Mayo Clinic — “<a class="web-link" href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/exercise-intensity/art-20046887" target="_blank">Exercise intensity: How to measure it</a> 
+                    ” overview page: describes how to gauge your exercise intensity by understanding your heart.</p>
+                <p>Harvard Health Publishing — “<a class="web-link" href="https://www.health.harvard.edu/blog/how-does-sleep-affect-your-heart-rate-2021012921846?" target="_blank">How does sleep affect your heart rate?</a> 
+                    ” article: explains what happens to your heart rate while you sleep.</p>
             </div>
         </div>
 

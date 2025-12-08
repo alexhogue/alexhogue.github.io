@@ -1,5 +1,6 @@
 .about-overlay {
   display: none;
+  width: 55vw;
 }
 
 .about-body {
@@ -7,18 +8,28 @@
     flex-direction: column;
     gap: 12px;
 }
-
+ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 ol li {
     font-family: "heebo-body";
     font-size: 18px;
-    color: var(--primary-color)
-
+    color: var(--primary-color);
+}
+.inner-list {
+    padding-left: 18px;
+    list-style-type: disc; 
+}
+.inner-list li {
+    padding-left: 6px; 
+}
+.outer-list {
+    padding-left: 48px;
+    font-size: 18px;
 }
 
 .about-body {
     margin-bottom: 24px;
 }
 
-#learn-more-overlay {
-    
-}
