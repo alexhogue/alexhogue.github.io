@@ -16,14 +16,44 @@
     </head>
     <body><!--all the contents of an HTML document goes here-->
         <div class="overlay initial-overlay">
+            <h1 id="welcome-header">Welcome!</h1>
+            <div class="content-area">
+                <p> This tool will help you explore your resting, active, stressed, and sleeping heart rate. Using 
+                    your resting heart rate and some key parameters, we’ll calculate each heart rate state using 
+                    widely accepted scientific guidelines.
+                </p> 
+                <p>Your resting heart rate (RHR) is the number of times your heart beats per minute when 
+                    you are calm, relaxed, and not moving. It’s one of the clearest indicators of your baseline cardiovascular 
+                    health. Normal resting heart rate for most adults ranges between 60–100 bpm.
+                </p> 
+                <p><strong>Important: These values are estimates meant for learning and reflection, not medical diagnosis. If anything 
+                    feels unusual or concerning, consider reaching out to a healthcare professional.</strong>
+                </p>       
+            </div>
+            <div class="button-container">
+                <button class="start-button">
+                    <p>Enter the Atlas</p>
+                    <img class="caret-icon" src="./icons/caret.svg"/>
+                </button>
+            </div>
+            <!-- <div class="disclaimer">
+                <b>Disclaimer:</b> This tool is for visualization and educational purposes only. It is not a medical device 
+                and should not be used to measure, diagnose, or monitor any health condition. 
+            </div> -->
+        </div>
+        <div class="overlay calc-overlay" style="display: none;">
             <!-- <h1>The Heart Rate Atlas</h1> -->
+            <div class="back-button">
+                <img class="back-icon" id="inital-close-icon" src="./icons/caret.svg"/>
+                <!-- <div>Back</div> -->
+            </div>
             <img class="close-icon" id="inital-close-icon" src="./icons/close.svg"/>
             <div class="content-area">
                 <div class="data-area">
                     <p id="instruction-header">To visualize your heart rate, follow these easy steps:</p>
                     <div id="initial-instructions">
-                        <p>We will estimate your resting heart rate (RHR). To start at a resting baseline, relax and take steady 
-                            breaths. If your heart rate is elevated, wait a minute or so for it to slow back down.
+                        <p>To start at a resting baseline, relax and take steady breaths. If your heart rate is 
+                            elevated, wait a minute or so for it to slow back down.
                         </p>
                     </div>
                     <div class="input-area-cont">
@@ -71,7 +101,7 @@
                                             <div id="timer-display">Time left: 00:30</div> 
                                             <div id="pulse-count">Beats: 0</div>
                                         </div>
-                                        <div id="bpm-display" style="display: none;">Your resting heart rate: --</div>
+                                        <div id="bpm-display" style="display: none;">Your resting heart rate: -- bpm</div>
                                     </div>
                                 </div>
                             </div>  

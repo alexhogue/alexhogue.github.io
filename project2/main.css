@@ -57,7 +57,7 @@ p {
     font-family: 'Heebo-body';
     font-size: 18px;
     color: var(--primary-color);
-    line-height: 22px;
+    line-height: 24px;
 }
 
 p b {
@@ -99,7 +99,7 @@ body.popup-open .sidebar-area, body.popup-open .settings-button {
   pointer-events: none;    /* prevent clicks on blurred content */
   transition: filter 0.3s ease;
 }
-body.alert-open .initial-overlay,
+body.alert-open .calc-overlay,
 body.alert-open #heart-container {
   filter: blur(4px);
   pointer-events: none;   

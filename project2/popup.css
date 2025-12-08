@@ -18,14 +18,46 @@
   transition: filter 0.3s ease, background-color 0.3s ease;
 }
 
+.initial-overlay {
+    padding: 36px 56px 36px 56px;
+    gap: 24px;
+}
+
 .close-icon {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
+.back-button {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: flex;
+    font-size: 12px;
+    gap: 6px;
+    color: var(--primary-color);
+    font-family: "Heebo-body";
+}
+.back-icon {
+    transform: rotate(180deg);
+}
+
+#welcome-header {
+    padding: 0;
+    margin:0;
+}
+
 .content-area {
   display: flex;
+  flex-direction: column;
+  gap:12px;
+}
+.start-button {
+  display: flex;
+  padding: 12px 24px;
+  gap: 24px;
+  align-items: center;
 }
 
 .data-area {
@@ -53,7 +85,7 @@
 ul {
   font-family: "heebo-body";
   font-size: 18px;
-  line-height: 22px;
+  line-height: 24px;
   list-style-type: none;
   margin: 0;
   padding: 0;

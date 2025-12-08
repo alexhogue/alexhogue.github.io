@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const alertMessage = document.querySelector(".alert-message");
   const bpmOverlay = document.querySelector(".bpm-overlay");
   const bpmMessage = document.querySelector(".bpm-message");
+  const startButton = document.querySelector(".start-button");
+  const startOverlay = document.querySelector(".initial-overlay");
+  const calcOverlay = document.querySelector(".calc-overlay");
+  const backButton = document.querySelector(".back-button");
 
   let paused = true;
   document.body.classList.add("popup-open");
@@ -67,8 +71,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.remove("alert-open");
   }
 
+  startButton.addEventListener("click", () => {
+    calcOverlay.style.display = "flex";
+    startOverlay.style.display = "none";
+  })
+
   alertButton.addEventListener("click", () => {
     removeAlert();
+  })
+
+  backButton.addEventListener("click", () => {
+    calcOverlay.style.display = "none";
+    startOverlay.style.display = "flex";
   })
 
   window.addEventListener("keydown", function (event) {
@@ -125,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   settingBtn.addEventListener("click", () => {
-    overlay.style.display = "block";
+    calcOverlay.style.display = "block";
     document.body.classList.add("popup-open");
     pauseHeart();
   });
@@ -184,9 +198,9 @@ document.addEventListener("DOMContentLoaded", function () {
             timerInterval = null;
 
             bpm = computeRestingHeartRate();
-            
+
             if (bpm && bpmDisplay) {
-            bpmDisplay.textContent = `Your resting heart rate: ${bpm}`;
+            bpmDisplay.textContent = `Your resting heart rate: ${bpm} bpm`;
             bpmDisplay.style.display = "block";
             }
 
@@ -777,7 +791,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rateDisplay.textContent = restingHeartRate;
     }
     if (bpmDisplay) {
-      bpmDisplay.textContent = `Your resting heart rate: ${restingHeartRate}`;
+      bpmDisplay.textContent = `Your resting heart rate: ${restingHeartRate} bpm`;
       bpmDisplay.style.display = "block";
     }
     
@@ -845,7 +859,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateHeartbeatSpeed(restingHeartRate);
 
     // Close popup and start animation
-    overlay.style.display = "none";
+    calcOverlay.style.display = "none";
     document.body.classList.remove("popup-open");
     unpauseHeart();
   });
@@ -856,9 +870,9 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("visualize" + restingHeartRate);
 
     if (!bpm) {
-    //   alert(
-    //     "Click the heart icon for 30 seconds according to your pulse so we can estimate your resting heart rate."
-    //   );
+      showAlert(
+        "Click the heart icon for 30 seconds according to your pulse so we can estimate your resting heart rate."
+      );
       return;
     }
 
@@ -868,7 +882,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rateDisplay.textContent = bpm;
     }
     if (bpmDisplay) {
-      bpmDisplay.textContent = `Your resting heart rate: ${bpm}`;
+      bpmDisplay.textContent = `Your resting heart rate: ${bpm} bpm`;
       bpmDisplay.style.display = "block";
     }
 
@@ -932,7 +946,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateHeartbeatSpeed(bpm);
 
     // Close popup, unblur background, start animation
-    overlay.style.display = "none";
+    calcOverlay.style.display = "none";
     document.body.classList.remove("popup-open");
     unpauseHeart();
   });
