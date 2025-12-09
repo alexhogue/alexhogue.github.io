@@ -1,6 +1,9 @@
 .about-overlay {
   display: none;
-  width: 55vw;
+  width: 50vw;
+}
+.learn-more-overlay {
+    width: 50vw;
 }
 
 .about-body {
@@ -15,7 +18,7 @@ ol {
 ol li {
     font-family: "heebo-body";
     line-height: 22px;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--primary-color);
 }
 .inner-list {
@@ -27,7 +30,7 @@ ol li {
 }
 .outer-list {
     padding-left: 48px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .about-body {
@@ -35,6 +38,7 @@ ol li {
 }
 .alert-overlay {
     backdrop-filter: blur(6px);
+    background: var(--background-color);
     max-width: 35vw;
     z-index: 110;
     display: flex;
@@ -47,7 +51,7 @@ ol li {
     align-items: center;
     color: var(--primary-color);
     font-family: "Heebo-body";
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 16px;
     transition: background-color 0.3s ease;
 }
@@ -56,9 +60,12 @@ ol li {
     transition: background-color 0.3s ease;
 }
 .alert-message {
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Heebo-body";
     color: var(--primary-color);
+}
+.alert-message .bpm-value {
+  font-family: "Heebo-title";
 }
 
 @media (max-width: 1124px) {

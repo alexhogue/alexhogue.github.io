@@ -13,7 +13,7 @@
   background: rgba(253, 247, 237, 0.5);
   backdrop-filter: blur(5px);
   box-shadow: 0 4px 30px rgba(46, 0, 0, 0.05);
-  width: 55vw;
+  width: 52vw;
   min-width: 300px;
   transition: filter 0.3s ease, background-color 0.3s ease;
 }
@@ -21,6 +21,7 @@
 .initial-overlay {
     padding: 36px 56px 36px 56px;
     gap: 24px;
+    width: 50vw;
 }
 
 .close-icon {
@@ -69,7 +70,7 @@
 }
 
 #initial-instructions p {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .instruction-area {
@@ -84,7 +85,7 @@
 
 ul {
   font-family: "heebo-body";
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
   list-style-type: none;
   margin: 0;
@@ -117,7 +118,7 @@ ul li {
 
 label {
   font-family: "heebo-body";
-  font-size: 18px;
+  font-size: 16px;
   color: var(--primary-color);
 }
 
@@ -145,9 +146,9 @@ input {
   background-color: transparent;
   border: 1px solid var(--primary-color);
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--primary-color);
-  padding: 4px 18px;
+  padding: 6px 18px;
 }
 
 .button-container {
@@ -194,7 +195,7 @@ input {
   min-height: 96px;
   gap: 24px;
   font-family: "heebo-body";
-  font-size: 18px;
+  font-size: 16px;
   color: var(--primary-color);
   margin-top: -24px;
   margin-bottom: -24px;
@@ -233,9 +234,9 @@ input {
 }
 .activity-button-area label {
   display: inline-block;
-  padding: 2px 16px;
+  padding: 4px 16px;
   border: solid 1px #ccc;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 12px;
   transition: all 0.3s;
 }
@@ -252,7 +253,7 @@ input {
 .learn-more-btn {
   border: none;
   color: var(--primary-color);
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: underline;
 }
 
@@ -269,7 +270,7 @@ input {
   backdrop-filter: none;   
   color: var(--primary-color);
   font-family: "heebo-body";
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: underline;
   cursor: pointer;
 }

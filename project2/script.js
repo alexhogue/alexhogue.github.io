@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showAlert(message) {
-    alertMessage.textContent = message;
+    alertMessage.innerHTML = message;
     alertOverlay.style.display = "flex";
     document.body.classList.add("alert-open");
   }
@@ -258,6 +258,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  function startShapeIntro() {
+    const anims = document.querySelectorAll(".shape-anim-sec");
+    anims.forEach((el) => {
+      el.style.animation = "none";
+      // force reflow to restart animation
+      void el.offsetWidth;
+      el.style.animation = "";
+      el.style.animationDelay = "0s";
+    });
+  }
+
   function computeRestingHeartRate() {
     if (restingHeartRate &&
       (!pulseStartTime || !lastPulseTime || pulseCount === 0)
@@ -302,8 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return null;
     } else {
       showAlert(
-        `Your resting heart rate is ${bpm} beats per minute! Continue to visualize your heart beat under various conditions.`
+        `Your resting heart rate is <span class="bpm-value">${bpm}</span> beats per minute! Continue to visualize your heart beat under various conditions.`
       ); 
+      startShapeIntro();
     }
     return bpm; 
   }
@@ -724,11 +736,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.backgroundColor = "#EEDEEE";
     }
     if (currentMode === "stressed") {
+      let colorIndex = 0;
+      const colors = ["#FDF7ED", "#F19B61", "#E5B5E1"]; // Add your third color here
+
       backgroundColorInterval = setInterval(() => {
-        document.body.style.backgroundColor = isOriginalColor
-          ? "#F19B61"
-          : "#FDF7ED";
-        isOriginalColor = !isOriginalColor;
+        document.body.style.backgroundColor = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length; // Cycle through 0, 1, 2, then back to 0
       }, currentDuration);
     }
   }
