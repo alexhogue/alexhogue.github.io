@@ -13,7 +13,7 @@
   background: rgba(253, 247, 237, 0.5);
   backdrop-filter: blur(5px);
   box-shadow: 0 4px 30px rgba(46, 0, 0, 0.05);
-  width: 52vw;
+  width: 48vw;
   min-width: 300px;
   transition: filter 0.3s ease, background-color 0.3s ease;
 }
@@ -21,7 +21,7 @@
 .initial-overlay {
     padding: 36px 56px 36px 56px;
     gap: 24px;
-    width: 50vw;
+    width: 48vw;
 }
 
 .close-icon {
